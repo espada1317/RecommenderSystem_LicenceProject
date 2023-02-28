@@ -63,10 +63,10 @@
                     <strong>RSMC</strong>
                 </a>
                 <a class="navbar-brand d-flex align-items-center">
-                    Hello, <span> USER</span>!
+                    Hello, <span th:text="${principalName}"> USER</span>!
                 </a>
-                <a class="navbar-brand d-flex align-items-center">
-                    Hello, <span> ADMIN</span>!
+                <a class="navbar-brand d-flex align-items-center" th:if="${principalName != null}" th:href="@{/logout}">
+                    Logout
                 </a>
             </div>
         </div>

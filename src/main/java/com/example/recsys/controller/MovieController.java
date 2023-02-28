@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/movies")
 public class MovieController {
@@ -34,7 +36,8 @@ public class MovieController {
     }
 
     @GetMapping
-    public String listOfMoviesByKeyword(Model model, @Param("keyword") String keyword) {
+    public String listOfMoviesByKeyword(Model model, @Param("keyword") String keyword, Principal principal) {
+        model.addAttribute("principalName", principal.getName());
         model.addAttribute("movies", movieService.searchMoviesByKeyword(keyword));
         return "movies";
     }
