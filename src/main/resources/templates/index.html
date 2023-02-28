@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>RSMC</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="all" href="/css/index.css" th:href="@{/css/index.css}">
+</head>
+
+<body>
+    <div class="grid-wrapper">
+      <header>
+
+        <ul id="navigation">
+          <li><a class="get-started" th:href="@{/movies}">Movies</a></li>
+<!--          <li><a class="get-started">Services</a></li>-->
+<!--          <li><a class="get-started">Contact Us</a></li>-->
+<!--          <li href="#"  class="get-started">Get Started</li>-->
+        </ul>
+      </header>
+      <aside>
+        <h1>RSMC</h1>
+        <h3>All in one place</h3>
+        <p>
+          Movies, TV series, games, anime, manga, books and music recommendation in one place.
+          Save your own list, share them with friends, get new connections and enjoy your free time.
+          Be in trend, find your style and discover new interest.
+          Be extravagant, be curious, be nerdy, be yourself...
+        </p>
+        <p href="#" class="button">Learn More</p>
+      </aside>
+      <div class="background"></div>
+    </div>
+</body>
+</html>
