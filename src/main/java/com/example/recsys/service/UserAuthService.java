@@ -4,6 +4,6 @@ import com.example.recsys.entity.UserInfo;
 
 public interface UserAuthService {
 
-    String addUser(UserInfo userInfo);
+    void addUser(UserInfo userInfo);
 
 }

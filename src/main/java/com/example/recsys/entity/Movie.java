@@ -6,15 +6,15 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity(name = "movie")
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "Movie")
 @Getter
 @Setter
-@Table(name = "movie")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Movie {
 
     @Id
-    @Column(name = "moviekey", nullable = false)
+    @Column(name = "movie_key", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer movieKey;
 

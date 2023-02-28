@@ -28,8 +28,7 @@ public class MovieController {
     }
 
     @GetMapping("/getByTitle/{title}")
-    public String movieByTitle(Model model, @PathVariable("title") String movieTitle)
-    {
+    public String movieByTitle(Model model, @PathVariable("title") String movieTitle) {
         model.addAttribute("movies", movieService.getMovieByTitle(movieTitle));
         return "movie_details";
     }

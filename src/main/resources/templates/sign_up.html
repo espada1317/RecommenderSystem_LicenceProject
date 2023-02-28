@@ -117,11 +117,27 @@
                 <div class="col">
 
                   <h1 class="font-weight-bolder display-4">Get Started</h1>
-                  <div class="text-muted mb-5">Already have an account? <span><u> <a href="" class="text-black" role="button" data-slide="prev" th:href="@{/signIn}">
+                  <div class="text-muted mb-3">
+                    Already have an account?
+                    <span>
+                      <u>
+                        <a href="" class="text-black" role="button" data-slide="prev" th:href="@{/signIn}">
                           Sign In
-                        </a></u></span></div>
+                        </a>
+                      </u>
+                    </span>
+                  </div>
 
-                  <form method="POST" class="signup" th:action="@{/signUp}" th:object="${userInfo}">
+                  <div class="text-muted mb-1">
+                    <div class="alert alert-danger" role="alert" th:if="${param.error}">
+                      User with same username or email already exist.
+                    </div>
+                    <div class="alert alert-success" role="alert" th:if="${param.success}">
+                      Account successfully created.
+                    </div>
+                  </div>
+
+                  <form method="post" th:action="@{/signUp}" th:object="${userInfo}">
                     <div class="form-group mt-2">
                       <input type="text" class="form-control rounded-0 " id="fullName" name="fullName">
                       <label for="fullName" class=" text-muted">Your name</label>
@@ -151,7 +167,6 @@
 
       </div>
 
-<!--      <div class="col bg-image  d-none d-md-block p-0"></div>-->
     </div>
 
   </div>

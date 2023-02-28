@@ -1,7 +1,6 @@
 package com.example.recsys.service.implementation;
 
 import com.example.recsys.entity.UserInfo;
-import com.example.recsys.exceptions.InvalidCredentialException;
 import com.example.recsys.exceptions.UserAlreadyRegisteredException;
 import com.example.recsys.repository.UserInfoRepository;
 import com.example.recsys.service.UserAuthService;
@@ -19,15 +18,14 @@ public class UserAuthImpl implements UserAuthService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public String addUser(UserInfo userInfo) {
-        if(validate(userInfo)) {
+    public void addUser(UserInfo userInfo) {
+        if(validateRegister(userInfo)) {
             userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
             userInfoRepository.save(userInfo);
         }
-        throw new InvalidCredentialException();
     }
 
-    public boolean validate(UserInfo userInfo) {
+    public boolean validateRegister(UserInfo userInfo) {
         String nickname = userInfo.getNickname();
         if(userInfoRepository.findByNickname(nickname).isPresent())
             throw new UserAlreadyRegisteredException(nickname);

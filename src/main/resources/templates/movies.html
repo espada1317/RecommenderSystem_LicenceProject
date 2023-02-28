@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Movies</title>
@@ -57,32 +57,17 @@
 <body>
 
     <header>
-<!--        <div class="collapse bg-dark" id="navbarHeader">-->
-<!--            <div class="container">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-sm-8 col-md-7 py-4">-->
-<!--                        <h4 class="text-white">About</h4>-->
-<!--                        <p class="text-muted" >Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>-->
-<!--                    </div>-->
-<!--                    <div class="col-sm-4 offset-md-1 py-4">-->
-<!--                        <h4 class="text-white">Contact</h4>-->
-<!--                        <ul class="list-unstyled">-->
-<!--                            <li><a href="#" class="text-white">Follow on Twitter</a></li>-->
-<!--                            <li><a href="#" class="text-white">Like on Facebook</a></li>-->
-<!--                            <li><a href="#" class="text-white">Email me</a></li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
         <div class="navbar navbar-dark bg-dark box-shadow">
             <div class="container d-flex justify-content-between">
                 <a href="#" class="navbar-brand d-flex align-items-center">
                     <strong>RSMC</strong>
                 </a>
-<!--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--                    <span class="navbar-toggler-icon"></span>-->
-<!--                </button>-->
+                <a class="navbar-brand d-flex align-items-center">
+                    Hello, <span> USER</span>!
+                </a>
+                <a class="navbar-brand d-flex align-items-center">
+                    Hello, <span> ADMIN</span>!
+                </a>
             </div>
         </div>
     </header>
@@ -123,10 +108,10 @@
                                 <br>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a class="btn btn-primary btn-sm btn-outline-secondary" th:href="@{/movies/getByTitle/{title}(title=${movie.getTitle})}">View</a>
+                                        <a class="btn btn-primary btn-sm btn-outline-secondary" th:href="@{/movies/getById/{id}(id=${movie.movieKey})}">View</a>
                                     </div>
                                     <strong class="text-muted" th:text="${movie.release}"></strong>
-                                    <strong><small class="text-muted" th:text="${movie.length}"></small> min</strong>
+                                    <strong><small class="text-muted" th:text="${movie?.length}"></small> min</strong>
                                 </div>
                             </div>
                         </div>
