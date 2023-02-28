@@ -10,13 +10,13 @@
 <body>
 
     <header>
-        <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="navbar navbar-dark bg-black">
             <div class="container d-flex justify-content-between">
                 <a th:href="@{/}" class="navbar-brand d-flex align-items-center">
                     <strong>RSMC</strong>
                 </a>
-                <a class="navbar-brand d-flex align-items-center">
-                    Hello, <span th:text="${principalName}"> USER</span>!
+                <a class="navbar-brand d-flex align-items-center" th:ref="#">
+                    Hello, <span th:text="${principalName}">USER</span>!
                 </a>
                 <a class="navbar-brand d-flex align-items-center" th:if="${principalName != null}" th:href="@{/logout}">
                     Logout
@@ -26,15 +26,9 @@
     </header>
 
     <main role="main">
-
         <section class="jumbotron text-center">
             <div class="container">
-                <h1 class="jumbotron-heading" style="color: white;">Recommender System for Multimedia Content</h1>
-                <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
-                <p>
-                    <a href="#" class="btn btn-primary my-2">Do Something</a>
-                    <a href="#" class="btn btn-secondary my-2">Do Anything</a>
-                </p>
+                <h1 class="jumbotron-heading" style="color: white;">MOVIES</h1>
             </div>
         </section>
 

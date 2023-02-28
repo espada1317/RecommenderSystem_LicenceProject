@@ -13,9 +13,10 @@
 <body>
     <div class="grid-wrapper">
       <header>
-
         <ul id="navigation">
-          <li><a class="get-started" th:href="@{/movies}">Movies</a></li>
+            <li><a class="get-started" th:href="@{/movies}">Movies</a></li>
+            <li th:if="${principalName == null || principalName.length() == 0}"> <a class="get-started get-started-reverse" th:href="@{/signIn}"> Login </a> </li>
+            <li id="special" th:if="${principalName != null}"> <span class="get-started" id="user-name" > Hello, <span th:text="${principalName}"></span> </span> </li>
 <!--          <li><a class="get-started">Services</a></li>-->
 <!--          <li><a class="get-started">Contact Us</a></li>-->
 <!--          <li href="#"  class="get-started">Get Started</li>-->

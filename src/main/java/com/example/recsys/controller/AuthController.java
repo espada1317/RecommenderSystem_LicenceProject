@@ -5,9 +5,12 @@ import com.example.recsys.exceptions.UserAlreadyRegisteredException;
 import com.example.recsys.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.security.Principal;
 
 @Controller
 public class AuthController {
@@ -16,7 +19,11 @@ public class AuthController {
     private UserAuthService userAuthService;
 
     @GetMapping(value = "/")
-    public String indexPage() {
+    public String indexPage(Principal principal,
+                            Model model) {
+        if(principal != null) {
+            model.addAttribute("principalName", principal.getName());
+        }
         return "index";
     }
 
