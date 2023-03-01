@@ -32,6 +32,8 @@ public class SecurityConfig {
                 .and()
                     .authorizeHttpRequests().requestMatchers("/movies/getByTitle/**").hasAuthority("ADMIN")
                 .and()
+                    .authorizeHttpRequests().requestMatchers("/profile/**").hasAuthority("USER")
+                .and()
                     .formLogin()
                     .loginPage("/signIn")
                     .usernameParameter("nickname")

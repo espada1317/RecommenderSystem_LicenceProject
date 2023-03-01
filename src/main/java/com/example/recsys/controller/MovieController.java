@@ -36,9 +36,11 @@ public class MovieController {
     }
 
     @GetMapping
-    public String listOfMoviesByKeyword(Model model, @Param("keyword") String keyword, Principal principal) {
-        model.addAttribute("principalName", principal.getName());
+    public String listOfMoviesByKeyword(Model model,
+                                        @Param("keyword") String keyword,
+                                        Principal principal) {
         model.addAttribute("movies", movieService.searchMoviesByKeyword(keyword));
+        model.addAttribute("principalName", principal.getName());
         return "movies";
     }
 

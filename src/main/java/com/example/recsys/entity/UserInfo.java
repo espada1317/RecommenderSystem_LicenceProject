@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "Users")
+@Entity(name = "users")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,7 +19,7 @@ public class UserInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
-    @Column(name = "fullName")
+    @Column(name = "full_name")
     private String fullName;
 
     @Column(name = "nickname", nullable = false)
@@ -33,4 +33,15 @@ public class UserInfo {
 
     @Column(name = "roles")
     private String roles;
+
+    @Lob
+    @Column(name = "user_photo")
+    private byte[] userPhoto;
+
+    @Column(name = "overview", length = 1000)
+    private String userOverview;
+
+    @Column(name = "user_location")
+    private String userLocation;
+
 }
