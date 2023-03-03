@@ -33,9 +33,7 @@ public class MovieServiceImpl implements MovieService {
         if(keyword != null) {
             return movieRepository.findByTitleContainingOrOverviewContaining(keyword);
         }
-        return StreamSupport.stream(movieRepository.findAll().spliterator(), false)
-                .limit(LIMIT)
-                .collect(Collectors.toList());
+        return getAllMovies();
     }
 
     @Override

@@ -39,6 +39,7 @@ public class MovieController {
     public String listOfMoviesByKeyword(Model model,
                                         @Param("keyword") String keyword,
                                         Principal principal) {
+        model.addAttribute("keyword", keyword);
         model.addAttribute("movies", movieService.searchMoviesByKeyword(keyword));
         model.addAttribute("principalName", principal.getName());
         return "movies";

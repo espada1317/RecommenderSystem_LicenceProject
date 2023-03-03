@@ -25,7 +25,9 @@ public class PageSurfingController {
     }
 
     @GetMapping(value = "/profile")
-    public String profilePage() {
+    public String profilePage(Model model,
+                              Principal principal) {
+        model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
         return "profile_overview";
     }
 

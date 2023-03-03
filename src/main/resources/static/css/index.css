@@ -156,7 +156,7 @@
     }
 
     .button:hover{
-      opacity: 0.5;
+      opacity: 0.9;
     }
 
     .get-started {
@@ -180,7 +180,7 @@
     .background {
       grid-column: 2/3;
       grid-row: 1/4;
-      background-image: url("https://i.ibb.co/vz2CvWY/background-2layers.png");
+      background-image: url("https://i.ibb.co/mR6P0KP/idex-page-cover.png");
       background-size: cover;
       background-position: center;
     }
@@ -196,7 +196,6 @@
 
 @media only screen and (max-width: 850px) {
   .grid-wrapper {
-    background-image: url("https://images.unsplash.com/photo-1504019853082-9a4cb128c1ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60");
     background-size: cover;
     background-position: center;
     background-blend-mode: screen;

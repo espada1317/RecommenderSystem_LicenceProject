@@ -29,6 +29,13 @@ public class UserAuthImpl implements UserAuthService {
         }
     }
 
+    public boolean validateRegister(UserInfo userInfo) {
+        String nickname = userInfo.getNickname();
+        if(userInfoRepository.findByNickname(nickname).isPresent())
+            throw new UserAlreadyRegisteredException(nickname);
+        return true;
+    }
+
     @Override
     public UserInfo findUserByNickname(String nickname) {
         return userInfoRepository.findByNickname(nickname).get();
@@ -47,13 +54,6 @@ public class UserAuthImpl implements UserAuthService {
 
             userInfoRepository.updateUserInfo(modifiedFullName, modifiedLocation, modifiedEmail, modifiedUser.getUserId());
         }
-    }
-
-    public boolean validateRegister(UserInfo userInfo) {
-        String nickname = userInfo.getNickname();
-        if(userInfoRepository.findByNickname(nickname).isPresent())
-            throw new UserAlreadyRegisteredException(nickname);
-        return true;
     }
 
 }
