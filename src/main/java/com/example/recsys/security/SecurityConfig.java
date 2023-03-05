@@ -24,11 +24,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
-                    .authorizeHttpRequests().requestMatchers("/", "/signIn", "/signUp", "/css/**").permitAll()
+                    .authorizeHttpRequests().requestMatchers("/", "/signIn", "/signUp", "/css/**", "/about").permitAll()
                 .and()
-                    .authorizeHttpRequests().requestMatchers("/movies/getById/**").hasAnyAuthority("ADMIN", "USER")
-                .and()
-                    .authorizeHttpRequests().requestMatchers("/movies").hasAnyAuthority("ADMIN", "USER")
+                    .authorizeHttpRequests().requestMatchers("/movies/getById/**", "/movies").hasAnyAuthority("ADMIN", "USER")
                 .and()
                     .authorizeHttpRequests().requestMatchers("/movies/getByTitle/**").hasAuthority("ADMIN")
                 .and()
@@ -38,13 +36,12 @@ public class SecurityConfig {
                     .loginPage("/signIn")
                     .usernameParameter("nickname")
                     .passwordParameter("password")
-                    .defaultSuccessUrl("/")
+                    .defaultSuccessUrl("/", true)
                     .permitAll()
                 .and()
                     .logout()
                     .logoutRequestMatcher( new AntPathRequestMatcher("/logout") )
                     .logoutSuccessUrl("/signIn?logout")
-                    .permitAll()
                 .and()
                     .build();
     }

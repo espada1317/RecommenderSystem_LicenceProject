@@ -7,7 +7,7 @@ import java.security.Principal;
 
 public interface UserAuthService {
 
-    void addUser(UserInfo userInfo);
+    boolean addUser(UserInfo userInfo);
 
     UserInfo findUserByNickname(String nickname);
 

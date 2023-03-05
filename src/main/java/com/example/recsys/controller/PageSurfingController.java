@@ -15,13 +15,25 @@ import java.security.Principal;
 public class PageSurfingController {
 
     @Autowired
-    private UserAuthService userAuthService;
+    private final UserAuthService userAuthService;
+
+    public PageSurfingController(UserAuthService userAuthService) {
+        this.userAuthService = userAuthService;
+    }
 
     @GetMapping(value = "/")
     public String indexPage(Principal principal,
                             Model model) {
-        model.addAttribute("principalName", principal.getName());
+        if(principal != null) {
+            model.addAttribute("principalName", principal.getName());
+        }
+
         return "index";
+    }
+
+    @GetMapping(value = "/about")
+    public String aboutPage() {
+        return "about";
     }
 
     @GetMapping(value = "/profile")

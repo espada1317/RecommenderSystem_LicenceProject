@@ -22,11 +22,17 @@ public class UserAuthImpl implements UserAuthService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public void addUser(UserInfo userInfo) {
-        if(validateRegister(userInfo)) {
-            userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
-            userInfoRepository.save(userInfo);
+    public boolean addUser(UserInfo userInfo) {
+        try {
+            if(validateRegister(userInfo)) {
+                userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+                userInfoRepository.save(userInfo);
+            }
+        } catch (UserAlreadyRegisteredException registeredException) {
+            registeredException.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public boolean validateRegister(UserInfo userInfo) {
