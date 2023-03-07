@@ -57,8 +57,9 @@ public class UserAuthImpl implements UserAuthService {
             String modifiedLocation = userSettingsDto.getCity() + ", " + userSettingsDto.getState();
             String modifiedEmail = userSettingsDto.getEmail();
             String modifiedFullName = userSettingsDto.getFullName();
+            String modifiedOverview = userSettingsDto.getOverview();
 
-            userInfoRepository.updateUserInfo(modifiedFullName, modifiedLocation, modifiedEmail, modifiedUser.getUserId());
+            userInfoRepository.updateUserInfo(modifiedFullName, modifiedLocation, modifiedEmail, modifiedOverview, modifiedUser.getUserId());
         }
     }
 

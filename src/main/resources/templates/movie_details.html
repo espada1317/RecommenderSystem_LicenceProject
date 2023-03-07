@@ -18,17 +18,18 @@
           </div>
           <div class="col-lg-8 col-md-7 col-sm-6">
             <h1 class="card-title" th:text="${movie.title}"></h1>
-            <h4 class="mt-4"> Release: <small class="text-success" th:text="${movie.release}"></small> </h4>
-            <h4 class="box-title mt-3">Characteristics</h4>
-                <ul class="list-unstyled">
-                <li>Original language: <i th:text="${movie.language}"></i></li>
-                <li>Length: <i th:text="${movie.length}"></i> min</li>
-                <li>IMDB vote average: <i th:text="${movie.voteaverage}"></i></li>
-                <li>IMDB vote count: <i th:text="${movie.votecount}"></i></li>
-            </ul>
-            <h4 class="box-title mt-4" th:text="${movie.genres}"></h4>
-            <h4 class="box-title mt-3">Movie description</h4>
-            <span th:text="${movie.overview}"></span>
+            <h5 class="mt-4">Released:</h5>
+            <h6 th:text="${movie.release}"></h6>
+            <h5 class="mt-4">Original language:</h5>
+            <h6 th:text="${movie.language}"></h6>
+            <h5 class="mt-4">Movie length:</h5>
+            <h6> <span th:text="${movie.length}"></span> min</h6>
+            <h5 class="mt-4">Movie IMDB rating:</h5>
+            <h6> <span th:text="${movie.voteaverage}"></span> (<span th:text="${movie.votecount}"></span> votes) </h6>
+            <h5 class="mt-4">Genres:</h5>
+            <h6> <span th:text="${movie.genres}"></span> </h6>
+            <h5 class="box-title mt-3">Movie description:</h5>
+            <h6> <span th:text="${movie.overview}"></span> </h6>
           </div>
 
         </div>

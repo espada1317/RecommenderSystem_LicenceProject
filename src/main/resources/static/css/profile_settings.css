@@ -77,3 +77,12 @@ body {
 .text-right-modified {
     margin-top: 30px;
 }
+
+#text {
+    resize: none;
+    margin-botton:10px;
+}
+
+#count_message {
+    color: #fff;
+}

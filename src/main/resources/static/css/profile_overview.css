@@ -1,6 +1,7 @@
 body{
     margin-top:20px;
-    background:#000;
+    background-image: url('https://i.ibb.co/Jx11L7Q/skull-damask.jpg');
+    color: #fff;
 }
 
 .img-responsive, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
@@ -9,7 +10,12 @@ body{
     height: auto;
 }
 
+.panel {
+    border: none;
+}
+
 .panel-heading {
+    background-color: #000;
     padding: 15px 10px 15px 10px;
     border-bottom: 0px solid transparent;
     border-top-left-radius: 3px;
@@ -17,19 +23,19 @@ body{
 }
 
 .panel-default > .panel-heading {
-    color: #333;
-    background-color: #f5f6f8;
+    color: #d93b3b;
+    background-color: #000;
     border-color: none !important;
 }
 
 .btn-primary {
     color: #fff;
-    background-color: #a9b1bc !important;
-    border-color: #a9b1bc !important;
+    background-color: #000 !important;
+    border-color: #000 !important;
 }
 
 .btn-primary:hover {
-    background-color: #969ca5!important;
+    background-color: #969ca5! important;
 }
 
 .profile-content h3{
@@ -50,9 +56,13 @@ body{
 }
 
 .ibox-content {
-    background-color: #FFFFFF;
+    background-color: #2e2e2e;
     color: inherit;
     padding: 0px 20px 20px 20px;
+}
+
+.panel-body {
+    background-color: #2e2e2e;
 }
 
 .feed-activity-list .feed-element {
@@ -94,6 +104,12 @@ body{
     margin-top: 10px;
 }
 
+#nickname-bl {
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: .2rem;
+}
+
 .feed-photo {
     height: 180px;
     border-radius: 4px;
@@ -105,7 +121,7 @@ body{
 .btn-white {
     color: inherit;
     background: white;
-    border: 1px solid #E7EAEC;
+    border: 1px solid #000;
 }
 
 .btn {
@@ -170,4 +186,32 @@ body{
     .btn-primary{
         margin: 15px auto;
     }
+}
+
+#navigation {
+    grid-column: 1/5;
+    grid-row: 1/2;
+    display: flex;
+    justify-content: flex-start;
+    font-weight: 700;
+}
+
+a {
+    list-style-type: none;
+    text-decoration: none;
+    color: #000;
+}
+
+li {
+    list-style-type: none;
+    display: inline;
+    padding: 0 10px;
+}
+
+.get-started {
+    padding: 2px 10px;
+    background-color: #fff;
+    color: #000;
+    text-transform: uppercase;
+    border-radius: 20px;
 }

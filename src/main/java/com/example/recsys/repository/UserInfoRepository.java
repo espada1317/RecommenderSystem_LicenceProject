@@ -13,6 +13,6 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE users u SET u.fullName = ?1, u.userLocation = ?2, u.email = ?3 WHERE userId = ?4")
-    void updateUserInfo(String fullName, String userLocation, String email, Integer userId);
+    @Query("UPDATE users u SET u.fullName = ?1, u.userLocation = ?2, u.email = ?3, u.userOverview = ?4 WHERE userId = ?5")
+    void updateUserInfo(String fullName, String userLocation, String email, String overview, Integer userId);
 }
