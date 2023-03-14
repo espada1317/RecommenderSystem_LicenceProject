@@ -7,9 +7,11 @@ import java.util.List;
 public interface MovieService {
     List<Movie> getAllMovies();
 
-    List<Movie> searchMoviesByKeyword(String keyword);
+    List<Movie> searchMoviesByMultipleFilter(String keyword, String genre);
 
     Movie getMovieById(int id);
 
     Movie getMovieByTitle(String title);
+
+    List<String> getMovieGenres();
 }
