@@ -36,16 +36,23 @@ public class MovieController {
     }
 
     @GetMapping
-    public String listOfMovies(Model model,
-                                        @Param("keyword") String keyword,
-                                        @Param("genre") String genre,
-                                        Principal principal) {
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("selectedGenre",genre);
-        model.addAttribute("movies", movieService.searchMoviesByMultipleFilter(keyword, genre));
+    public String listOfMovies( Model model,
+                                @Param("keyword") String keyword,
+                                @Param("genre") String genre,
+                                @Param("year") Integer year,
+                                @Param("language") String language,
+                                @Param("sortBy") String sortBy,
+                                Principal principal) {
         model.addAttribute("principalName", principal.getName());
         model.addAttribute("movieGenres", movieService.getMovieGenres());
+        model.addAttribute("releaseYears", movieService.getReleaseYears());
+        model.addAttribute("originLang", movieService.getOriginalLanguages());
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("selectedGenre",genre);
+        model.addAttribute("selectedYear", year);
+        model.addAttribute("selectedLang", language);
+        model.addAttribute("selectedSort", sortBy);
+        model.addAttribute("movies", movieService.searchMoviesByMultipleFilter(keyword, genre, year, language, sortBy));
         return "movies";
     }
-
 }

@@ -13,7 +13,7 @@
     position: relative;
     overflow: hidden;
     height: 28px;
-    width: 150px;
+    width: 175px;
     background: #f2f2f2;
     border: 1px solid;
     border-color: white #f7f7f7 whitesmoke;
@@ -54,13 +54,13 @@
     position: relative;
     width: 130%;
     margin: 0;
-    padding: 6px 8px 6px 10px;
+    padding: 6px 20px 6px 10px;
     line-height: 14px;
     font-size: 12px;
     color: #62717a;
     text-shadow: 0 1px white;
-    background: #f2f2f2; /* Fallback for IE 8 */
-    background: rgba(0, 0, 0, 0) !important; /* "transparent" doesn't work with Opera */
+    background: #f2f2f2;
+    background: rgba(0, 0, 0, 0) !important;
     border: 0;
     border-radius: 0;
     -webkit-appearance: none;
@@ -118,6 +118,30 @@
     text-shadow: 0 1px rgba(0, 0, 0, 0.4);
 }
 
+#submit-cancel {
+    height: 28px;
+    width: 175px;
+    margin-top: -20px;
+    padding-top: 1px;
+    color: white;
+    background-color: black;
+}
+
+#clear-filter {
+    float: right;
+    margin-top: -113px;
+    width: 175px;
+}
+
+.form-control {
+    width: 94%;
+}
+
+.search-button {
+    float: right;
+    margin-top: -38px;
+}
+
     </style>
 
 </head>
@@ -147,42 +171,76 @@
             </div>
         </section>
 
-        <div class="album py-4 bg-light">
+        <div class="album py-3 bg-light">
+
             <div class="container">
                 <form th:action="@{/movies}">
                     Filters:
-                    <section class="container">
+                    <div class="form-outline mb-1 container">
                         <div class="dropdown dropdown-dark">
                             <select name="genre" class="dropdown-select" id="genre-drop">
-                                <option selected disabled hidden="">Select genre</option>
+                                <option selected value="*">All genres</option>
                                 <option th:each="genre: ${movieGenres}" th:value="${genre}" th:text="${genre}" th:selected="${genre.equals(selectedGenre)}"></option>
                             </select>
                         </div>
-                    </section>
+                        <div class="dropdown dropdown-dark">
+                            <select name="year" class="dropdown-select">
+                                <option selected value="0">All release year</option>
+                                <option th:each="r_year: ${releaseYears}" th:value="${r_year}" th:text="${r_year}" th:selected="${r_year.equals(selectedYear)}"></option>
+                            </select>
+                        </div>
+                        <div class="dropdown dropdown-dark">
+                            <select name="language" class="dropdown-select">
+                                <option selected value="*">All original language</option>
+                                <option th:each="lang: ${originLang}" th:value="${lang}" th:text="${lang}" th:selected="${lang.equals(selectedLang)}"></option>
+                            </select>
+                        </div>
+                        <div class="dropdown dropdown-dark">
+                            <select name="sortBy" class="dropdown-select">
+                                <option selected value="titleAsc" th:selected="${ #strings.equals('titleAsc', selectedSort) }">Sort ASC by title</option>
+                                <option value="titleDesc" th:selected="${ #strings.equals('titleDesc', selectedSort) }">Sort DESC by title</option>
+                                <option value="yearAsc" th:selected="${ #strings.equals('yearAsc', selectedSort) }">Sort ASC by release year</option>
+                                <option value="yearDesc" th:selected="${ #strings.equals('yearDesc', selectedSort) }">Sort DESC by release year</option>
+                                <option value="langAsc" th:selected="${ #strings.equals('langAsc', selectedSort) }">Sort ASC by origin language</option>
+                                <option value="langDesc" th:selected="${ #strings.equals('langDesc', selectedSort) }">Sort DESC by origin language</option>
+                                <option value="lengthAsc" th:selected="${ #strings.equals('lengthAsc', selectedSort) }">Sort ASC by length</option>
+                                <option value="lengthDesc" th:selected="${ #strings.equals('lengthDesc', selectedSort) }">Sort DESC by length</option>
+                                <option value="popularityAsc" th:selected="${ #strings.equals('popularityAsc', selectedSort) }">Sort ASC by popularity</option>
+                                <option value="popularityDesc" th:selected="${ #strings.equals('popularityDesc', selectedSort) }">Sort DESC by popularity</option>
+                                <option value="imdbAsc" th:selected="${ #strings.equals('imdbAsc', selectedSort) }">Sort ASC by IMDB rating</option>
+                                <option value="imdbDesc" th:selected="${ #strings.equals('imdbDesc', selectedSort) }">Sort DESC by IMDB rating</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="form-outline mb-4">
                         Search:
                         <input type="search" name="keyword" class="form-control" id="datatable-search-input" th:value="${keyword}">
+                        <input type="submit" class="search-button btn btn-primary" value="Search">
                     </div>
                 </form>
 
+                <div class="form-outline mb-2" id="clear-filter">
+                    <a type="button" id="submit-cancel" class="btn btn-secondary" th:href="@{/movies?genre=*&year=0&language=*&keyword=}"> Clear filters </a>
+                </div>
+
                 <div class="row">
-                    <div class="col-md-3" th:each = "movie: ${movies}">
+                    <div class="col-sm-3" th:each = "movie: ${movies}">
                         <div class="card mb-4 box-shadow">
                             <img class="card-img-top" th:src="${movie.poster}" th:alt="${movie.poster}">
                             <div class="card-body">
                                 <p class="card-text" th:text="${movie.title}"></p>
-                                <details>
-                                    <summary>Movie Overview</summary>
-                                    <p class="card-text" th:text="${movie.overview}"></p>
-                                </details>
-                                <br>
+<!--                                <details>-->
+<!--                                    <summary>Movie Overview</summary>-->
+<!--                                    <p class="card-text" th:text="${movie.overview}"></p>-->
+<!--                                </details>-->
+<!--                                <br>-->
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a class="btn btn-primary btn-sm btn-outline-secondary" th:href="@{/movies/getById/{id}(id=${movie.movieKey})}">View</a>
                                     </div>
                                     <strong class="text-muted" th:text="${movie.release}"></strong>
-                                    <strong><small class="text-muted" th:text="${movie?.length}"></small> min</strong>
+<!--                                    <strong><small class="text-muted" th:text="${movie?.length}"></small> min</strong>-->
                                 </div>
                             </div>
                         </div>
