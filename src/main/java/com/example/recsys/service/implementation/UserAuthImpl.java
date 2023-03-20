@@ -53,7 +53,6 @@ public class UserAuthImpl implements UserAuthService {
 
         if(userInfo.isPresent()) {
             UserInfo modifiedUser = userInfo.get();
-
             String modifiedLocation = userSettingsDto.getCity() + ", " + userSettingsDto.getState();
             String modifiedEmail = userSettingsDto.getEmail();
             String modifiedFullName = userSettingsDto.getFullName();

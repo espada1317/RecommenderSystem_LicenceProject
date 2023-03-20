@@ -1,15 +1,16 @@
 package com.example.recsys.service.implementation;
 
 import com.example.recsys.comparators.*;
+import com.example.recsys.dto.MovieReviewDto;
 import com.example.recsys.entity.Movie;
+import com.example.recsys.entity.MovieReviews;
 import com.example.recsys.repository.MovieRepository;
+import com.example.recsys.repository.MovieReviewRepository;
 import com.example.recsys.service.MovieService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -17,11 +18,13 @@ import java.util.stream.StreamSupport;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
+    private final MovieReviewRepository movieReviewRepository;
 
     public static final int LIMIT = 48;
 
-    public MovieServiceImpl(MovieRepository movieRepository) {
+    public MovieServiceImpl(MovieRepository movieRepository, MovieReviewRepository movieReviewRepository) {
         this.movieRepository = movieRepository;
+        this.movieReviewRepository = movieReviewRepository;
     }
 
     @Override
@@ -118,6 +121,44 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<String> getOriginalLanguages() {
         return movieRepository.findAllDistinctLanguageList();
+    }
+
+    @Override
+    public void saveReview(Integer movieId, String nickname, MovieReviewDto movieReviewsDto) {
+        Movie referencedMovie = getMovieById(movieId);
+
+        MovieReviews movieReviews = new MovieReviews();
+        movieReviews.setReviewScore(movieReviewsDto.getScoreReview());
+        movieReviews.setCategory(movieReviewsDto.getCategory());
+        movieReviews.setReviewMessage(movieReviewsDto.getReviewMessage());
+        movieReviews.setMovie(referencedMovie);
+        movieReviews.setNickname(nickname);
+
+        movieReviewRepository.save(movieReviews);
+    }
+
+    @Override
+    public Optional<MovieReviews> getReviewByNicknameAndMovieId(String nickname, Integer movieId) {
+        return Optional.ofNullable(movieReviewRepository.findReviewByUserAndMovie(nickname, movieId));
+    }
+
+    @Override
+    public void updateReview(String nickname, Integer movieId, MovieReviewDto movieReviewDto) {
+        Optional<MovieReviews> movieReview = Optional.ofNullable(movieReviewRepository.findReviewByUserAndMovie(nickname, movieId));
+
+        if(movieReview.isPresent()) {
+            String modifiedCategory = movieReviewDto.getCategory();
+            Integer modifiedScore = movieReviewDto.getScoreReview();
+            String modifiedReview = movieReviewDto.getReviewMessage();
+
+            movieReviewRepository.updateReview(modifiedCategory, modifiedScore, modifiedReview, movieReview.get().getMovieReviewKey());
+        }
+    }
+
+    @Override
+    public void deleteReview(String nickname, Integer movieId) {
+        Optional<MovieReviews> movieReview = Optional.ofNullable(movieReviewRepository.findReviewByUserAndMovie(nickname, movieId));
+        movieReview.ifPresent(movieReviews -> movieReviewRepository.deleteReview(movieReviews.getMovieReviewKey()));
     }
 
 }

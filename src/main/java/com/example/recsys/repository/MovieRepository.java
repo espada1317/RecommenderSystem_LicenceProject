@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
-//    List<Movie> findFirst10ByOrderByTitleName();
 
     @Query("SELECT m FROM movie m WHERE CONCAT(m.overview, ' ', m.title) LIKE CONCAT('%', :keyword , '%')")
     List<Movie> findByTitleContainingOrOverviewContaining(@Param("keyword") String keyword);

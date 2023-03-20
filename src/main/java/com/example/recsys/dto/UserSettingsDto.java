@@ -17,5 +17,4 @@ public class UserSettingsDto {
     private String state;
 
     private String overview;
-
 }
