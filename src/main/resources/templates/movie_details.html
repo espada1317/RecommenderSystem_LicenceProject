@@ -28,7 +28,9 @@
             <h5 class="mt-4">Movie IMDB rating:</h5>
             <h6> <span th:text="${movie.voteaverage}"></span> (<span th:text="${movie.votecount}"></span> votes) </h6>
             <h5 class="mt-4">Genres:</h5>
-            <h6> <span th:text="${movie.genres}"></span> </h6>
+            <div th:each="genre,count : ${#strings.arraySplit(movie.genres, ',')}" class="form-outline mb-1 container">
+              <a class="div-genres" th:text="${genre.trim()}" th:href="@{'/movies?genre='+${genre.trim()}+'&year=0&language=*&sortBy=titleAsc&keyword='}"></a>
+            </div> <br>
             <h5 class="box-title mt-3">Movie description:</h5>
             <h6> <span th:text="${movie.overview}"></span> </h6>
           </div>

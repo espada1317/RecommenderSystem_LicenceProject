@@ -183,3 +183,9 @@ h6 {
     float: right;
     margin-top: -38px;
 }
+
+.div-genres {
+    margin-right: 10px;
+    display: inline-block;
+    float: left;
+}
