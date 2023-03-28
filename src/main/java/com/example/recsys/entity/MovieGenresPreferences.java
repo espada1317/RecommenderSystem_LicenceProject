@@ -22,6 +22,9 @@ public class MovieGenresPreferences {
     @Column(name = "nickname", nullable = false)
     private String nickname;
 
+    @Column(name = "skipped")
+    private Integer skipped;
+
     @Column(name = "action")
     private Double actionRatio;
 

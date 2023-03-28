@@ -38,6 +38,9 @@ public class PageSurfingController {
                             Model model) {
         if(principal != null) {
             model.addAttribute("principalName", principal.getName());
+            if(preferencesService.getPreferenceProfileOfUser(principal.getName()).isEmpty()) {
+                return "redirect:/preferences/movie";
+            }
         }
 
         return "index";
@@ -82,10 +85,16 @@ public class PageSurfingController {
         return "movie_preferences";
     }
 
-    @PostMapping(value = "/preferences/movie")
+    @PostMapping(value = "/preferences/movie", params = "act=submit")
     public String saveUserMoviePreferences(@ModelAttribute("moviePreferencesDto") MoviePreferenceProfileDto moviePreferenceProfileDto,
                                            Principal principal) {
         preferencesService.saveMoviePreference(principal.getName(), moviePreferenceProfileDto);
+        return "redirect:/";
+    }
+
+    @PostMapping(value = "/preferences/movie", params = "act=skip")
+    public String skippedUserMoviePreferences(Principal principal) {
+        preferencesService.skipMoviePreference(principal.getName());
         return "redirect:/";
     }
 

@@ -104,11 +104,6 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie getMovieByTitle(String title) {
-        return movieRepository.findByTitle(title);
-    }
-
-    @Override
     public List<String> getMovieGenres() {
         return movieRepository.findAllDistinctGenreList();
     }

@@ -7,6 +7,8 @@ import com.example.recsys.service.PreferencesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class PreferencesServiceImpl implements PreferencesService {
@@ -22,6 +24,7 @@ public class PreferencesServiceImpl implements PreferencesService {
     public void saveMoviePreference(String nickname, MoviePreferenceProfileDto moviePreferenceProfileDto) {
         MovieGenresPreferences movieGenresPreferences = new MovieGenresPreferences();
         movieGenresPreferences.setNickname(nickname);
+        movieGenresPreferences.setSkipped(0);
         movieGenresPreferences.setActionRatio(getMovieGenreRation(moviePreferenceProfileDto.getAction()));
         movieGenresPreferences.setAdventureRatio(getMovieGenreRation(moviePreferenceProfileDto.getAdventure()));
         movieGenresPreferences.setAnimationRatio(getMovieGenreRation(moviePreferenceProfileDto.getAnimation()));
@@ -45,6 +48,39 @@ public class PreferencesServiceImpl implements PreferencesService {
         moviePreferenceRepository.save(movieGenresPreferences);
     }
 
+    @Override
+    public void skipMoviePreference(String nickname) {
+        MovieGenresPreferences movieGenresPreferences = new MovieGenresPreferences();
+        movieGenresPreferences.setNickname(nickname);
+        movieGenresPreferences.setSkipped(1);
+        movieGenresPreferences.setActionRatio(0.25);
+        movieGenresPreferences.setAdventureRatio(0.25);
+        movieGenresPreferences.setAnimationRatio(0.25);
+        movieGenresPreferences.setComedyRatio(0.25);
+        movieGenresPreferences.setCrimeRatio(0.25);
+        movieGenresPreferences.setDocumentaryRatio(0.25);
+        movieGenresPreferences.setDramaRatio(0.25);
+        movieGenresPreferences.setFamilyRatio(0.25);
+        movieGenresPreferences.setFantasyRatio(0.25);
+        movieGenresPreferences.setHistoryRatio(0.25);
+        movieGenresPreferences.setHorrorRatio(0.25);
+        movieGenresPreferences.setMusicRatio(0.25);
+        movieGenresPreferences.setMysteryRatio(0.25);
+        movieGenresPreferences.setRomanceRatio(0.25);
+        movieGenresPreferences.setScienceFictionRatio(0.25);
+        movieGenresPreferences.setThrillerRatio(0.25);
+        movieGenresPreferences.setTvMovieRatio(0.25);
+        movieGenresPreferences.setWarRatio(0.25);
+        movieGenresPreferences.setWesternRatio(0.25);
+
+        moviePreferenceRepository.save(movieGenresPreferences);
+    }
+
+    @Override
+    public Optional<MovieGenresPreferences> getPreferenceProfileOfUser(String nickname) {
+        return moviePreferenceRepository.findByNickname(nickname);
+    }
+
     public Double getMovieGenreRation(String genre) {
         if(genre == null) {
             return 0.25;
@@ -55,10 +91,6 @@ public class PreferencesServiceImpl implements PreferencesService {
         if(genre.equals("sometimes")) {
             return 0.5;
         }
-        if(genre.equals("never")) {
-            return 0.0;
-        }
-
-        return 0.25;
+        return 0.0;
     }
 }

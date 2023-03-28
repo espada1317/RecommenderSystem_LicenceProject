@@ -14,8 +14,6 @@ public interface MovieService {
 
     Movie getMovieById(int id);
 
-    Movie getMovieByTitle(String title);
-
     List<String> getMovieGenres();
 
     List<Integer> getReleaseYears();
