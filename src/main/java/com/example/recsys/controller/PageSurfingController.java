@@ -1,8 +1,12 @@
 package com.example.recsys.controller;
 
+import com.example.recsys.dto.MoviePreferenceProfileDto;
 import com.example.recsys.dto.UserSettingsDto;
+import com.example.recsys.service.MovieService;
+import com.example.recsys.service.PreferencesService;
 import com.example.recsys.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +21,16 @@ public class PageSurfingController {
     @Autowired
     private final UserAuthService userAuthService;
 
-    public PageSurfingController(UserAuthService userAuthService) {
+    @Autowired
+    private final MovieService movieService;
+
+    @Autowired
+    private final PreferencesService preferencesService;
+
+    public PageSurfingController(UserAuthService userAuthService, MovieService movieService, PreferencesService preferencesService) {
         this.userAuthService = userAuthService;
+        this.movieService = movieService;
+        this.preferencesService = preferencesService;
     }
 
     @GetMapping(value = "/")
@@ -51,19 +63,30 @@ public class PageSurfingController {
         return "profile_settings";
     }
 
-    @PostMapping(value= "/profile/settings", params = "action=update")
+    @PostMapping(value = "/profile/settings", params = "action=update")
     public String modifyUserSettings(@ModelAttribute("userSettingsDto") UserSettingsDto userSettingsDto,
-                                     Principal principal,
-                                     Model model) {
+                                     Principal principal) {
         userAuthService.updateUser(userSettingsDto, principal);
         return "redirect:/profile/settings?success";
     }
 
-    @PostMapping(value= "/profile/settings", params = "action=cancel")
-    public String cancelModifying(@ModelAttribute("userSettingsDto") UserSettingsDto userSettingsDto,
-                                     Principal principal,
-                                     Model model) {
+    @PostMapping(value = "/profile/settings", params = "action=cancel")
+    public String cancelModifying(@ModelAttribute("userSettingsDto") UserSettingsDto userSettingsDto) {
         return "redirect:/profile";
+    }
+
+    @GetMapping(value = "/preferences/movie")
+    public String getMoviePreferencesByUser(@Param("action") String action,
+                                            Model model) {
+        model.addAttribute("movieGenres", movieService.getMovieGenres());
+        return "movie_preferences";
+    }
+
+    @PostMapping(value = "/preferences/movie")
+    public String saveUserMoviePreferences(@ModelAttribute("moviePreferencesDto") MoviePreferenceProfileDto moviePreferenceProfileDto,
+                                           Principal principal) {
+        preferencesService.saveMoviePreference(principal.getName(), moviePreferenceProfileDto);
+        return "redirect:/";
     }
 
 }
