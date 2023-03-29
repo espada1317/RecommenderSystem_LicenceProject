@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface MovieReviewRepository extends JpaRepository<MovieReviews, Integer> {
 
@@ -22,4 +24,7 @@ public interface MovieReviewRepository extends JpaRepository<MovieReviews, Integ
     @Modifying
     @Query("DELETE FROM movie_reviews m_r WHERE m_r.movieReviewKey = ?1")
     void deleteReview(Integer reviewKey);
+
+    @Query(value = "SELECT * FROM movie_reviews WHERE nickname = :nickname", nativeQuery = true)
+    List<MovieReviews> getMovieActivityOfUser(String nickname);
 }

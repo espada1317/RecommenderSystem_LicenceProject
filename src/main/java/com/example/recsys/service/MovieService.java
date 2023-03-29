@@ -27,4 +27,6 @@ public interface MovieService {
     void updateReview(String nickname, Integer movieId, MovieReviewDto movieReviewDto);
 
     void deleteReview(String nickname, Integer movieId);
+
+    List<MovieReviews> getReviewActivity(String nickname);
 }

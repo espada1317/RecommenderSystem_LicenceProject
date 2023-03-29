@@ -2,6 +2,7 @@ package com.example.recsys.controller;
 
 import com.example.recsys.dto.MoviePreferenceProfileDto;
 import com.example.recsys.dto.UserSettingsDto;
+import com.example.recsys.entity.MovieReviews;
 import com.example.recsys.service.MovieService;
 import com.example.recsys.service.PreferencesService;
 import com.example.recsys.service.UserAuthService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class PageSurfingController {
@@ -55,6 +57,8 @@ public class PageSurfingController {
     public String profilePage(Model model,
                               Principal principal) {
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
+        model.addAttribute("userActivity", movieService.getReviewActivity(principal.getName()));
+
         return "profile_overview";
     }
 

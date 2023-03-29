@@ -6,6 +6,8 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDateTime;
+
 @Entity(name = "movie_reviews")
 @Table(name = "movie_reviews")
 @Data
@@ -31,6 +33,9 @@ public class MovieReviews {
 
     @Column(name = "review_message")
     private String reviewMessage;
+
+    @Column(name = "datetime")
+    private LocalDateTime localDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "movie_id", nullable = false)

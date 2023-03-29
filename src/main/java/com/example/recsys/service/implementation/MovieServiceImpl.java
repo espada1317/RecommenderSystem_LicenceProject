@@ -9,6 +9,8 @@ import com.example.recsys.repository.MovieReviewRepository;
 import com.example.recsys.service.MovieService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -128,6 +130,7 @@ public class MovieServiceImpl implements MovieService {
         movieReviews.setReviewMessage(movieReviewsDto.getReviewMessage());
         movieReviews.setMovie(referencedMovie);
         movieReviews.setNickname(nickname);
+        movieReviews.setLocalDateTime(LocalDateTime.now());
 
         movieReviewRepository.save(movieReviews);
     }
@@ -154,6 +157,11 @@ public class MovieServiceImpl implements MovieService {
     public void deleteReview(String nickname, Integer movieId) {
         Optional<MovieReviews> movieReview = Optional.ofNullable(movieReviewRepository.findReviewByUserAndMovie(nickname, movieId));
         movieReview.ifPresent(movieReviews -> movieReviewRepository.deleteReview(movieReviews.getMovieReviewKey()));
+    }
+
+    @Override
+    public List<MovieReviews> getReviewActivity(String nickname) {
+        return movieReviewRepository.getMovieActivityOfUser(nickname);
     }
 
 }

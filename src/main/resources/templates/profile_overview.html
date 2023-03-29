@@ -2,10 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="all" href="/css/index.css" th:href="@{/css/profile_overview.css}">
+    <style>
+        .review {
+            font-style: oblique;
+        }
+    </style>
 </head>
 <body>
 
@@ -77,17 +82,19 @@
 <!--                      </div>-->
 <!--                    </div>&lt;!&ndash; feed-element&ndash;&gt;-->
 
-                    <div class="feed-element">
-                      <a href="#" class="pull-left">
-                        <img alt="image" class="img-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png">
-                      </a>
+                    <div class="feed-element" th:each="activity : ${ userActivity }">
+<!--                      <a href="#" class="pull-left">-->
+<!--                        <img alt="image" class="img-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png">-->
+<!--                      </a>-->
 
                       <div class="media-body ">
-                        <small class="pull-right">30m ago</small>
-                        <strong>espada1317</strong> CONTENT WILL COME SOON <br>
-                        <small class="text-muted">Today 8:52 pm - 1.06.2015</small>
+<!--                        <small class="pull-right">30m ago</small>-->
+                        <strong>espada1317</strong> marked movie <strong th:text="${activity.getMovie().getTitle()}"></strong> with mark <strong th:text="${activity.reviewScore} + '/10'"></strong><br>
+                        <span class="review" th:if="${activity.reviewMessage != null && activity.reviewMessage.length > 1}" th:text="${'Review message: &#34;' + activity.reviewMessage + '&#34;'}"></span>
+                          <br th:if="${activity.reviewMessage != null && activity.reviewMessage.length > 1}">
+                        <small class="text-muted" th:text="${ #temporals.format(activity.localDateTime, 'dd-MM-yyyy HH:mm:ss') }"></small>
                       </div>
-                    </div><!-- feed-element-->
+                    </div>
 
 <!--                    <div class="feed-element">-->
 <!--                      <a href="#" class="pull-left">-->
@@ -213,6 +220,7 @@
 
 <!--        <div class="clearfix"></div>-->
       </div>
+    </div>
     </div>
 
 </body>
