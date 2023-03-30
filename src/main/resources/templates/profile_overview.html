@@ -23,7 +23,7 @@
     <div class="container bootdey">
       <div class="content">
         <div id="pad-wrapper">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <div class="panel panel-default">
               <div class="panel-heading"><strong>Details</strong></div>
               <div class="panel-body no-padding">
@@ -31,7 +31,7 @@
                   <img alt="image" class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png">
                 </div>
                 <div class="ibox-content profile-content">
-                  <h3><strong th:text="${userDetails.fullName != null ? userDetails.fullName : 'Anonymous'}"></strong></h3>
+                  <h3 class="user-fullname" th:text="${userDetails.fullName != null ? userDetails.fullName : 'Anonymous'}"></h3>
                   <h4>(<strong id="nickname-bl" th:text="${userDetails.nickname}"></strong>)</h4>
 
                   <p><i class="fa fa-map-marker"></i> <span th:text="${userDetails.userLocation != null ? userDetails.userLocation : 'Somewhere in the world..'}"></span></p>
@@ -42,12 +42,12 @@
                     <div class="row">
                       <div class="col-md-6">
                         <button type="button" class="btn btn-primary btn-sm btn-block">
-                          <i class="fa fa-envelope"></i> Send Message</button>
+                          <i class="fa fa-area-chart"></i> Statistics</button>
                       </div>
 
                       <div class="col-md-6">
                         <a type="button" class="btn btn-default btn-sm btn-block" th:href="@{/profile/settings}">
-                          <i class="fa fa-sharp fa-solid fa-gear"></i> Modify profile
+                          <i class="fa fa-sharp fa-solid fa-gear"></i> Settings
                         </a>
                       </div>
                     </div>
@@ -57,7 +57,7 @@
             </div>
           </div>
 
-          <div class="col-md-8">
+          <div class="col-md-9">
             <div class="panel panel-default">
               <div class="panel-heading"><strong>Activities</strong></div>
               <div class="panel-body">
@@ -83,13 +83,12 @@
 <!--                    </div>&lt;!&ndash; feed-element&ndash;&gt;-->
 
                     <div class="feed-element" th:each="activity : ${ userActivity }">
-<!--                      <a href="#" class="pull-left">-->
-<!--                        <img alt="image" class="img-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png">-->
-<!--                      </a>-->
+                      <a th:href="@{/movies/getById/{id}(id=${activity.getMovie().movieKey})}" class="pull-left">
+                        <img alt="image" class="img-circle" th:src="${activity.getMovie().poster}">
+                      </a>
 
                       <div class="media-body ">
-<!--                        <small class="pull-right">30m ago</small>-->
-                        <strong>espada1317</strong> marked movie <strong th:text="${activity.getMovie().getTitle()}"></strong> with mark <strong th:text="${activity.reviewScore} + '/10'"></strong><br>
+                        <strong class="nickname">espada1317</strong> marked movie <a class="movie-title" th:href="@{/movies/getById/{id}(id=${activity.getMovie().movieKey})}" th:text="${activity.getMovie().getTitle()}"></a> with mark <strong th:text="${activity.reviewScore} + '/10'"></strong><br>
                         <span class="review" th:if="${activity.reviewMessage != null && activity.reviewMessage.length > 1}" th:text="${'Review message: &#34;' + activity.reviewMessage + '&#34;'}"></span>
                           <br th:if="${activity.reviewMessage != null && activity.reviewMessage.length > 1}">
                         <small class="text-muted" th:text="${ #temporals.format(activity.localDateTime, 'dd-MM-yyyy HH:mm:ss') }"></small>
@@ -208,9 +207,9 @@
 <!--                  </div>-->
 
 
-                  <button class="btn btn-cprimary btn-block ">
-                    <i class="fa fa-arrow-down"></i> Show More
-                  </button>
+<!--                  <button class="btn btn-cprimary btn-block ">-->
+<!--                    <i class="fa fa-arrow-down"></i> Show More-->
+<!--                  </button>-->
 
                 </div>
               </div>

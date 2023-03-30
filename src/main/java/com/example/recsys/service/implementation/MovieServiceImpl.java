@@ -149,7 +149,7 @@ public class MovieServiceImpl implements MovieService {
             Integer modifiedScore = movieReviewDto.getScoreReview();
             String modifiedReview = movieReviewDto.getReviewMessage();
 
-            movieReviewRepository.updateReview(modifiedCategory, modifiedScore, modifiedReview, movieReview.get().getMovieReviewKey());
+            movieReviewRepository.updateReview(modifiedCategory, modifiedScore, modifiedReview, LocalDateTime.now(), movieReview.get().getMovieReviewKey());
         }
     }
 
