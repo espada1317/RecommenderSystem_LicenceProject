@@ -28,5 +28,7 @@ public interface MovieService {
 
     void deleteReview(String nickname, Integer movieId);
 
-    List<MovieReviews> getReviewActivity(String nickname);
+    List<MovieReviews> getAllUserAndFriendActivity(String nickname);
+
+    List<MovieReviews> getMoviesActivity(String nickname);
 }

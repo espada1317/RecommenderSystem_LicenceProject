@@ -1,4 +1,13 @@
-body{
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>My Movies</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<!--  <link rel="stylesheet" type="text/css" media="all" href="/css/index.css" th:href="@{/css/profile_overview.css}">-->
+  <style>
+    body{
     margin-top:20px;
    /* background-image: url('https://i.ibb.co/Jx11L7Q/skull-damask.jpg'); */
     background: black;
@@ -77,6 +86,8 @@ body{
 
 .img-circle {
     border-radius: 0;
+    width: 60px;
+    height: 90px;
 }
 
 .feed-element > .pull-left {
@@ -231,7 +242,7 @@ li {
 
 .profilehead {
     width: 100%;
-    height: 400px;
+    height: 300px;
     background: gray;
     background-image: url('https://i.ibb.co/St10RpL/profile-cover.png');
     display: flex;
@@ -277,6 +288,7 @@ header {
     flex-direction: column;
     justify-content: center;
 }
+
 h3, h4 {
     color: white;
     margin: 0 0 0 20px;
@@ -354,3 +366,199 @@ body{
     color: white;
     font-weight: 600;
 }
+
+table {
+  background-color: #2e2e2e;
+  width: 100%;
+  border: 1px solid white;
+  border-radius: 10px;
+  border-collapse: separate;
+}
+
+td {
+  padding: 10px 5px;
+  border-top: 1px solid white;
+}
+
+tr, td, th, table, thread {
+  text-align: center;
+}
+
+
+.poster {
+  text-align: center;
+  margin-left: 20px;
+  width: 10%;
+}
+
+.titleMovie {
+  width: 50%;
+  text-align: left;
+  color: #0088cc;
+}
+
+.progr {
+  width: 16%;
+}
+
+.year, .imdb, .score {
+  width: 8%;
+}
+
+.imdb {
+ color: #FFD700;
+}
+
+  </style>
+
+</head>
+<body>
+
+<header>
+  <ul id="navigation">
+    <li id="special"><a class="get-started" th:href="@{/}">Main Page</a></li>
+  </ul>
+</header>
+
+<div class="profilehead">
+  <div class="profileheadcontent">
+    <div class="profileheadcontentoverview">
+      <div class="profileheadcontentoverviewphoto">
+        <img alt="image" class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+      </div>
+
+      <div class="profileheadcontentoverviewinfo">
+        <h3 class="user-fullname" th:text="${userDetails.fullName != null ? userDetails.fullName : 'Anonymous'}"></h3>
+        <h4>(<strong id="nickname-bl" th:text="${userDetails.nickname}"></strong>)</h4>
+      </div>
+    </div>
+
+    <div class="profileheadcontentfollows">
+      <span>
+          <a href="#">0 Following</a>
+          <a href="#">0 Followers</a>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="profilenavbar">
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY DASHBOARD</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/overview}">
+    <div class="profilebarbuttons">
+      <span>OVERVIEW</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/myMovieList}">
+    <div class="profilebarbuttons" id="selectedbtn">
+      <span>MY MOVIE</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY TV SHOWS</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY ANIME</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY GAMES</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY MUSIC</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY BOOKS</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY REVIEWS</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY STATS</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY FRIENDS</span>
+    </div>
+  </a>
+</div>
+
+<div class="container bootdey">
+  <div class="content">
+    <div id="pad-wrapper">
+
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>Filter Options</strong></div>
+          <div class="panel-body no-padding">
+            <div class="ibox-content profile-content">
+              <p><i class="fa fa-map-marker"></i> <span th:text="${userDetails.userLocation != null ? userDetails.userLocation : 'Somewhere in the world..'}"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong th:text="${'Personal movie stats (' + personalMovieList.size() + ' results found)'}"></strong></div>
+          <div class="panel-body">
+
+            <div class="ibox-content">
+              <div class="feed-activity-list">
+
+                <table>
+                  <thead>
+                    <tr>
+                      <th class="poster">Poster</th>
+                      <th class="titleMovie">Title</th>
+                      <th class="year">Year</th>
+                      <th class="imdb">IMDB</th>
+                      <th class="score">Score</th>
+                      <th class="progr">Progress</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="activity : ${personalMovieList}">
+                      <td class="poster">
+                        <a th:href="@{/movies/getById/{id}(id=${activity.getMovie().movieKey})}" class="pull-left">
+                          <img alt="image" class="img-circle" th:src="${activity.getMovie().poster}">
+                        </a>
+                      </td>
+                      <td class="titleMovie"><span th:text="${activity.getMovie().title}">Title</span></td>
+                      <td class="year"><span th:text="${ #temporals.year(activity.getMovie().release) }">Release</span></td>
+                      <td class="imdb"><span th:text="${activity.getMovie().voteaverage}">IMDB</span></td>
+                      <td class="score"><span th:text="${activity.reviewScore}">Score</span></td>
+                      <td class="progr"><span th:text="${activity.category == 'completed' ? 'Completed' : (activity.category == 'plan_watch' ? 'Plan to Watch' : 'Dropped')}">Progress</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

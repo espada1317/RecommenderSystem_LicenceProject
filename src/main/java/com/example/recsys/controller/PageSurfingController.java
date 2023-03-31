@@ -57,9 +57,18 @@ public class PageSurfingController {
     public String profilePage(Model model,
                               Principal principal) {
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
-        model.addAttribute("userActivity", movieService.getReviewActivity(principal.getName()));
+        model.addAttribute("userActivity", movieService.getAllUserAndFriendActivity(principal.getName()));
 
         return "profile_overview";
+    }
+
+    @GetMapping(value = "/profile/myMovieList")
+    public String personalMovieList(Model model,
+                                    Principal principal) {
+        model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
+        model.addAttribute("personalMovieList", movieService.getMoviesActivity(principal.getName()));
+
+        return "my_movies_stats";
     }
 
     @GetMapping(value = "/profile/settings")

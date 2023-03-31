@@ -27,5 +27,8 @@ public interface MovieReviewRepository extends JpaRepository<MovieReviews, Integ
     void deleteReview(Integer reviewKey);
 
     @Query(value = "SELECT * FROM movie_reviews WHERE nickname = :nickname AND ( (review_score <> '' OR review_score <> NULL ) OR review_message <> '') ORDER BY datetime DESC", nativeQuery = true)
-    List<MovieReviews> getMovieActivityOfUser(String nickname);
+    List<MovieReviews> getAllUserAndFriendActivity(String nickname);
+
+    @Query(value = "SELECT * FROM movie_reviews WHERE nickname = :nickname ORDER BY datetime DESC", nativeQuery = true)
+    List<MovieReviews> getMoviesActivity(String nickname);
 }

@@ -160,8 +160,13 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<MovieReviews> getReviewActivity(String nickname) {
-        return movieReviewRepository.getMovieActivityOfUser(nickname);
+    public List<MovieReviews> getAllUserAndFriendActivity(String nickname) {
+        return movieReviewRepository.getAllUserAndFriendActivity(nickname);
+    }
+
+    @Override
+    public List<MovieReviews> getMoviesActivity(String nickname) {
+        return movieReviewRepository.getMoviesActivity(nickname);
     }
 
 }

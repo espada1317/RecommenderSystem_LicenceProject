@@ -6,138 +6,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="all" href="/css/index.css" th:href="@{/css/profile_overview.css}">
-    <style>
-        .review {
-            font-style: oblique;
-        }
-        .profilehead {
-            width: 100%;
-            height: 400px;
-            background: gray;
-            background-image: url('https://i.ibb.co/St10RpL/profile-cover.png');
-            display: flex;
-        }
-
-        .profileheadcontent {
-            height: 200px;
-            align-self: flex-end;
-            margin-left: auto;
-            margin-right: auto;
-            width: 70%;
-            display: flex;
-        }
-
-        header {
-            position: absolute;
-        }
-
-        .profileheadcontentoverview {
-            width: 50%;
-            height: 100%;
-            display: flex;
-        }
-
-        .profileheadcontentoverviewphoto {
-            width: 200px;
-            height: 100%;
-            display: flex;
-        }
-
-        .profileheadcontentoverviewphoto img {
-            width: 100%;
-            heigth: 100%;
-            align-self: center;
-        }
-
-        .profileheadcontentoverviewinfo {
-            width: 50%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            margin-right: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        h3, h4 {
-            color: white;
-            margin: 0 0 0 20px;
-        }
-
-        .profileheadcontentfollows {
-            width: 50%;
-            height: 100%;
-            margin-left: auto;
-            display: flex;
-        }
-
-        .profileheadcontentfollows span {
-            margin-left: auto;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            align-self: flex-end;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 10px;
-        }
-
-        .profileheadcontentfollows span a {
-            margin: 0 5px 0 5px;
-            color: white;
-        }
-
-        .bootdey {
-            margin-top: 20px;
-        }
-
-        .profilenavbar {
-            background: #171717;
-            height: 60px;
-            width: 100%;
-            border-top: 1px solid #525252;
-            border-bottom: 1px solid #525252;
-            display: flex;
-            justify-content: center;
-        }
-
-        .profilebarbuttons {
-            display: inline-block;
-            display: flex;
-            width: 135px;
-            height: 100%;
-            background: #292726;
-            justify-content: center;
-            align-items: center;
-<!--            border: 1px solid white;-->
-        }
-
-        .profilebarbuttons span {
-            display: inline-block;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .profilebarbuttons:hover {
-            opacity: .6;
-        }
-
-        body{
-            margin-top:20px;
-           /* background-image: url('https://i.ibb.co/Jx11L7Q/skull-damask.jpg'); */
-            background: #171717;
-            color: #fff;
-        }
-
-        #selectedbtn {
-            border-bottom: 5px solid white;
-        }
-
-        .profilenavbar a {
-            text-decoration: none;
-            font-size: 13px;
-            font-family: Verdana;
-            color: white;
-            font-weight: 600;
-        }
-    </style>
 </head>
 <body>
 
@@ -180,7 +48,7 @@
                 <span>OVERVIEW</span>
             </div>
         </a>
-        <a th:href="@{/movies}">
+        <a th:href="@{/profile/myMovieList}">
             <div class="profilebarbuttons">
                 <span>MY MOVIE</span>
             </div>
