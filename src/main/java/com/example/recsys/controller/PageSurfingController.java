@@ -53,7 +53,7 @@ public class PageSurfingController {
         return "about";
     }
 
-    @GetMapping(value = "/profile")
+    @GetMapping(value = "/profile/overview")
     public String profilePage(Model model,
                               Principal principal) {
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));

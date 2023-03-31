@@ -15,7 +15,7 @@
                 <a th:href="@{/}" class="navbar-brand d-flex align-items-center">
                     <strong>RSMC</strong>
                 </a>
-                <a class="navbar-brand d-flex align-items-right" th:href="@{/profile}">
+                <a class="navbar-brand d-flex align-items-right" th:href="@{/profile/overview}">
                     Hello, <span th:text="${principalName}">USER</span>!
                 </a>
                 <a class="navbar-brand d-flex align-items-right" th:if="${principalName != null}" th:href="@{/logout}">

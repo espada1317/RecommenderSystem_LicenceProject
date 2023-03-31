@@ -16,7 +16,7 @@
         <ul id="navigation">
             <li><a class="get-started" th:href="@{/movies}">Movies</a></li>
             <li th:if="${principalName == null || principalName.length() == 0}"> <a class="get-started get-started-reverse" th:href="@{/signIn}"> Login </a> </li>
-            <li id="special" th:if="${principalName != null}"> <a th:href="@{/profile}" class="get-started" id="user-name" > Hello, <span th:text="${principalName}"></span> </a> </li>
+            <li id="special" th:if="${principalName != null}"> <a th:href="@{/profile/overview}" class="get-started" id="user-name" > Hello, <span th:text="${principalName}"></span> </a> </li>
         </ul>
       </header>
       <aside>
