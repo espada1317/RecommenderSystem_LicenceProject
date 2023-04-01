@@ -36,7 +36,7 @@ public class MovieController {
         return "movie_details";
     }
 
-    @PostMapping(value= "/saveReview", params = "action=save")
+    @PostMapping(value = "/saveReview", params = "action=save")
     public String saveMovieReview(@ModelAttribute("movieReviewDto") MovieReviewDto movieReviewDto,
                                      @RequestParam("id") Integer movieId,
                                      Principal principal) {
@@ -44,7 +44,7 @@ public class MovieController {
         return "redirect:/movies/getById/" + movieId;
     }
 
-    @PostMapping(value= "/saveReview", params = "action=update")
+    @PostMapping(value = "/saveReview", params = "action=update")
     public String updateMovieReview(@ModelAttribute("movieReviewDto") MovieReviewDto movieReviewDto,
                                   @RequestParam("id") Integer movieId,
                                   Principal principal) {
@@ -52,7 +52,7 @@ public class MovieController {
         return "redirect:/movies/getById/" + movieId;
     }
 
-    @PostMapping(value= "/saveReview", params = "action=delete")
+    @PostMapping(value = "/saveReview", params = "action=delete")
     public String deleteMovieReview(@RequestParam("id") Integer movieId,
                                   Principal principal) {
         movieService.deleteReview(principal.getName(), movieId);
@@ -79,4 +79,5 @@ public class MovieController {
         model.addAttribute("movies", movieService.searchMoviesByMultipleFilter(keyword, genre, year, language, sortBy));
         return "movies";
     }
+
 }

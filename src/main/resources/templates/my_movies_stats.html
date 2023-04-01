@@ -370,14 +370,14 @@ body{
 table {
   background-color: #2e2e2e;
   width: 100%;
-  border: 1px solid white;
+  border: 1px solid gray;
   border-radius: 10px;
   border-collapse: separate;
 }
 
 td {
   padding: 10px 5px;
-  border-top: 1px solid white;
+  border-top: 1px solid gray;
 }
 
 tr, td, th, table, thread {
@@ -407,6 +407,122 @@ tr, td, th, table, thread {
 
 .imdb {
  color: #FFD700;
+}
+
+.dropdown {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    height: 28px;
+    width: 100%;
+    background: #f2f2f2;
+    border: 1px solid;
+    border-color: white #f7f7f7 whitesmoke;
+    border-radius: 3px;
+    background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+    background-image: -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+    background-image: -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+    background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.06));
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+
+.dropdown:before, .dropdown:after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: 9px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 4px dashed;
+    border-color: #888888 transparent;
+    pointer-events: none;
+}
+
+.dropdown:before {
+    border-bottom-style: solid;
+    border-top: none;
+}
+
+.dropdown:after {
+    margin-top: 7px;
+    border-top-style: solid;
+    border-bottom: none;
+}
+
+.dropdown-select {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 6px 20px 6px 10px;
+    line-height: 14px;
+    font-size: 12px;
+    color: #62717a;
+    text-shadow: 0 1px white;
+    background: #f2f2f2;
+    background: rgba(0, 0, 0, 0) !important;
+    border: 0;
+    border-radius: 0;
+    -webkit-appearance: none;
+}
+
+.dropdown-select:focus {
+    z-index: 3;
+    width: 100%;
+    color: #394349;
+    outline: 2px solid #49aff2;
+    outline: 2px solid -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+.dropdown-select > option {
+    margin: 3px;
+    padding: 6px 8px;
+    text-shadow: none;
+    background: #f2f2f2;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.dropdown-dark {
+    background: #444;
+    border-color: #111111 #0a0a0a black;
+    background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.4));
+    background-image: -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.4));
+    background-image: -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.4));
+    background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.4));
+    -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-dark:before {
+    border-bottom-color: #aaa;
+}
+
+.dropdown-dark:after {
+    border-top-color: #aaa;
+}
+
+.dropdown-dark .dropdown-select {
+    color: #fff;
+    text-shadow: 0 1px black;
+    background: #444;
+}
+
+.dropdown-dark .dropdown-select:focus {
+    color: #ccc;
+}
+
+.dropdown-dark .dropdown-select > option {
+    background: #444;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.filterbtn {
+    color: white;
+    background: black;
+    border: none;
 }
 
   </style>
@@ -509,7 +625,37 @@ tr, td, th, table, thread {
           <div class="panel-heading"><strong>Filter Options</strong></div>
           <div class="panel-body no-padding">
             <div class="ibox-content profile-content">
-              <p><i class="fa fa-map-marker"></i> <span th:text="${userDetails.userLocation != null ? userDetails.userLocation : 'Somewhere in the world..'}"></span></p>
+              <form th:action="@{/profile/myMovieList}">
+                <div class="dropdown dropdown-dark">
+                  <select name="category" class="dropdown-select" id="genre-drop">
+                    <option selected value="*">All progress</option>
+                    <option value="plan_watch" th:selected="${ #strings.equals('plan_watch', selectedCategory) }">Plan to Watch</option>
+                    <option value="completed" th:selected="${ #strings.equals('completed', selectedCategory) }">Completed</option>
+                    <option value="dropped" th:selected="${ #strings.equals('dropped', selectedCategory) }">Dropped</option>
+                  </select>
+                </div>
+                <div class="dropdown dropdown-dark">
+                  <select name="year" class="dropdown-select">
+                    <option selected value="0">All release year</option>
+                    <option th:each="r_year: ${moviesReleaseYears}" th:value="${r_year}" th:text="${r_year}" th:selected="${r_year.equals(selectedYear)}"></option>
+                  </select>
+                </div>
+                <div class="dropdown dropdown-dark">
+                  <select name="sortBy" class="dropdown-select">
+                    <option selected value="titleAsc" th:selected="${ #strings.equals('titleAsc', selectedSort) }">Sort ASC by title</option>
+                    <option value="titleDesc" th:selected="${ #strings.equals('titleDesc', selectedSort) }">Sort DESC by title</option>
+                    <option value="yearAsc" th:selected="${ #strings.equals('yearAsc', selectedSort) }">Sort ASC by release year</option>
+                    <option value="yearDesc" th:selected="${ #strings.equals('yearDesc', selectedSort) }">Sort DESC by release year</option>
+                    <option value="imdbAsc" th:selected="${ #strings.equals('imdbAsc', selectedSort) }">Sort ASC by IMDB rating</option>
+                    <option value="imdbDesc" th:selected="${ #strings.equals('imdbDesc', selectedSort) }">Sort DESC by IMDB rating</option>
+                  </select>
+                </div>
+                <div class="col-md-10">
+                  <button type="submit" class="btn btn-default btn-sm btn-block filterbtn">
+                    <i class="fa fa-search"></i> Filter
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

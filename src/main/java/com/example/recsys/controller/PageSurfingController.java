@@ -64,10 +64,16 @@ public class PageSurfingController {
 
     @GetMapping(value = "/profile/myMovieList")
     public String personalMovieList(Model model,
+                                    @Param("category") String category,
+                                    @Param("year") Integer year,
+                                    @Param("sortBy") String sortBy,
                                     Principal principal) {
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
-        model.addAttribute("personalMovieList", movieService.getMoviesActivity(principal.getName()));
-
+        model.addAttribute("moviesReleaseYears", movieService.getDistinctPersonalReleaseYears(principal.getName()));
+        model.addAttribute("selectedYear", year);
+        model.addAttribute("selectedSort", sortBy);
+        model.addAttribute("selectedCategory", category);
+        model.addAttribute("personalMovieList", movieService.searchPersonalMoviesByMultipleFilter(principal.getName(), category, year, sortBy));
         return "my_movies_stats";
     }
 

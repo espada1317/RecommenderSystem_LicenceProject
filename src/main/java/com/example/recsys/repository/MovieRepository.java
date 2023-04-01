@@ -32,5 +32,4 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Query(value = "SELECT DISTINCT language AS lang FROM movie ORDER BY lang", nativeQuery = true)
     List<String> findAllDistinctLanguageList();
 
-    Movie findByTitle(String title);
 }

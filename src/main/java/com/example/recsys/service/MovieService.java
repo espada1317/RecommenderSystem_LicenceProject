@@ -31,4 +31,12 @@ public interface MovieService {
     List<MovieReviews> getAllUserAndFriendActivity(String nickname);
 
     List<MovieReviews> getMoviesActivity(String nickname);
+
+    List<Integer> getDistinctPersonalReleaseYears(String nickname);
+
+    List<MovieReviews> searchPersonalMoviesByMultipleFilter(String nickname, String category, Integer year, String sortBy);
+
+    List<MovieReviews> getPersonalMoviesByCategory(String nickname, String category);
+
+    List<MovieReviews> getPersonalMoviesByYear(String nickname, Integer year);
 }

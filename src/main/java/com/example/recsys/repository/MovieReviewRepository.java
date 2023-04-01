@@ -31,4 +31,13 @@ public interface MovieReviewRepository extends JpaRepository<MovieReviews, Integ
 
     @Query(value = "SELECT * FROM movie_reviews WHERE nickname = :nickname ORDER BY datetime DESC", nativeQuery = true)
     List<MovieReviews> getMoviesActivity(String nickname);
+
+    @Query(value = "SELECT DISTINCT YEAR(release) AS rel_year FROM movie_reviews INNER JOIN movie ON movie.movie_key = movie_reviews.movie_id WHERE nickname = :nickname ORDER BY rel_year DESC", nativeQuery = true)
+    List<Integer> getListOfDistinctReleaseYearsOfPersonalMovies(String nickname);
+
+    @Query(value = "SELECT * FROM movie_reviews WHERE nickname = :nickname AND category = :category", nativeQuery = true)
+    List<MovieReviews> getReviewsByCategories(String nickname, String category);
+
+    @Query(value = "SELECT * FROM movie_reviews INNER JOIN movie ON movie.movie_key = movie_reviews.movie_id WHERE nickname = :nickname AND YEAR(release) = :year", nativeQuery = true)
+    List<MovieReviews> getReviewsByMovieYearRelease(String nickname, Integer year);
 }

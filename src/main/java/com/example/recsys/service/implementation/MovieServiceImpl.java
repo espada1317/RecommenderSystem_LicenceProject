@@ -10,7 +10,6 @@ import com.example.recsys.service.MovieService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -168,5 +167,59 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieReviews> getMoviesActivity(String nickname) {
         return movieReviewRepository.getMoviesActivity(nickname);
     }
+
+    @Override
+    public List<Integer> getDistinctPersonalReleaseYears(String nickname) {
+        return movieReviewRepository.getListOfDistinctReleaseYearsOfPersonalMovies(nickname);
+    }
+
+    @Override
+    public List<MovieReviews> searchPersonalMoviesByMultipleFilter(String nickname, String category, Integer year, String sortBy) {
+        List<MovieReviews> result = getMoviesActivity(nickname);
+
+        if(category != null && !category.equals("*")) {
+            List<MovieReviews> categoryList = movieReviewRepository.getReviewsByCategories(nickname, category);
+            result.retainAll(categoryList);
+        }
+        if(year != null && year != 0) {
+            List<MovieReviews> yearList = movieReviewRepository.getReviewsByMovieYearRelease(nickname, year);
+            result.retainAll(yearList);
+        }
+        if(sortBy != null && !sortBy.equals("*")) {
+            switch (sortBy) {
+                case "titleAsc" -> {
+                    result.sort(new MovieReviewTitleComparator());
+                }
+                case "titleDesc" -> {
+                    result.sort(new MovieReviewTitleComparator().reversed());
+                }
+                case "yearAsc" -> {
+                    result.sort(new MovieReviewYearComparator());
+                }
+                case "yearDesc" -> {
+                    result.sort(new MovieReviewYearComparator().reversed());
+                }
+                case "imdbAsc" -> {
+                    result.sort(new MovieReviewImdbRatingComparator());
+                }
+                case "imdbDesc" -> {
+                    result.sort(new MovieReviewImdbRatingComparator().reversed());
+                }
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<MovieReviews> getPersonalMoviesByCategory(String nickname, String category) {
+        return movieReviewRepository.getReviewsByCategories(nickname, category);
+    }
+
+    @Override
+    public List<MovieReviews> getPersonalMoviesByYear(String nickname, Integer year) {
+        return movieReviewRepository.getReviewsByMovieYearRelease(nickname, year);
+    }
+
 
 }
