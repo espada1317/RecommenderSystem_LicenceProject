@@ -11,26 +11,31 @@
 </head>
 
 <body>
+
     <div class="grid-wrapper">
-      <header>
-        <ul id="navigation">
-            <li><a class="get-started" th:href="@{/movies}">Movies</a></li>
-            <li th:if="${principalName == null || principalName.length() == 0}"> <a class="get-started get-started-reverse" th:href="@{/signIn}"> Login </a> </li>
-            <li id="special" th:if="${principalName != null}"> <a th:href="@{/profile/overview}" class="get-started" id="user-name" > Hello, <span th:text="${principalName}"></span> </a> </li>
-        </ul>
-      </header>
-      <aside>
-        <h1>RSMC</h1>
-        <h3>All in one place</h3>
-        <p>
-          Movies, TV series, games, anime, manga, books and music recommendation in one place.
-          Save your own list, share them with friends, get new connections and enjoy your free time.
-          Be in trend, find your style and discover new interest.
-          Be extravagant, be curious, be nerdy, be yourself...
-        </p>
-        <p> <a class="button" th:href="@{/about}">Learn More</a> </p>
-      </aside>
-      <div class="background"></div>
+        <header>
+            <ul id="navigation">
+                <li><a class="get-started" th:href="@{/movies}">Movies</a></li>
+                <li th:if="${principalName == null || principalName.length() == 0}"> <a class="get-started get-started-reverse" th:href="@{/signIn}"> Login </a> </li>
+                <li id="special" th:if="${principalName != null}"> <a th:href="@{/profile/overview}" class="get-started" id="user-name" > Hello, <span th:text="${principalName}"></span> </a> </li>
+            </ul>
+        </header>
+
+        <aside>
+            <h1>RSMC</h1>
+            <h3>All in one place</h3>
+            <p>
+                Movies, TV series, games, anime, manga, books and music recommendation in one place.
+                Save your own list, share them with friends, get new connections and enjoy your free time.
+                Be in trend, find your style and discover new interest.
+                Be extravagant, be curious, be nerdy, be yourself...
+            </p>
+            <p>
+                <a class="button" th:href="@{/about}">Learn More</a>
+            </p>
+        </aside>
+        <div class="background"></div>
     </div>
+
 </body>
 </html>

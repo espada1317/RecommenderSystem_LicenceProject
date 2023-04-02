@@ -7,6 +7,7 @@ import com.example.recsys.entity.MovieReviews;
 import com.example.recsys.repository.MovieRepository;
 import com.example.recsys.repository.MovieReviewRepository;
 import com.example.recsys.service.MovieService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,10 @@ import java.util.stream.StreamSupport;
 @Service
 public class MovieServiceImpl implements MovieService {
 
+    @Autowired
     private final MovieRepository movieRepository;
+
+    @Autowired
     private final MovieReviewRepository movieReviewRepository;
 
     public static final int LIMIT = 48;
@@ -219,6 +223,11 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<MovieReviews> getPersonalMoviesByYear(String nickname, Integer year) {
         return movieReviewRepository.getReviewsByMovieYearRelease(nickname, year);
+    }
+
+    @Override
+    public List<MovieReviews> getRecentWatchedMovies(String nickname) {
+        return movieReviewRepository.getRecentWatchedMovies(nickname);
     }
 
 

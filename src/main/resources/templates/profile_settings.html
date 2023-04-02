@@ -9,102 +9,95 @@
 <body>
 
     <div class="container">
-      <div class="row gutters">
-        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-          <div class="card h-100">
-            <div class="card-body">
-              <div class="account-settings">
-                <div class="user-profile">
-                  <div class="user-avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Maxwell Admin">
-                  </div>
-                  <h5 class="user-name"  th:if="${userDetails != null}" th:text="${userDetails.fullName}"></h5>
-                  <h6 class="user-email" th:if="${userDetails != null}" th:text="${userDetails.nickname}"></h6>
-                  <div class="about">
-                    <h5 class="mb-2 back-ch">About</h5>
-                    <p th:if="${userDetails != null}" th:text="${ userDetails.userOverview != null ? userDetails.userOverview : 'Seems that here is so empty...'}"></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-          <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-            <div class="card h-100">
-
-              <form method="post" th:action="@{/profile/settings}" th:object="${userSettingsDto}">
-
-                <div class="card-body">
-                  <div class="alert alert-success text-center" role="alert" th:if="${param.success}">
-                    Account successfully updated.
-                  </div>
-                  <div class="row gutters">
-
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                      <h6 class="mb-3 back-ch">Personal Details</h6>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                      <div class="form-group">
-                        <label for="fullName">Full Name</label>
-                        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter full name" th:value="${userDetails.fullName}">
-                      </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                      <div class="form-group">
-                        <label for="eMail">Email</label>
-                        <input type="email" class="form-control" id="eMail" name="email" placeholder="Enter email" th:value="${userDetails.email}">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row gutters">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                      <h6 class="mb-3 back-ch">Address</h6>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                      <div class="form-group">
-                        <label for="ciTy">City</label>
-                        <input type="name" class="form-control" id="ciTy" name="city" placeholder="Enter City" th:value="${userDetails.userLocation != null ? userDetails.userLocation.split(',')[0].trim() : ''}">
-                      </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                      <div class="form-group">
-                        <label for="sTate">State</label>
-                        <input type="text" class="form-control" id="sTate" name="state" placeholder="Enter State" th:value="${userDetails.userLocation != null ? userDetails.userLocation.split(',')[1].trim() : ''}">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row gutters">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                      <h6 class="mb-3 back-ch">About</h6>
-                    </div>
-                    <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="well">
-                            <textarea class="form-control" id="text" name="overview" placeholder="Say to world something about you" rows="5" th:text="${userDetails.userOverview != null ? userDetails.userOverview : ''}"></textarea>
-                            <h6 class="pull-right" id="count_message"></h6>
+        <div class="row gutters">
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="account-settings">
+                            <div class="user-profile">
+                                <div class="user-avatar">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Maxwell Admin">
+                                </div>
+                                <h5 class="user-name"  th:if="${userDetails != null}" th:text="${userDetails.fullName}"></h5>
+                                <h6 class="user-email" th:if="${userDetails != null}" th:text="${userDetails.nickname}"></h6>
+                                <div class="about">
+                                    <h5 class="mb-2 back-ch">About</h5>
+                                    <p th:if="${userDetails != null}" th:text="${ userDetails.userOverview != null ? userDetails.userOverview : 'Seems that here is so empty...'}"></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                  </div>
-
-                  <div class="row gutters">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                      <div class="text-right text-right-modified">
-                        <button type="submit" name="action" value="update" id="submit"        class="btn btn-primary">Update</button>
-                        <button type="submit" name="action" value="cancel" id="submit-cancel" class="btn btn-secondary">Cancel</button>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-
-              </form>
-
             </div>
 
-          </div>
+            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                <div class="card h-100">
+                    <form method="post" th:action="@{/profile/settings}" th:object="${userSettingsDto}">
+                        <div class="card-body">
+                            <div class="alert alert-success text-center" role="alert" th:if="${param.success}">
+                                Account successfully updated.
+                            </div>
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h6 class="mb-3 back-ch">Personal Details</h6>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="fullName">Full Name</label>
+                                        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter full name" th:value="${userDetails.fullName}">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="eMail">Email</label>
+                                        <input type="email" class="form-control" id="eMail" name="email" placeholder="Enter email" th:value="${userDetails.email}">
+                                    </div>
+                                </div>
+                            </div>
 
-      </div>
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h6 class="mb-3 back-ch">Address</h6>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="ciTy">City</label>
+                                        <input type="name" class="form-control" id="ciTy" name="city" placeholder="Enter City" th:value="${userDetails.userLocation != null ? userDetails.userLocation.split(',')[0].trim() : ''}">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="sTate">State</label>
+                                        <input type="text" class="form-control" id="sTate" name="state" placeholder="Enter State" th:value="${userDetails.userLocation != null ? userDetails.userLocation.split(',')[1].trim() : ''}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h6 class="mb-3 back-ch">About</h6>
+                                </div>
+                                <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="well">
+                                        <textarea class="form-control" id="text" name="overview" placeholder="Say to world something about you" rows="5" th:text="${userDetails.userOverview != null ? userDetails.userOverview : ''}"></textarea>
+                                        <h6 class="pull-right" id="count_message"></h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="text-right text-right-modified">
+                                        <button type="submit" name="action" value="update" id="submit"        class="btn btn-primary">Update</button>
+                                        <button type="submit" name="action" value="cancel" id="submit-cancel" class="btn btn-secondary">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>

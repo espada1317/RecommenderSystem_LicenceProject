@@ -40,4 +40,7 @@ public interface MovieReviewRepository extends JpaRepository<MovieReviews, Integ
 
     @Query(value = "SELECT * FROM movie_reviews INNER JOIN movie ON movie.movie_key = movie_reviews.movie_id WHERE nickname = :nickname AND YEAR(release) = :year", nativeQuery = true)
     List<MovieReviews> getReviewsByMovieYearRelease(String nickname, Integer year);
+
+    @Query(value = "SELECT * FROM movie_reviews WHERE nickname = :nickname AND category = 'completed' ORDER BY datetime DESC", nativeQuery = true)
+    List<MovieReviews> getRecentWatchedMovies(String nickname);
 }

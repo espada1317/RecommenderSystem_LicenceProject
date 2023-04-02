@@ -1,0 +1,94 @@
+* {
+  box-sizing: border-box;
+}
+.eyedio {
+  font-size: 16px;
+  font-family: sans-serif;
+  color: white;
+  display: inline-block;
+  position: relative;
+<!--  left: 50%;-->
+<!--  top: 50%;-->
+  transform: translateX(-50%) translateY(-50%);
+}
+.eyedio__radio {
+  display: none;
+  float: left;
+}
+.eyedio__label {
+  display: inline;
+  position: relative;
+  padding-left: 1.25em;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.eyedio__eye {
+  content: '';
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  bottom: 50%;
+  width: 1em;
+  height: 1em;
+  border: 2px solid;
+  transform: translateY(50%);
+  overflow: hidden;
+}
+.eyedio__eye:after {
+  content: '';
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 0;
+  height: 0;
+  border: .125em solid;
+  transition: opacity .3s;
+  opacity: 0;
+}
+.eyedio__radio:checked + .eyedio__eye:after {
+  opacity: 1;
+}
+.eyedio__radio:checked + .eyedio__eye {
+  animation: blink .4s 1;
+}
+.eyedio__radio:not(:checked) + .eyedio__eye {
+  animation: unblink .4s 1;
+}
+@keyframes unblink {
+  50% {
+    height: 0
+  }
+}
+@keyframes blink {
+  50% {
+    height: 0
+  }
+}
+.container {
+  margin-top: 2%;
+  color: white;
+}
+body{
+  background-image: url('https://i.ibb.co/tKVtnPP/movie-pref-back.png');
+  background-color: black;
+  background-repeat: repeat;
+  background-size: 35%;
+  background-position: center;
+}
+.card {
+  background: black;
+}
+.action-buttons {
+  float:right;
+  width: 70px;
+  margin: 10px;
+  border-radius: 8px;
+  border: none;
+}
+th, td {
+  padding: 5px 250px 5px 0;
+}

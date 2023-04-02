@@ -1,0 +1,516 @@
+body{
+    margin-top:20px;
+   /* background-image: url('https://i.ibb.co/Jx11L7Q/skull-damask.jpg'); */
+    background: black;
+    color: #fff;
+}
+
+.img-responsive, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.panel {
+    border: none;
+}
+
+.panel-heading {
+    background-color: #000;
+    padding: 15px 10px 15px 10px;
+    border-bottom: 0px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.panel-default > .panel-heading {
+    color: #d93b3b;
+    background-color: #000;
+    border-color: none !important;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #000 !important;
+    border-color: #000 !important;
+}
+
+.btn-primary:hover {
+    background-color: #969ca5! important;
+}
+
+.stats {
+    width: 100%;
+    margin: 30px auto;
+    text-align: center;
+    display: table;
+}
+
+.stats .statis {
+    display: table-cell;
+    width: 25%;
+    vertical-align: top;
+}
+
+.ibox-content {
+    background-color: #2e2e2e;
+    color: inherit;
+    padding: 0px 20px 20px 20px;
+}
+
+.panel-body {
+    background-color: #2e2e2e;
+}
+
+.feed-activity-list .feed-element {
+    border-bottom: 1px solid #E7EAEC;
+}
+
+.feed-element {
+    padding: 10px 0 20px 0;
+}
+
+.feed-element img.img-circle, .dropdown-messages-box img.img-circle {
+    width: 40px;
+    height: 50px;
+}
+
+.img-circle {
+    border-radius: 0;
+    width: 60px;
+    height: 90px;
+}
+
+.feed-element > .pull-left {
+    margin-right: 10px;
+}
+
+.feed-element .well {
+    border: 1px solid #E7EAEC;
+    box-shadow: none;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.text-navy {
+    color: #1AB394;
+}
+
+.feed-element .actions {
+    margin-top: 10px;
+}
+
+#nickname-bl {
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: .1rem;
+}
+
+.feed-photo {
+    height: 180px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-white {
+    color: inherit;
+    background: white;
+    border: 1px solid #000;
+}
+
+.btn-block {
+    width: 120%;
+}
+
+.btn {
+    border-radius: 3px;
+}
+
+.btn-cprimary {
+    background-color: #f5f6f8;
+    border-color: #f5f6f8;
+    color: #333;
+}
+
+.btn-danger {
+    background-color: #ef5352;
+    border-color: #ef5352;
+    color: #FFFFFF;
+}
+
+.btn {
+    border-radius: 3px;
+}
+
+@media(min-width: 768px) and (max-width: 991px) {
+    .feed-photo {
+        width: 100%;
+        height: 350px!important;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .btn-primary{
+        margin: 15px auto;
+    }
+}
+
+@media(min-width: 480px) and (max-width: 767px) {
+    .feed-photo {
+        width: 100%;
+        height: 300px!important;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .btn-primary{
+        margin: 15px auto;
+    }
+}
+
+@media(max-width:480px) {
+    .feed-photo {
+        width: 100%;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .btn-primary{
+        margin: 15px auto;
+    }
+}
+
+#navigation {
+    grid-column: 1/5;
+    grid-row: 1/2;
+    display: flex;
+    justify-content: flex-start;
+    font-weight: 700;
+}
+
+a {
+    list-style-type: none;
+    text-decoration: none;
+    color: #fff;
+}
+
+.nickname {
+    color: #d93b3b;
+}
+
+.movie-title {
+    color: #34b1eb;
+}
+
+li {
+    list-style-type: none;
+    display: inline;
+    padding: 0 10px;
+}
+
+.get-started {
+    padding: 2px 10px;
+    background-color: #fff;
+    color: #000;
+    text-transform: uppercase;
+    border-radius: 20px;
+}
+
+.review {
+    font-style: oblique;
+}
+
+.profilehead {
+    width: 100%;
+    height: 300px;
+    background: gray;
+    background-image: url('https://i.ibb.co/St10RpL/profile-cover.png');
+    display: flex;
+}
+
+.profileheadcontent {
+    height: 200px;
+    align-self: flex-end;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    display: flex;
+}
+
+header {
+    position: absolute;
+}
+
+.profileheadcontentoverview {
+    width: 50%;
+    height: 100%;
+    display: flex;
+}
+
+.profileheadcontentoverviewphoto {
+    width: 200px;
+    height: 100%;
+    display: flex;
+}
+
+.profileheadcontentoverviewphoto img {
+    width: 100%;
+    heigth: 100%;
+    align-self: center;
+}
+
+.profileheadcontentoverviewinfo {
+    width: 50%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h3, h4 {
+    color: white;
+    margin: 0 0 0 20px;
+}
+
+.profileheadcontentfollows {
+    width: 50%;
+    height: 100%;
+    margin-left: auto;
+    display: flex;
+}
+
+.profileheadcontentfollows span {
+    margin-left: auto;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    align-self: flex-end;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+}
+
+.profileheadcontentfollows span a {
+    margin: 0 5px 0 5px;
+    color: white;
+}
+
+.bootdey {
+    margin-top: 20px;
+}
+
+.profilenavbar {
+    background: #171717;
+    height: 60px;
+    width: 100%;
+    border-top: 1px solid #525252;
+    border-bottom: 1px solid #525252;
+    display: flex;
+    justify-content: center;
+}
+
+.profilebarbuttons {
+    display: inline-block;
+    display: flex;
+    width: 135px;
+    height: 100%;
+    background: #292726;
+    justify-content: center;
+    align-items: center;
+}
+
+.profilebarbuttons span {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+}
+
+.profilebarbuttons:hover {
+    opacity: .6;
+}
+
+body{
+    margin-top:20px;
+    background: #171717;
+    color: #fff;
+}
+
+#selectedbtn {
+    border-bottom: 5px solid white;
+}
+
+.profilenavbar a {
+    text-decoration: none;
+    font-size: 13px;
+    font-family: Verdana;
+    color: white;
+    font-weight: 600;
+}
+
+table {
+  background-color: #2e2e2e;
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 10px;
+  border-collapse: separate;
+}
+
+td {
+  padding: 10px 5px;
+  border-top: 1px solid gray;
+}
+
+tr, td, th, table, thread {
+  text-align: center;
+}
+
+.poster {
+  text-align: center;
+  margin-left: 20px;
+  width: 10%;
+}
+
+.titleMovie {
+  width: 50%;
+  text-align: left;
+  color: #0088cc;
+}
+
+.progr {
+  width: 16%;
+}
+
+.year, .imdb, .score {
+  width: 8%;
+}
+
+.imdb {
+ color: #FFD700;
+}
+
+.dropdown {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    height: 28px;
+    width: 100%;
+    background: #f2f2f2;
+    border: 1px solid;
+    border-color: white #f7f7f7 whitesmoke;
+    border-radius: 3px;
+    background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+    background-image: -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+    background-image: -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+    background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.06));
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+
+.dropdown:before, .dropdown:after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: 9px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 4px dashed;
+    border-color: #888888 transparent;
+    pointer-events: none;
+}
+
+.dropdown:before {
+    border-bottom-style: solid;
+    border-top: none;
+}
+
+.dropdown:after {
+    margin-top: 7px;
+    border-top-style: solid;
+    border-bottom: none;
+}
+
+.dropdown-select {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 6px 20px 6px 10px;
+    line-height: 14px;
+    font-size: 12px;
+    color: #62717a;
+    text-shadow: 0 1px white;
+    background: #f2f2f2;
+    background: rgba(0, 0, 0, 0) !important;
+    border: 0;
+    border-radius: 0;
+    -webkit-appearance: none;
+}
+
+.dropdown-select:focus {
+    z-index: 3;
+    width: 100%;
+    color: #394349;
+    outline: 2px solid #49aff2;
+    outline: 2px solid -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+.dropdown-select > option {
+    margin: 3px;
+    padding: 6px 8px;
+    text-shadow: none;
+    background: #f2f2f2;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.dropdown-dark {
+    background: #444;
+    border-color: #111111 #0a0a0a black;
+    background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.4));
+    background-image: -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.4));
+    background-image: -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.4));
+    background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.4));
+    -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-dark:before {
+    border-bottom-color: #aaa;
+}
+
+.dropdown-dark:after {
+    border-top-color: #aaa;
+}
+
+.dropdown-dark .dropdown-select {
+    color: #fff;
+    text-shadow: 0 1px black;
+    background: #444;
+}
+
+.dropdown-dark .dropdown-select:focus {
+    color: #ccc;
+}
+
+.dropdown-dark .dropdown-select > option {
+    background: #444;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.filterbtn {
+    color: white;
+    background: black;
+    border: none;
+}
