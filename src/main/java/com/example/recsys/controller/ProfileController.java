@@ -56,6 +56,7 @@ public class ProfileController {
                                     Principal principal) {
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
         model.addAttribute("recentWatched", movieService.getRecentWatchedMovies(principal.getName()));
+        model.addAttribute("planToWatchMovies", movieService.getPlanToWatchMovies(principal.getName()));
         return "my_dashboard";
     }
 

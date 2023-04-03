@@ -5,15 +5,68 @@
     <title>My Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/my_dashboard.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Texturina:wght@300&display=swap');
+    </style>
 </head>
 <body>
 
     <header>
-        <ul id="navigation">
-            <li id="special">
-                <a class="get-started" th:href="@{/}">Main Page</a>
-            </li>
-        </ul>
+        <div class="main-pages">
+            <div class="page" id="index-logo">
+                <a th:href="@{/}" class="navbar-brand">
+                    <strong id="index-page">RSMC</strong>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/profile/overview}">
+                    <img alt="image" class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                    <span id="selected-main-page">PROFILE</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/movies}">
+                    <img src="https://i.ibb.co/prcykHQ/movie-icon.png" alt="movie-icon">
+                    <span>MOVIES</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/movies}">
+                    <img src="https://i.ibb.co/vvPdYGF/tv-icon.webp" alt="tv-icon">
+                    <span>TV SERIES</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/movies}">
+                    <img src="https://i.ibb.co/PMKrBwq/anime-icon.png" alt="anime-icon">
+                    <span>ANIME</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/movies}">
+                    <img src="https://i.ibb.co/zJr1vDg/music-icon.png" alt="music-icon">
+                    <span>MUSIC</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/movies}">
+                    <img src="https://i.ibb.co/rZ30zGW/books.png" alt="books">
+                    <span>BOOKS</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/movies}">
+                    <img src="https://i.ibb.co/Yhy7KbQ/comic.png" alt="comic">
+                    <span>MANGA</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/logout}">
+                    Logout
+                </a>
+            </div>
+        </div>
     </header>
 
     <div class="profilehead">
@@ -100,19 +153,36 @@
             <div class="col-md-20">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <strong>Personal lists</strong>
+                        <strong>Personal Lists</strong>
                     </div>
-                    <div class="panel-body">
-                        <h3 class="recently-header">Recently Watched Movies</h3>
-                        <section class="exploreScroll">
-                            <div class="horizontal-scroll-wrapper squares">
-                                <div th:each="recentMovies : ${recentWatched}">
-                                    <div class="card"><img th:src="${recentMovies.getMovie().poster}" th:alt="${recentMovies.getMovie().poster}"></div>
-                                    <div class="info" th:text="${recentMovies.getMovie().title}"></div>
-                                </div>
-                            </div>
-                        </section>
 
+                    <div class="panel-body">
+                        <div class="category-block left">
+                            <h3 class="recently-header">Recently Watched Movies</h3>
+                            <section class="exploreScroll">
+                                <div class="horizontal-scroll-wrapper squares">
+                                    <div class="card-list" th:each="recentMovies : ${recentWatched}">
+                                        <div class="card"><img th:src="${recentMovies.getMovie().poster}" th:alt="${recentMovies.getMovie().poster}"></div>
+                                        <div class="info" th:text="${recentMovies.getMovie().title}"></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="category-block right">
+                            <h3 class="recently-header">Plan to Watch</h3>
+                            <section class="exploreScroll">
+                                <div class="horizontal-scroll-wrapper squares">
+                                    <div class="card-list" th:each="planWatch : ${planToWatchMovies}">
+                                        <div class="card"><img th:src="${planWatch.getMovie().poster}" th:alt="${planWatch.getMovie().poster}"></div>
+                                        <div class="info">
+                                            <span th:text="${planWatch.getMovie().title}"></span>
+                                             &#9672; IMDB:
+                                            <span th:text="${planWatch.getMovie().voteaverage}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -230,5 +230,9 @@ public class MovieServiceImpl implements MovieService {
         return movieReviewRepository.getRecentWatchedMovies(nickname);
     }
 
+    @Override
+    public List<MovieReviews> getPlanToWatchMovies(String nickname) {
+        return movieReviewRepository.getPlanToWatchMovies(nickname);
+    }
 
 }

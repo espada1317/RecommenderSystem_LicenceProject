@@ -6,13 +6,68 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="all" href="/css/index.css" th:href="@{/css/profile_overview.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Texturina:wght@300&display=swap');
+    </style>
 </head>
 <body>
 
     <header>
-        <ul id="navigation">
-            <li id="special"><a class="get-started" th:href="@{/}">Main Page</a></li>
-        </ul>
+        <div class="main-pages">
+            <div class="page" id="index-logo">
+                <a th:href="@{/}" class="navbar-brand">
+                    <strong id="index-page">RSMC</strong>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/profile/overview}">
+                    <img alt="image" class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                    <span id="selected-main-page">PROFILE</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/movies}">
+                    <img src="https://i.ibb.co/prcykHQ/movie-icon.png" alt="movie-icon">
+                    <span>MOVIES</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/movies}">
+                    <img src="https://i.ibb.co/vvPdYGF/tv-icon.webp" alt="tv-icon">
+                    <span>TV SERIES</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/movies}">
+                    <img src="https://i.ibb.co/PMKrBwq/anime-icon.png" alt="anime-icon">
+                    <span>ANIME</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/movies}">
+                    <img src="https://i.ibb.co/zJr1vDg/music-icon.png" alt="music-icon">
+                    <span>MUSIC</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/movies}">
+                    <img src="https://i.ibb.co/rZ30zGW/books.png" alt="books">
+                    <span>BOOKS</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/movies}">
+                    <img src="https://i.ibb.co/Yhy7KbQ/comic.png" alt="comic">
+                    <span>MANGA</span>
+                </a>
+            </div>
+            <div class="page">
+                <a class="navbar-brand" th:href="@{/logout}">
+                    Logout
+                </a>
+            </div>
+        </div>
     </header>
 
     <div class="profilehead">
@@ -104,9 +159,6 @@
                             <strong>Details</strong>
                         </div>
                         <div class="panel-body no-padding">
-                        <!--                <div class="ibox-content no-padding border-left-right">-->
-                        <!--                  <img alt="image" class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png">-->
-                        <!--                </div>-->
                             <div class="ibox-content profile-content">
                                 <p>
                                     <i class="fa fa-map-marker"></i>
@@ -119,12 +171,6 @@
 
                                 <div class="user-button">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <button type="button" class="btn btn-primary btn-sm btn-block">
-                                                <i class="fa fa-area-chart"></i>Statistics
-                                            </button>
-                                        </div>
-
                                         <div class="col-md-6">
                                             <a type="button" class="btn btn-default btn-sm btn-block" th:href="@{/profile/settings}">
                                                 <i class="fa fa-sharp fa-solid fa-gear"></i> Settings

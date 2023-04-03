@@ -41,4 +41,6 @@ public interface MovieService {
     List<MovieReviews> getPersonalMoviesByYear(String nickname, Integer year);
 
     List<MovieReviews> getRecentWatchedMovies(String nickname);
+
+    List<MovieReviews> getPlanToWatchMovies(String nickname);
 }

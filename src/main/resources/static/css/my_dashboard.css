@@ -9,6 +9,8 @@
 }
 
 .panel-heading {
+    font-family: 'Texturina', serif;
+    font-size: 16px;
     background-color: #000;
     padding: 15px 10px 15px 10px;
     border-bottom: 0px solid transparent;
@@ -36,10 +38,6 @@
     background-color: #2e2e2e;
     color: inherit;
     padding: 0px 20px 20px 20px;
-}
-
-.panel-body {
-    background-color: #2e2e2e;
 }
 
 .feed-activity-list .feed-element {
@@ -213,23 +211,22 @@ li {
 
 .profilehead {
     width: 100%;
-    height: 300px;
-    background: gray;
+    height: 150px;
+    background: black;
     background-image: url('https://i.ibb.co/St10RpL/profile-cover.png');
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
     display: flex;
 }
 
 .profileheadcontent {
-    height: 200px;
+    height: 120px;
     align-self: flex-end;
     margin-left: auto;
     margin-right: auto;
     width: 70%;
     display: flex;
-}
-
-header {
-    position: absolute;
 }
 
 .profileheadcontentoverview {
@@ -239,7 +236,7 @@ header {
 }
 
 .profileheadcontentoverviewphoto {
-    width: 200px;
+    width: 120px;
     height: 100%;
     display: flex;
 }
@@ -256,6 +253,7 @@ header {
     background: rgba(0, 0, 0, 0.8);
     margin-right: auto;
     display: flex;
+    font-family: 'Texturina', sans-serif;
     flex-direction: column;
     justify-content: center;
 }
@@ -332,8 +330,8 @@ body{
 
 .profilenavbar a {
     text-decoration: none;
-    font-size: 13px;
-    font-family: Verdana;
+    font-family: 'Texturina', serif;
+    font-size: 14px;
     color: white;
     font-weight: 600;
 }
@@ -355,13 +353,16 @@ body{
     overflow-x: auto;
 }
 
+.card-list {
+    height: 350px;
+}
+
 .card {
     min-width: 200px;
     max-width: 200px;
     height: 300px;
     background-color: black;
     text-align: center;
-    padding: 5px;
     margin: 20px 10px 5px 10px;
     border-radius: 5px;
     box-shadow: 0 8px 6px -4px #777da7;
@@ -393,8 +394,91 @@ body{
 
 .info {
      text-align: center;
+     font-family: 'Texturina', sans-serif;
+     font-size: 14px;
 }
 
 .recently-header {
     margin-bottom: -10px;
+}
+
+.panel-body {
+    background-color: #2e2e2e;
+    font-family: 'Grenze Gotisch', cursive;
+    display: flex;
+}
+
+.category-block {
+    background: #2e2e2e;
+    width: 49%;
+    display: inline-block;
+}
+
+.left {
+    margin-right: auto;
+    border-right: 1px solid white;
+}
+
+.right {
+    margin-left: auto;
+}
+
+header {
+    height: 80px;
+    margin-top: 0;
+}
+
+.main-pages {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+}
+
+.page {
+    margin: 0;
+    height: 100%;
+    width: 130px;
+    display: flex;
+    weight: 350px;
+    align-items: center;
+    justify-content: center;
+    background: #292726;
+    font-family: 'Texturina', sans-serif;
+}
+
+.page:hover {
+    opacity: .7;
+}
+
+.page a:hover{
+    color: #d93b3b;
+}
+
+html {
+    margin-top: -20px;
+}
+
+#index-page {
+    font-family: 'Grenze Gotisch', cursive;
+    font-size: 45px;
+    background: #171717;
+}
+
+.navbar-brand img {
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -20px;
+    margin-bottom: 2px;
+}
+
+#index-logo {
+    background: #171717;
+    margin: 0 30px;
+}
+
+#selected-main-page {
+    color: orange;
 }

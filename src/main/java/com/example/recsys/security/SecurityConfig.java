@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .and()
                     .authorizeHttpRequests().requestMatchers("/movies/getById/**", "/movies", "/movies/**").hasAnyAuthority("ADMIN", "USER")
                 .and()
-                    .authorizeHttpRequests().requestMatchers("/profile", "/profile/**", "/preferences/**").hasAuthority("USER")
+                    .authorizeHttpRequests().requestMatchers("/profile", "/profile/**", "/preferences/**", "/saveReview").hasAuthority("USER")
                 .and()
                     .formLogin()
                     .loginPage("/signIn")
