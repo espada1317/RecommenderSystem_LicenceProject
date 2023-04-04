@@ -46,4 +46,7 @@ public interface MovieReviewRepository extends JpaRepository<MovieReviews, Integ
 
     @Query(value = "SELECT * FROM movie_reviews WHERE nickname = :nickname AND category = 'plan_watch' ORDER BY datetime DESC", nativeQuery = true)
     List<MovieReviews> getPlanToWatchMovies(String nickname);
+
+    @Query(value = "SELECT * FROM movie_reviews WHERE review_message <> '' AND nickname = :nickname", nativeQuery = true)
+    List<MovieReviews> getReviewsByNickname(String nickname);
 }

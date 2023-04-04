@@ -26,7 +26,7 @@ public class SecurityConfig {
         return http.csrf().disable()
                     .authorizeHttpRequests().requestMatchers("/", "/signIn", "/signUp", "/css/**", "/about","/images/**").permitAll()
                 .and()
-                    .authorizeHttpRequests().requestMatchers("/movies/getById/**", "/movies", "/movies/**").hasAnyAuthority("ADMIN", "USER")
+                    .authorizeHttpRequests().requestMatchers( "/movies", "/movies/**", "/tv", "/tv/**").hasAnyAuthority("ADMIN", "USER")
                 .and()
                     .authorizeHttpRequests().requestMatchers("/profile", "/profile/**", "/preferences/**", "/saveReview").hasAuthority("USER")
                 .and()

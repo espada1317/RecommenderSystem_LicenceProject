@@ -1,6 +1,9 @@
 package com.example.recsys.service.implementation;
 
-import com.example.recsys.comparators.*;
+import com.example.recsys.comparators.movies.*;
+import com.example.recsys.comparators.movies.reviews.MovieReviewImdbRatingComparator;
+import com.example.recsys.comparators.movies.reviews.MovieReviewTitleComparator;
+import com.example.recsys.comparators.movies.reviews.MovieReviewYearComparator;
 import com.example.recsys.dto.MovieReviewDto;
 import com.example.recsys.entity.Movie;
 import com.example.recsys.entity.MovieReviews;
@@ -14,7 +17,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -98,7 +100,7 @@ public class MovieServiceImpl implements MovieService {
             }
         }
 
-        return StreamSupport.stream(result.spliterator(), false)
+        return result.stream()
                 .limit(LIMIT)
                 .collect(Collectors.toList());
     }
@@ -233,6 +235,11 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<MovieReviews> getPlanToWatchMovies(String nickname) {
         return movieReviewRepository.getPlanToWatchMovies(nickname);
+    }
+
+    @Override
+    public List<MovieReviews> getReviewsByNickname(String nickname) {
+        return movieReviewRepository.getReviewsByNickname(nickname);
     }
 
 }

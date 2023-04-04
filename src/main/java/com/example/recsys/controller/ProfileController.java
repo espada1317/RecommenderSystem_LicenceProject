@@ -60,6 +60,14 @@ public class ProfileController {
         return "my_dashboard";
     }
 
+    @GetMapping(value = "/profile/reviews")
+    public String personalReviews(Model model,
+                                Principal principal) {
+        model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
+        model.addAttribute("personalReviews", movieService.getReviewsByNickname(principal.getName()));
+        return "my_reviews";
+    }
+
     @GetMapping(value = "/profile/settings")
     public String profileSettings(Principal principal,
                                   Model model) {

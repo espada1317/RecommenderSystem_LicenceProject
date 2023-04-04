@@ -1,4 +1,4 @@
-package com.example.recsys.comparators;
+package com.example.recsys.comparators.movies;
 
 import com.example.recsys.entity.Movie;
 
