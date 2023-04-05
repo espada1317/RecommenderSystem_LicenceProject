@@ -1,5 +1,6 @@
 package com.example.recsys.controller;
 
+import com.example.recsys.entity.TvSeriesReviews;
 import com.example.recsys.service.TvSeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/tv")
@@ -44,14 +46,14 @@ public class TvSeriesController {
     }
 
     @GetMapping("/getById/{id}")
-    public String movieById(Model model,
+    public String tvById(Model model,
                             @PathVariable("id") int tvID,
                             Principal principal) {
         model.addAttribute("tvSeries", tvSeriesService.getTvById(tvID));
         model.addAttribute("tvID", tvID);
 
-//        Optional<MovieReviews> movieReview = movieService.getReviewByNicknameAndMovieId(principal.getName(), movieID);
-//        movieReview.ifPresent(movieReviews -> model.addAttribute("reviewInfo", movieReviews));
+        Optional<TvSeriesReviews> tvReview = tvSeriesService.getReviewByNicknameAndTvId(principal.getName(), tvID);
+        tvReview.ifPresent(tvReviews -> model.addAttribute("reviewInfo", tvReviews));
 
         return "tv_details";
     }

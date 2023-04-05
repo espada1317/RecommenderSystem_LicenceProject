@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>My Tv Series</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/my_tv_stats.css}">
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Texturina:wght@300&display=swap');
+    </style>
+</head>
+<body>
+
+<header>
+  <div class="main-pages">
+    <div class="page" id="index-logo">
+      <a th:href="@{/}" class="navbar-brand">
+        <strong id="index-page">RSMC</strong>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/profile/overview}">
+        <img alt="image" class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+        <span id="selected-main-page">PROFILE</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/movies}">
+        <img src="https://i.ibb.co/prcykHQ/movie-icon.png" alt="movie-icon">
+        <span>MOVIES</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/tv}">
+        <img src="https://i.ibb.co/vvPdYGF/tv-icon.webp" alt="tv-icon">
+        <span>TV SERIES</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/movies}">
+        <img src="https://i.ibb.co/PMKrBwq/anime-icon.png" alt="anime-icon">
+        <span>ANIME</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/movies}">
+        <img src="https://i.ibb.co/zJr1vDg/music-icon.png" alt="music-icon">
+        <span>MUSIC</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/movies}">
+        <img src="https://i.ibb.co/rZ30zGW/books.png" alt="books">
+        <span>BOOKS</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/movies}">
+        <img src="https://i.ibb.co/Yhy7KbQ/comic.png" alt="comic">
+        <span>MANGA</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/logout}">
+        Logout
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="profilehead">
+  <div class="profileheadcontent">
+    <div class="profileheadcontentoverview">
+      <div class="profileheadcontentoverviewphoto">
+        <img alt="image" class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+      </div>
+
+      <div class="profileheadcontentoverviewinfo">
+        <h3 class="user-fullname" th:text="${userDetails.fullName != null ? userDetails.fullName : 'Anonymous'}"></h3>
+        <h4>(<strong id="nickname-bl" th:text="${userDetails.nickname}"></strong>)</h4>
+      </div>
+    </div>
+
+    <div class="profileheadcontentfollows">
+      <span>
+          <a href="#">0 Following</a>
+          <a href="#">0 Followers</a>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="profilenavbar">
+  <a th:href="@{/profile/dashboard}">
+    <div class="profilebarbuttons">
+      <span>MY DASHBOARD</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/overview}">
+    <div class="profilebarbuttons">
+      <span>OVERVIEW</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/myMovieList}">
+    <div class="profilebarbuttons">
+      <span>MY MOVIE</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/myTvList}">
+    <div class="profilebarbuttons" id="selectedbtn">
+      <span>MY TV SHOWS</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY ANIME</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY GAMES</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY MUSIC</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY BOOKS</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/reviews}">
+    <div class="profilebarbuttons">
+      <span>MY REVIEWS</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY STATS</span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="profilebarbuttons">
+      <span>MY FRIENDS</span>
+    </div>
+  </a>
+</div>
+
+<div class="container bootdey">
+  <div class="content">
+    <div id="pad-wrapper">
+
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Filter Options</strong>
+          </div>
+          <div class="panel-body no-padding">
+            <div class="ibox-content profile-content">
+              <form th:action="@{/profile/myTvList}">
+                <div class="dropdown dropdown-dark">
+                  <select name="category" class="dropdown-select" id="genre-drop">
+                    <option selected value="*">All progress</option>
+                    <option value="plan_watch" th:selected="${ #strings.equals('plan_watch', selectedCategory) }">Plan to Watch</option>
+                    <option value="watching" th:selected="${ #strings.equals('watching', selectedCategory) }">Watching</option>
+                    <option value="completed" th:selected="${ #strings.equals('completed', selectedCategory) }">Completed</option>
+                    <option value="on_hold" th:selected="${ #strings.equals('on_hold', selectedCategory) }">On Hold</option>
+                    <option value="dropped" th:selected="${ #strings.equals('dropped', selectedCategory) }">Dropped</option>
+                  </select>
+                </div>
+                <div class="dropdown dropdown-dark">
+                  <select name="sortBy" class="dropdown-select">
+                    <option selected value="titleAsc" th:selected="${ #strings.equals('titleAsc', selectedSort) }">Sort ASC by title</option>
+                    <option value="titleDesc" th:selected="${ #strings.equals('titleDesc', selectedSort) }">Sort DESC by title</option>
+                    <option value="imdbAsc" th:selected="${ #strings.equals('imdbAsc', selectedSort) }">Sort ASC by IMDB rating</option>
+                    <option value="imdbDesc" th:selected="${ #strings.equals('imdbDesc', selectedSort) }">Sort DESC by IMDB rating</option>
+                  </select>
+                </div>
+                <div class="col-md-10">
+                  <button type="submit" class="btn btn-default btn-sm btn-block filterbtn">
+                    <i class="fa fa-search"></i> Filter
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong th:text="'Personal movie stats (' + ${ personalTvList == null ? 0 : personalTvList.size() } + ' results found)'"></strong>
+          </div>
+          <div class="panel-body">
+
+            <div class="ibox-content">
+              <div class="feed-activity-list">
+
+                <table>
+                  <thead>
+                  <tr>
+                    <th class="poster">Poster</th>
+                    <th class="titleMovie">Title</th>
+                    <th class="year">Start Year</th>
+                    <th class="year">End Year</th>
+                    <th class="imdb">IMDB</th>
+                    <th class="score">Score</th>
+                    <th class="progr">Progress</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="activity : ${personalTvList}">
+                    <td class="poster">
+                      <a th:href="@{/tv/getById/{id}(id=${activity.getTvSeries().tvKey})}" class="pull-left">
+                        <img alt="image" class="img-circle" th:src="${activity.getTvSeries().poster}">
+                      </a>
+                    </td>
+                    <td class="titleMovie">
+                      <span th:text="${activity.getTvSeries().title}">Title</span>
+                    </td>
+                    <td class="year">
+                      <span th:text="${ activity.getTvSeries().runtimeStart }">Release Start</span>
+                    </td>
+                    <td class="year">
+                      <span th:text="${ activity.getTvSeries().runtimeEnd == 9999 ? 'Present' : activity.getTvSeries().runtimeEnd }">Release End</span>
+                    </td>
+                    <td class="imdb">
+                      <span th:text="${activity.getTvSeries().voteAverage}">IMDB</span>
+                    </td>
+                    <td class="score">
+                      <span th:text="${activity.reviewScore}">Score</span>
+                    </td>
+                    <td class="progr">
+                      <span th:text="${activity.category == 'completed' ? 'Completed' : (activity.category == 'plan_watch' ? 'Plan to Watch' : (activity.category == 'dropped' ? 'Dropped' : ( activity.category == 'watching' ? 'Watching' : 'On Hold' )))}">Progress</span>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

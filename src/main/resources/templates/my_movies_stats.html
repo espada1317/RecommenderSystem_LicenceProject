@@ -108,7 +108,7 @@
                 <span>MY MOVIE</span>
             </div>
         </a>
-        <a href="#">
+        <a th:href="@{/profile/myTvList}">
             <div class="profilebarbuttons">
                 <span>MY TV SHOWS</span>
             </div>
@@ -200,7 +200,7 @@
                 <div class="col-md-9">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <strong th:text="${'Personal movie stats (' + personalMovieList.size() + ' results found)'}"></strong>
+                            <strong th:text="'Personal movie stats (' + ${ personalMovieList == null ? 0 : personalMovieList.size() } + ' results found)'"></strong>
                         </div>
                         <div class="panel-body">
 

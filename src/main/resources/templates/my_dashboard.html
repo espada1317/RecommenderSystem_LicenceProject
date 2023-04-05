@@ -105,7 +105,7 @@
                 <span>MY MOVIE</span>
             </div>
         </a>
-        <a href="#">
+        <a th:href="@{/profile/myTvList}">
             <div class="profilebarbuttons">
                 <span>MY TV SHOWS</span>
             </div>
@@ -157,18 +157,18 @@
                     </div>
 
                     <div class="panel-body">
-                        <div class="category-block left">
+                        <div class="category-block left" th:if="${recentWatchedMovies != null}">
                             <h3 class="recently-header">Recently Watched Movies</h3>
                             <section class="exploreScroll">
                                 <div class="horizontal-scroll-wrapper squares">
-                                    <div class="card-list" th:each="recentMovies : ${recentWatched}">
+                                    <div class="card-list" th:each="recentMovies : ${recentWatchedMovies}">
                                         <div class="card"><img th:src="${recentMovies.getMovie().poster}" th:alt="${recentMovies.getMovie().poster}"></div>
                                         <div class="info" th:text="${recentMovies.getMovie().title}"></div>
                                     </div>
                                 </div>
                             </section>
                         </div>
-                        <div class="category-block right">
+                        <div class="category-block right" th:if="${planToWatchMovies != null}">
                             <h3 class="recently-header">Plan to Watch</h3>
                             <section class="exploreScroll">
                                 <div class="horizontal-scroll-wrapper squares">
@@ -183,6 +183,34 @@
                                 </div>
                             </section>
                         </div>
+                        <br>
+                        <div class="category-block left" th:if="${recentWatchedTvs != null}">
+                            <h3 class="recently-header">Recently Watched Tv Series</h3>
+                            <section class="exploreScroll">
+                                <div class="horizontal-scroll-wrapper squares">
+                                    <div class="card-list" th:each="recentTv : ${recentWatchedTvs}">
+                                        <div class="card"><img th:src="${recentTv.tvSeries.poster}" th:alt="${recentTv.getTvSeries().poster}"></div>
+                                        <div class="info" th:text="${recentTv.tvSeries.title}"></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="category-block right" th:if="${planToWatchTvs != null}">
+                            <h3 class="recently-header">Plan to Watch</h3>
+                            <section class="exploreScroll">
+                                <div class="horizontal-scroll-wrapper squares">
+                                    <div class="card-list" th:each="planWatch : ${planToWatchTvs}">
+                                        <div class="card"><img th:src="${planWatch.getTvSeries().poster}" th:alt="${planWatch.getTvSeries().poster}"></div>
+                                        <div class="info">
+                                            <span th:text="${planWatch.getTvSeries().title}"></span>
+                                            &#9672; IMDB:
+                                            <span th:text="${planWatch.getTvSeries().voteaverage}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
                     </div>
                 </div>
             </div>

@@ -405,13 +405,14 @@ body{
 .panel-body {
     background-color: #2e2e2e;
     font-family: 'Grenze Gotisch', cursive;
-    display: flex;
+    /* display: inline-block; */
 }
 
 .category-block {
     background: #2e2e2e;
     width: 49%;
     display: inline-block;
+    margin-bottom: 30px;
 }
 
 .left {

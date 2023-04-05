@@ -1,7 +1,11 @@
 package com.example.recsys.controller;
 
+import com.example.recsys.dto.RecentReviewsDto;
+import com.example.recsys.dto.UserActivityDto;
 import com.example.recsys.dto.UserSettingsDto;
 import com.example.recsys.service.MovieService;
+import com.example.recsys.service.ProfileService;
+import com.example.recsys.service.TvSeriesService;
 import com.example.recsys.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -22,16 +27,29 @@ public class ProfileController {
     @Autowired
     private final MovieService movieService;
 
-    public ProfileController(UserAuthService userAuthService, MovieService movieService) {
+    @Autowired
+    private final TvSeriesService tvSeriesService;
+
+    @Autowired
+    private final ProfileService profileService;
+
+    public ProfileController(UserAuthService userAuthService, MovieService movieService, TvSeriesService tvSeriesService, ProfileService profileService) {
         this.userAuthService = userAuthService;
         this.movieService = movieService;
+        this.tvSeriesService = tvSeriesService;
+        this.profileService = profileService;
     }
 
     @GetMapping(value = "/profile/overview")
     public String profilePage(Model model,
                               Principal principal) {
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
-        model.addAttribute("userActivity", movieService.getAllUserAndFriendActivity(principal.getName()));
+
+        List<UserActivityDto> userActivityDtoList = profileService.getAllUserRecentActivity(
+                movieService.getAllUserAndFriendsMovieActivity(principal.getName()),
+                tvSeriesService.getAllUserAndFriendsTvActivity(principal.getName()));
+
+        model.addAttribute("userActivity", userActivityDtoList);
 
         return "profile_overview";
     }
@@ -51,12 +69,26 @@ public class ProfileController {
         return "my_movies_stats";
     }
 
+    @GetMapping(value = "/profile/myTvList")
+    public String personalTvList(Model model,
+                                    @Param("category") String category,
+                                    @Param("sortBy") String sortBy,
+                                    Principal principal) {
+        model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
+        model.addAttribute("selectedSort", sortBy);
+        model.addAttribute("selectedCategory", category);
+        model.addAttribute("personalTvList", tvSeriesService.searchPersonalTvByMultipleFilter(principal.getName(), category, sortBy));
+        return "my_tv_stats";
+    }
+
     @GetMapping(value = "/profile/dashboard")
     public String personalDashboard(Model model,
                                     Principal principal) {
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
-        model.addAttribute("recentWatched", movieService.getRecentWatchedMovies(principal.getName()));
+        model.addAttribute("recentWatchedMovies", movieService.getRecentWatchedMovies(principal.getName()));
         model.addAttribute("planToWatchMovies", movieService.getPlanToWatchMovies(principal.getName()));
+        model.addAttribute("recentWatchedTvs", tvSeriesService.getRecentWatchedTvs(principal.getName()));
+        model.addAttribute("planToWatchMoviesTvs", tvSeriesService.getPlanToWatchTvs(principal.getName()));
         return "my_dashboard";
     }
 
@@ -64,7 +96,12 @@ public class ProfileController {
     public String personalReviews(Model model,
                                 Principal principal) {
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
-        model.addAttribute("personalReviews", movieService.getReviewsByNickname(principal.getName()));
+
+        List<RecentReviewsDto> userReviewsList = profileService.getAllRecentReviews(
+                movieService.getReviewsByNickname(principal.getName()),
+                tvSeriesService.getReviewsByNickname(principal.getName()));
+
+        model.addAttribute("userReviews", userReviewsList);
         return "my_reviews";
     }
 
@@ -84,7 +121,7 @@ public class ProfileController {
     }
 
     @PostMapping(value = "/profile/settings", params = "action=cancel")
-    public String cancelModifying(@ModelAttribute("userSettingsDto") UserSettingsDto userSettingsDto) {
+    public String cancelModifying() {
         return "redirect:/profile";
     }
 

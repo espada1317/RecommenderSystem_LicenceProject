@@ -108,7 +108,7 @@
                 <span>MY MOVIE</span>
             </div>
         </a>
-        <a href="#">
+        <a th:href="@{/profile/myTvList}">
             <div class="profilebarbuttons">
                 <span>MY TV SHOWS</span>
             </div>
@@ -192,14 +192,15 @@
                             <div class="ibox-content">
                                 <div class="feed-activity-list">
                                     <div class="feed-element" th:each="activity : ${ userActivity }">
-                                        <a th:href="@{/movies/getById/{id}(id=${activity.getMovie().movieKey})}" class="pull-left">
-                                            <img alt="image" class="img-circle" th:src="${activity.getMovie().poster}">
+                                        <a th:href="@{activity.contentPosterLink}" class="pull-left">
+                                            <img alt="image" class="img-circle" th:src="${activity.poster}">
                                         </a>
 
                                         <div class="media-body ">
                                             <strong class="nickname">espada1317</strong>
-                                            marked movie
-                                            <a class="movie-title" th:href="@{/movies/getById/{id}(id=${activity.getMovie().movieKey})}" th:text="${activity.getMovie().getTitle()}"></a>
+                                            marked
+                                            <span th:text="${activity.type}"></span>
+                                            <a class="movie-title" th:href="@{activity.contentPosterLink}" th:text="${activity.title}"></a>
                                             with mark
                                             <strong th:text="${activity.reviewScore} + '/10'"></strong>
                                             <br>

@@ -383,17 +383,17 @@ tr, td, th, table, thread {
 }
 
 .titleMovie {
-  width: 50%;
+  width: 36%;
   text-align: left;
   color: #0088cc;
 }
 
 .progr {
-  width: 16%;
+  width: 20%;
 }
 
 .year, .imdb, .score {
-  width: 8%;
+  width: 10%;
 }
 
 .imdb {

@@ -105,7 +105,7 @@
       <span>MY MOVIE</span>
     </div>
   </a>
-  <a href="#">
+  <a th:href="@{/profile/myTvList}">
     <div class="profilebarbuttons">
       <span>MY TV SHOWS</span>
     </div>
@@ -160,13 +160,15 @@
 
           <div class="content">
             <ul class="team">
-              <li class="member" th:each="review : ${personalReviews}">
+              <li class="member" th:each="review : ${userReviews}">
                 <div class="thumb">
                   <img src="https://i.ibb.co/vd7ptvD/smile-boy.png">
                 </div>
                 <div class="description">
                   <h3>
-                    <a th:href="@{/movies/getById/{id}(id=${review.getMovie().movieKey})}"><span class="movie-name" th:text="${review.getMovie().title}"></span></a>
+                    <a th:href="@{review.link}">
+                      <span class="movie-name" th:text="${review.title}"></span>
+                    </a>
                     <span class="movie-score" th:if="${review.reviewScore != null}" th:text="' &#9672; Score:' + ${review.reviewScore}"></span>
                   </h3>
                   <p th:text="'Review message: 	&quot;' + ${review.reviewMessage} + '&quot;'"></p>
