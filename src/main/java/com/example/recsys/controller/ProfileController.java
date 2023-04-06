@@ -3,10 +3,7 @@ package com.example.recsys.controller;
 import com.example.recsys.dto.RecentReviewsDto;
 import com.example.recsys.dto.UserActivityDto;
 import com.example.recsys.dto.UserSettingsDto;
-import com.example.recsys.service.MovieService;
-import com.example.recsys.service.ProfileService;
-import com.example.recsys.service.TvSeriesService;
-import com.example.recsys.service.UserAuthService;
+import com.example.recsys.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -33,11 +30,15 @@ public class ProfileController {
     @Autowired
     private final ProfileService profileService;
 
-    public ProfileController(UserAuthService userAuthService, MovieService movieService, TvSeriesService tvSeriesService, ProfileService profileService) {
+    @Autowired
+    private final AnimeService animeService;
+
+    public ProfileController(UserAuthService userAuthService, MovieService movieService, TvSeriesService tvSeriesService, ProfileService profileService, AnimeService animeService) {
         this.userAuthService = userAuthService;
         this.movieService = movieService;
         this.tvSeriesService = tvSeriesService;
         this.profileService = profileService;
+        this.animeService = animeService;
     }
 
     @GetMapping(value = "/profile/overview")
@@ -47,7 +48,8 @@ public class ProfileController {
 
         List<UserActivityDto> userActivityDtoList = profileService.getAllUserRecentActivity(
                 movieService.getAllUserAndFriendsMovieActivity(principal.getName()),
-                tvSeriesService.getAllUserAndFriendsTvActivity(principal.getName()));
+                tvSeriesService.getAllUserAndFriendsTvActivity(principal.getName()),
+                animeService.getAllUserAndFriendsAnimeActivity(principal.getName()));
 
         model.addAttribute("userActivity", userActivityDtoList);
 
@@ -81,6 +83,18 @@ public class ProfileController {
         return "my_tv_stats";
     }
 
+    @GetMapping(value = "/profile/myAnimeList")
+    public String personalAnimeList(Model model,
+                                 @Param("category") String category,
+                                 @Param("sortBy") String sortBy,
+                                 Principal principal) {
+        model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
+        model.addAttribute("selectedSort", sortBy);
+        model.addAttribute("selectedCategory", category);
+        model.addAttribute("personalAnimeList", animeService.searchPersonalAnimeByMultipleFilter(principal.getName(), category, sortBy));
+        return "my_anime_stats";
+    }
+
     @GetMapping(value = "/profile/dashboard")
     public String personalDashboard(Model model,
                                     Principal principal) {
@@ -89,6 +103,8 @@ public class ProfileController {
         model.addAttribute("planToWatchMovies", movieService.getPlanToWatchMovies(principal.getName()));
         model.addAttribute("recentWatchedTvs", tvSeriesService.getRecentWatchedTvs(principal.getName()));
         model.addAttribute("planToWatchMoviesTvs", tvSeriesService.getPlanToWatchTvs(principal.getName()));
+        model.addAttribute("recentWatchedAnime", animeService.getRecentWatchedAnime(principal.getName()));
+        model.addAttribute("planToWatchAnime", animeService.getPlanToWatchAnime(principal.getName()));
         return "my_dashboard";
     }
 
@@ -99,7 +115,8 @@ public class ProfileController {
 
         List<RecentReviewsDto> userReviewsList = profileService.getAllRecentReviews(
                 movieService.getReviewsByNickname(principal.getName()),
-                tvSeriesService.getReviewsByNickname(principal.getName()));
+                tvSeriesService.getReviewsByNickname(principal.getName()),
+                animeService.getReviewsByNickname(principal.getName()));
 
         model.addAttribute("userReviews", userReviewsList);
         return "my_reviews";

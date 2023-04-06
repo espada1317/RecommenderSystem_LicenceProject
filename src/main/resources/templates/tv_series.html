@@ -39,7 +39,7 @@
       </a>
     </div>
     <div class="page">
-      <a class="navbar-brand" th:href="@{/movies}">
+      <a class="navbar-brand" th:href="@{/anime}">
         <img src="https://i.ibb.co/PMKrBwq/anime-icon.png" alt="anime-icon">
         <span>ANIME</span>
       </a>
@@ -107,8 +107,6 @@
               <option value="titleDesc" th:selected="${ #strings.equals('titleDesc', selectedSort) }">Sort DESC by title</option>
               <option value="lengthAsc" th:selected="${ #strings.equals('lengthAsc', selectedSort) }">Sort ASC by total length</option>
               <option value="lengthDesc" th:selected="${ #strings.equals('lengthDesc', selectedSort) }">Sort DESC by total length</option>
-              <option value="popularityAsc" th:selected="${ #strings.equals('popularityAsc', selectedSort) }">Sort ASC by popularity</option>
-              <option value="popularityDesc" th:selected="${ #strings.equals('popularityDesc', selectedSort) }">Sort DESC by popularity</option>
               <option value="imdbAsc" th:selected="${ #strings.equals('imdbAsc', selectedSort) }">Sort ASC by IMDB rating</option>
               <option value="imdbDesc" th:selected="${ #strings.equals('imdbDesc', selectedSort) }">Sort DESC by IMDB rating</option>
             </select>

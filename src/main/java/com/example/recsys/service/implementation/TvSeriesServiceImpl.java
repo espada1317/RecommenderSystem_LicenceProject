@@ -143,8 +143,8 @@ public class TvSeriesServiceImpl implements TvSeriesService {
     }
 
     @Override
-    public Optional<TvSeriesReviews> getReviewByNicknameAndTvId(String nickname, Integer movieId) {
-        return Optional.ofNullable(tvSeriesReviewRepository.findReviewByUserAndMovie(nickname, movieId));
+    public Optional<TvSeriesReviews> getReviewByNicknameAndTvId(String nickname, Integer tvId) {
+        return Optional.ofNullable(tvSeriesReviewRepository.findReviewByUserAndMovie(nickname, tvId));
     }
 
     @Override

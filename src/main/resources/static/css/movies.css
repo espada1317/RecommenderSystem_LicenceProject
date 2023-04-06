@@ -263,3 +263,11 @@ a.navbar-brand {
 .white-blocks {
     color: white;
 }
+
+.card {
+    height: 540px;
+}
+
+.card-img-top {
+    height: 430px;
+}

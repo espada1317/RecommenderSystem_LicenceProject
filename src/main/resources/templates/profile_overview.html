@@ -39,7 +39,7 @@
                 </a>
             </div>
             <div class="page">
-                <a class="navbar-brand" th:href="@{/movies}">
+                <a class="navbar-brand" th:href="@{/anime}">
                     <img src="https://i.ibb.co/PMKrBwq/anime-icon.png" alt="anime-icon">
                     <span>ANIME</span>
                 </a>
@@ -113,7 +113,7 @@
                 <span>MY TV SHOWS</span>
             </div>
         </a>
-        <a href="#">
+        <a th:href="@{/profile/myAnimeList}">
             <div class="profilebarbuttons">
                 <span>MY ANIME</span>
             </div>
@@ -192,7 +192,7 @@
                             <div class="ibox-content">
                                 <div class="feed-activity-list">
                                     <div class="feed-element" th:each="activity : ${ userActivity }">
-                                        <a th:href="@{activity.contentPosterLink}" class="pull-left">
+                                        <a th:href="@{${activity.contentPosterLink}}" class="pull-left">
                                             <img alt="image" class="img-circle" th:src="${activity.poster}">
                                         </a>
 
@@ -200,7 +200,7 @@
                                             <strong class="nickname">espada1317</strong>
                                             marked
                                             <span th:text="${activity.type}"></span>
-                                            <a class="movie-title" th:href="@{activity.contentPosterLink}" th:text="${activity.title}"></a>
+                                            <a class="movie-title" th:href="@{${activity.contentPosterLink}}" th:text="${activity.title}"></a>
                                             with mark
                                             <strong th:text="${activity.reviewScore} + '/10'"></strong>
                                             <br>

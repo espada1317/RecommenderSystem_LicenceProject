@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/anime.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Texturina:wght@300&display=swap');
+  </style>
+</head>
+
+<body>
+
+<header>
+    <div class="main-pages">
+        <div class="page" id="index-logo">
+            <a th:href="@{/}" class="navbar-brand">
+                <strong id="index-page">RSMC</strong>
+            </a>
+        </div>
+        <div class="page">
+            <a class="navbar-brand" th:href="@{/profile/overview}">
+                <img alt="image" class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                <span>PROFILE</span>
+            </a>
+        </div>
+        <div class="page">
+            <a class="navbar-brand" th:href="@{/movies}">
+                <img src="https://i.ibb.co/prcykHQ/movie-icon.png" alt="movie-icon">
+                <span>MOVIES</span>
+            </a>
+        </div>
+        <div class="page">
+            <a class="navbar-brand" th:href="@{/tv}">
+                <img src="https://i.ibb.co/vvPdYGF/tv-icon.webp" alt="tv-icon">
+                <span>TV SERIES</span>
+            </a>
+        </div>
+        <div class="page">
+            <a class="navbar-brand" th:href="@{/anime}">
+                <img src="https://i.ibb.co/PMKrBwq/anime-icon.png" alt="anime-icon">
+                <span  id="selected-main-page">ANIME</span>
+            </a>
+        </div>
+        <div class="page">
+            <a class="navbar-brand" th:href="@{/movies}">
+                <img src="https://i.ibb.co/zJr1vDg/music-icon.png" alt="music-icon">
+                <span>MUSIC</span>
+            </a>
+        </div>
+        <div class="page">
+            <a class="navbar-brand" th:href="@{/movies}">
+                <img src="https://i.ibb.co/rZ30zGW/books.png" alt="books">
+                <span>BOOKS</span>
+            </a>
+        </div>
+        <div class="page">
+            <a class="navbar-brand" th:href="@{/movies}">
+                <img src="https://i.ibb.co/Yhy7KbQ/comic.png" alt="comic">
+                <span>MANGA</span>
+            </a>
+        </div>
+        <div class="page">
+            <a class="navbar-brand" th:href="@{/logout}">
+                Logout
+            </a>
+        </div>
+    </div>
+</header>
+
+<main role="main">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading" style="color: white;">ANIME</h1>
+        </div>
+    </section>
+
+    <div class="album py-3 backgr">
+
+        <div class="container">
+            <form th:action="@{/anime}">
+                <span class="white-blocks">Filters:</span>
+                <div class="form-outline mb-1 container">
+                    <div class="dropdown dropdown-dark">
+                        <select name="genre" class="dropdown-select" id="genre-drop">
+                            <option selected value="*">All genres</option>
+                            <option th:each="genre: ${animeGenres}" th:value="${genre}" th:text="${genre}" th:selected="${genre.equals(selectedGenre)}"></option>
+                        </select>
+                    </div>
+                    <div class="dropdown dropdown-dark">
+                        <select name="type" class="dropdown-select" id="type-drop">
+                            <option selected value="*">All types</option>
+                            <option th:each="type: ${animeTypes}" th:value="${type}" th:text="${type}" th:selected="${type.equals(selectedType)}"></option>
+                        </select>
+                    </div>
+                    <div class="dropdown dropdown-dark">
+                        <select name="source" class="dropdown-select" id="source-drop">
+                            <option selected value="*">All sources</option>
+                            <option th:each="source: ${animeSources}" th:value="${source}" th:text="${source}" th:selected="${source.equals(selectedSource)}"></option>
+                        </select>
+                    </div>
+                    <div class="dropdown dropdown-dark">
+                        <select name="startYear" class="dropdown-select">
+                            <option selected value="0">All start release year</option>
+                            <option th:each="rs_year: ${releaseStartYears}" th:value="${rs_year}" th:text="${rs_year}" th:selected="${rs_year.equals(selectedStartYear)}"></option>
+                        </select>
+                    </div>
+                    <div class="dropdown dropdown-dark">
+                        <select name="endYear" class="dropdown-select">
+                            <option selected value="0">All end release year</option>
+                            <option th:each="re_year: ${releaseEndYears}" th:value="${re_year}" th:text="${ re_year == 2900 ? 'Present' : re_year }" th:selected="${re_year.equals(selectedEndYear)}"></option>
+                        </select>
+                    </div>
+                    <div class="dropdown dropdown-dark">
+                        <select name="sortBy" class="dropdown-select">
+                            <option selected value="titleAsc" th:selected="${ #strings.equals('titleAsc', selectedSort) }">Sort ASC by title</option>
+                            <option value="titleDesc" th:selected="${ #strings.equals('titleDesc', selectedSort) }">Sort DESC by title</option>
+                            <option value="lengthAsc" th:selected="${ #strings.equals('lengthAsc', selectedSort) }">Sort ASC by total length</option>
+                            <option value="lengthDesc" th:selected="${ #strings.equals('lengthDesc', selectedSort) }">Sort DESC by total length</option>
+                            <option value="scoreAsc" th:selected="${ #strings.equals('scoreAsc', selectedSort) }">Sort ASC by score</option>
+                            <option value="scoreDesc" th:selected="${ #strings.equals('scoreDesc', selectedSort) }">Sort DESC by score</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <span class="white-blocks">Search:</span>
+                    <input type="search" name="keyword" class="form-control" id="datatable-search-input" th:value="${keyword}">
+                    <input type="submit" class="search-button btn btn-primary" value="Search">
+                </div>
+            </form>
+
+            <div class="form-outline mb-2" id="clear-filter">
+                <a type="button" id="submit-cancel" class="btn btn-secondary" th:href="@{/anime?genre=*&type=*&source=*&startYear=0&endYear=0&sortBy=&keyword=}"> Clear filters </a>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3" th:each = "anime: ${animeList}">
+                    <div class="card mb-4 box-shadow">
+                        <img class="card-img-top" th:src="${anime.poster}" th:alt="${anime.poster}">
+                        <div class="card-body">
+                            <p class="card-text" th:text="${anime.title}"></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-primary btn-sm btn-outline-secondary" th:href="@{/anime/getById/{id}(id=${anime.animeKey})}">View</a>
+                                </div>
+                                <strong class="text-muted" th:text="${ #temporals.year(anime.runtimeStart) } + ' - ' + ${ #temporals.year(anime.runtimeEnd) == 2900 ? 'Present' : #temporals.year(anime.runtimeEnd)}"></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<footer class="text-muted">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>

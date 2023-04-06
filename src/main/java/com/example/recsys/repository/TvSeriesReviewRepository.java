@@ -1,6 +1,5 @@
 package com.example.recsys.repository;
 
-import com.example.recsys.entity.MovieReviews;
 import com.example.recsys.entity.TvSeriesReviews;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

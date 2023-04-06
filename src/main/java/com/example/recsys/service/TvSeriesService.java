@@ -3,7 +3,6 @@ package com.example.recsys.service;
 import com.example.recsys.dto.TvReviewDto;
 import com.example.recsys.entity.TvSeries;
 import com.example.recsys.entity.TvSeriesReviews;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;

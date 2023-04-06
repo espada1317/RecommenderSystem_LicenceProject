@@ -1,7 +1,9 @@
 package com.example.recsys.controller;
 
+import com.example.recsys.dto.AnimeReviewDto;
 import com.example.recsys.dto.MovieReviewDto;
 import com.example.recsys.dto.TvReviewDto;
+import com.example.recsys.service.AnimeService;
 import com.example.recsys.service.MovieService;
 import com.example.recsys.service.TvSeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,13 @@ public class ReviewController {
     @Autowired
     private final TvSeriesService tvSeriesService;
 
-    public ReviewController(MovieService movieService, TvSeriesService tvSeriesService) {
+    @Autowired
+    private final AnimeService animeService;
+
+    public ReviewController(MovieService movieService, TvSeriesService tvSeriesService, AnimeService animeService) {
         this.movieService = movieService;
         this.tvSeriesService = tvSeriesService;
+        this.animeService = animeService;
     }
 
     @PostMapping(value = "/movie/saveReview", params = "action=save")
@@ -70,6 +76,29 @@ public class ReviewController {
                                     Principal principal) {
         tvSeriesService.deleteReview(principal.getName(), movieId);
         return "redirect:/tv/getById/" + movieId;
+    }
+
+    @PostMapping(value = "/anime/saveReview", params = "action=save")
+    public String saveAnimeReview(@ModelAttribute("animeReviewDto") AnimeReviewDto animeReviewDto,
+                               @RequestParam("id") Integer animeId,
+                               Principal principal) {
+        animeService.saveReview(animeId, principal.getName(), animeReviewDto);
+        return "redirect:/anime/getById/" + animeId;
+    }
+
+    @PostMapping(value = "/anime/saveReview", params = "action=update")
+    public String updateAnimeReview(@ModelAttribute("animeReviewDto") AnimeReviewDto animeReviewDto,
+                                 @RequestParam("id") Integer animeId,
+                                 Principal principal) {
+        animeService.updateReview(principal.getName(), animeId, animeReviewDto);
+        return "redirect:/anime/getById/" + animeId;
+    }
+
+    @PostMapping(value = "/anime/saveReview", params = "action=delete")
+    public String deleteAnimeReview(@RequestParam("id") Integer animeId,
+                                 Principal principal) {
+        animeService.deleteReview(principal.getName(), animeId);
+        return "redirect:/anime/getById/" + animeId;
     }
 
 }

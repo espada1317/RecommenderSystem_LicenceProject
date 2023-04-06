@@ -5,7 +5,7 @@
   <title>My Tv Series</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/my_tv_stats.css}">
+  <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/my_anime_stats.css}">
   <style>
         @import url('https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@500&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Texturina:wght@300&display=swap');
@@ -109,12 +109,12 @@
     </div>
   </a>
   <a th:href="@{/profile/myTvList}">
-    <div class="profilebarbuttons" id="selectedbtn">
+    <div class="profilebarbuttons">
       <span>MY TV SHOWS</span>
     </div>
   </a>
   <a th:href="@{/profile/myAnimeList}">
-    <div class="profilebarbuttons">
+    <div class="profilebarbuttons" id="selectedbtn">
       <span>MY ANIME</span>
     </div>
   </a>
@@ -161,7 +161,7 @@
           </div>
           <div class="panel-body no-padding">
             <div class="ibox-content profile-content">
-              <form th:action="@{/profile/myTvList}">
+              <form th:action="@{/profile/myAnimeList}">
                 <div class="dropdown dropdown-dark">
                   <select name="category" class="dropdown-select" id="genre-drop">
                     <option selected value="*">All progress</option>
@@ -176,8 +176,8 @@
                   <select name="sortBy" class="dropdown-select">
                     <option selected value="titleAsc" th:selected="${ #strings.equals('titleAsc', selectedSort) }">Sort ASC by title</option>
                     <option value="titleDesc" th:selected="${ #strings.equals('titleDesc', selectedSort) }">Sort DESC by title</option>
-                    <option value="imdbAsc" th:selected="${ #strings.equals('imdbAsc', selectedSort) }">Sort ASC by IMDB rating</option>
-                    <option value="imdbDesc" th:selected="${ #strings.equals('imdbDesc', selectedSort) }">Sort DESC by IMDB rating</option>
+                    <option value="lengthAsc" th:selected="${ #strings.equals('lengthAsc', selectedSort) }">Sort ASC by length</option>
+                    <option value="lengthDesc" th:selected="${ #strings.equals('lengthDesc', selectedSort) }">Sort DESC by length</option>
                   </select>
                 </div>
                 <div class="col-md-10">
@@ -194,7 +194,7 @@
       <div class="col-md-9">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <strong th:text="'Personal movie stats (' + ${ personalTvList == null ? 0 : personalTvList.size() } + ' results found)'"></strong>
+            <strong th:text="'Personal movie stats (' + ${ personalAnimeList == null ? 0 : personalAnimeList.size() } + ' results found)'"></strong>
           </div>
           <div class="panel-body">
 
@@ -208,29 +208,33 @@
                     <th class="titleMovie">Title</th>
                     <th class="year">Start Year</th>
                     <th class="year">End Year</th>
-                    <th class="imdb">IMDB</th>
+                    <th class="imdb">Source</th>
+                    <th class="type">Type</th>
                     <th class="score">Score</th>
                     <th class="progr">Progress</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr th:each="activity : ${personalTvList}">
+                  <tr th:each="activity : ${personalAnimeList}">
                     <td class="poster">
-                      <a th:href="@{/tv/getById/{id}(id=${activity.getTvSeries().tvKey})}" class="pull-left">
-                        <img alt="image" class="img-circle" th:src="${activity.getTvSeries().poster}">
+                      <a th:href="@{/anime/getById/{id}(id=${activity.getAnime().animeKey})}" class="pull-left">
+                        <img alt="image" class="img-circle" th:src="${activity.getAnime().poster}">
                       </a>
                     </td>
                     <td class="titleMovie">
-                      <span th:text="${activity.getTvSeries().title}">Title</span>
+                      <span th:text="${activity.getAnime().title}">Title</span>
                     </td>
                     <td class="year">
-                      <span th:text="${ activity.getTvSeries().runtimeStart }">Release Start</span>
+                      <span th:text="${ #temporals.year(activity.getAnime().runtimeStart) }">Release Start</span>
                     </td>
                     <td class="year">
-                      <span th:text="${ activity.getTvSeries().runtimeEnd == 9999 ? 'Present' : activity.getTvSeries().runtimeEnd }">Release End</span>
+                      <span th:text="${ #temporals.year(activity.getAnime().runtimeEnd) == 2900 ? 'Present' : #temporals.year(activity.getAnime().runtimeEnd) }">Release End</span>
                     </td>
                     <td class="imdb">
-                      <span th:text="${activity.getTvSeries().voteAverage}">IMDB</span>
+                      <span th:text="${activity.getAnime().source}">Source</span>
+                    </td>
+                    <td class="imdb">
+                      <span th:text="${activity.getAnime().type}">Type</span>
                     </td>
                     <td class="score">
                       <span th:text="${activity.reviewScore}">Score</span>
