@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Texturina:wght@300&display=swap');
+
 :root {
     --jumbotron-padding-y: 3rem;
 }
@@ -253,7 +256,7 @@ a.navbar-brand {
     margin: 0 30px;
 }
 
-#selected-main-page {
+.selected-main-page {
     color: orange;
 }
 

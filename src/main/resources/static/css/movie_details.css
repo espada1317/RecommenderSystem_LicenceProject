@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Texturina:wght@300&display=swap');
+
+
 body{
     background-color: #edf1f5;
     background-image: url('https://i.ibb.co/VWfjY8G/gothic-backg.png');
@@ -188,4 +192,82 @@ h6 {
     margin-right: 10px;
     display: inline-block;
     float: left;
+}
+
+header {
+    height: 80px;
+    margin-top: -20px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.main-pages {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    background: #171717;
+}
+
+.page {
+    margin: 0;
+    height: 100%;
+    width: 130px;
+    display: flex;
+    flex-direction: column;
+    weight: 350px;
+    align-items: center;
+    justify-content: center;
+    background: #292726;
+    font-family: 'Texturina', sans-serif;
+}
+
+.page a {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.page:hover {
+    opacity: .7;
+}
+
+.page a:hover{
+    color: #d93b3b;
+}
+
+#index-page {
+    font-family: 'Grenze Gotisch', cursive;
+    font-size: 45px;
+    background: #171717;
+}
+
+a.navbar-brand {
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.navbar-brand img {
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2px;
+}
+
+#index-logo {
+    background: #171717;
+    margin: 0 30px;
+}
+
+.selected-main-page {
+    color: orange;
+}
+
+.backgr {
+    background: black;
+}
+
+.white-blocks {
+    color: white;
 }

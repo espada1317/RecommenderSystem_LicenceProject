@@ -28,9 +28,9 @@ public class MovieController {
     public String movieById(Model model,
                             @PathVariable("id") int movieID,
                             Principal principal) {
+        model.addAttribute("isMoviePage", true);
         model.addAttribute("movies", movieService.getMovieById(movieID));
         model.addAttribute("movieID", movieID);
-
         Optional<MovieReviews> movieReview = movieService.getReviewByNicknameAndMovieId(principal.getName(), movieID);
         movieReview.ifPresent(movieReviews -> model.addAttribute("reviewInfo", movieReviews));
 
@@ -45,6 +45,7 @@ public class MovieController {
                                 @Param("language") String language,
                                 @Param("sortBy") String sortBy,
                                 Principal principal) {
+        model.addAttribute("isMoviePage", true);
         model.addAttribute("principalName", principal.getName());
         model.addAttribute("movieGenres", movieService.getMovieGenres());
         model.addAttribute("releaseYears", movieService.getReleaseYears());

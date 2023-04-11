@@ -32,7 +32,8 @@ public class TvSeriesController {
                                 @Param("year") Integer endYear,
                                 @Param("sortBy") String sortBy,
                                 Principal principal) {
-        model.addAttribute("principalName", principal.getName());
+        model.addAttribute("isTvPage",true);
+        model.addAttribute("principalName",principal.getName());
         model.addAttribute("tvGenres", tvSeriesService.getTvGenres());
         model.addAttribute("releaseStartYears", tvSeriesService.getReleaseStartYears());
         model.addAttribute("releaseEndYears", tvSeriesService.getReleaseEndYears());
@@ -49,9 +50,9 @@ public class TvSeriesController {
     public String tvById(Model model,
                             @PathVariable("id") int tvID,
                             Principal principal) {
+        model.addAttribute("isTvPage",true);
         model.addAttribute("tvSeries", tvSeriesService.getTvById(tvID));
         model.addAttribute("tvID", tvID);
-
         Optional<TvSeriesReviews> tvReview = tvSeriesService.getReviewByNicknameAndTvId(principal.getName(), tvID);
         tvReview.ifPresent(tvReviews -> model.addAttribute("reviewInfo", tvReviews));
 

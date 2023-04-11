@@ -34,6 +34,7 @@ public class AnimeController {
                                   @Param("year") Integer endYear,
                                   @Param("sortBy") String sortBy,
                                   Principal principal) {
+        model.addAttribute("isAnimePage", true);
         model.addAttribute("principalName", principal.getName());
         model.addAttribute("animeGenres", animeService.getAnimeGenres());
         model.addAttribute("animeTypes", animeService.getAnimeTypes());
@@ -55,9 +56,9 @@ public class AnimeController {
     public String animeById(Model model,
                          @PathVariable("id") int animeID,
                          Principal principal) {
+        model.addAttribute("isAnimePage", true);
         model.addAttribute("animeDetails", animeService.getAnimeById(animeID));
         model.addAttribute("animeID", animeID);
-
         Optional<AnimeReview> animeReview = animeService.getReviewByNicknameAndAnimeId(principal.getName(), animeID);
         animeReview.ifPresent(anime -> model.addAttribute("reviewInfo", anime));
 

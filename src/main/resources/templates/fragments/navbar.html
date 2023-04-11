@@ -1,0 +1,50 @@
+<div th:fragment="navbar">
+  <div class="main-pages">
+    <div class="page" id="index-logo">
+      <a th:href="@{/}" class="navbar-brand">
+        <strong id="index-page">RSMC</strong>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/profile/overview}">
+        <img alt="image" class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+        <span th:classappend=" ${isProfilePage} ? selected-main-page : '' ">PROFILE</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/movies}">
+        <img src="https://i.ibb.co/prcykHQ/movie-icon.png" alt="movie-icon">
+        <span th:classappend=" ${isMoviePage} ? selected-main-page : '' ">MOVIES</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/tv}">
+        <img src="https://i.ibb.co/vvPdYGF/tv-icon.webp" alt="tv-icon">
+        <span th:classappend=" ${isTvPage} ? selected-main-page : '' ">TV SERIES</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/anime}">
+        <img src="https://i.ibb.co/PMKrBwq/anime-icon.png" alt="anime-icon">
+        <span th:classappend=" ${isAnimePage} ? selected-main-page : '' ">ANIME</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" href="#">
+        <img src="https://i.ibb.co/zJr1vDg/music-icon.png" alt="music-icon">
+        <span>MUSIC</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" href="#">
+        <img src="https://i.ibb.co/rZ30zGW/books.png" alt="books">
+        <span>BOOKS</span>
+      </a>
+    </div>
+    <div class="page">
+      <a class="navbar-brand" th:href="@{/logout}">
+        Logout
+      </a>
+    </div>
+  </div>
+</div>

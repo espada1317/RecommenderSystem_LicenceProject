@@ -44,13 +44,13 @@ public class ProfileController {
     @GetMapping(value = "/profile/overview")
     public String profilePage(Model model,
                               Principal principal) {
+        model.addAttribute("isProfilePage", true);
+        model.addAttribute("isOverview", true);
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
-
         List<UserActivityDto> userActivityDtoList = profileService.getAllUserRecentActivity(
                 movieService.getAllUserAndFriendsMovieActivity(principal.getName()),
                 tvSeriesService.getAllUserAndFriendsTvActivity(principal.getName()),
                 animeService.getAllUserAndFriendsAnimeActivity(principal.getName()));
-
         model.addAttribute("userActivity", userActivityDtoList);
 
         return "profile_overview";
@@ -62,6 +62,8 @@ public class ProfileController {
                                     @Param("year") Integer year,
                                     @Param("sortBy") String sortBy,
                                     Principal principal) {
+        model.addAttribute("isProfilePage", true);
+        model.addAttribute("isMovieStats", true);
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
         model.addAttribute("moviesReleaseYears", movieService.getDistinctPersonalReleaseYears(principal.getName()));
         model.addAttribute("selectedYear", year);
@@ -76,6 +78,8 @@ public class ProfileController {
                                     @Param("category") String category,
                                     @Param("sortBy") String sortBy,
                                     Principal principal) {
+        model.addAttribute("isProfilePage", true);
+        model.addAttribute("isTvStats", true);
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
         model.addAttribute("selectedSort", sortBy);
         model.addAttribute("selectedCategory", category);
@@ -88,6 +92,8 @@ public class ProfileController {
                                  @Param("category") String category,
                                  @Param("sortBy") String sortBy,
                                  Principal principal) {
+        model.addAttribute("isProfilePage", true);
+        model.addAttribute("isAnimeStats", true);
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
         model.addAttribute("selectedSort", sortBy);
         model.addAttribute("selectedCategory", category);
@@ -98,6 +104,8 @@ public class ProfileController {
     @GetMapping(value = "/profile/dashboard")
     public String personalDashboard(Model model,
                                     Principal principal) {
+        model.addAttribute("isProfilePage", true);
+        model.addAttribute("isDashboard", true);
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
         model.addAttribute("recentWatchedMovies", movieService.getRecentWatchedMovies(principal.getName()));
         model.addAttribute("planToWatchMovies", movieService.getPlanToWatchMovies(principal.getName()));
@@ -111,13 +119,13 @@ public class ProfileController {
     @GetMapping(value = "/profile/reviews")
     public String personalReviews(Model model,
                                 Principal principal) {
+        model.addAttribute("isProfilePage", true);
+        model.addAttribute("isReviewStats", true);
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
-
         List<RecentReviewsDto> userReviewsList = profileService.getAllRecentReviews(
                 movieService.getReviewsByNickname(principal.getName()),
                 tvSeriesService.getReviewsByNickname(principal.getName()),
                 animeService.getReviewsByNickname(principal.getName()));
-
         model.addAttribute("userReviews", userReviewsList);
         return "my_reviews";
     }

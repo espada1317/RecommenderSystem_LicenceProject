@@ -9,84 +9,87 @@
 </head>
 <body>
 
-<div class="container">
+  <header th:insert="fragments/navbar :: navbar">
+  </header>
 
-  <div class="card mb-2">
-    <div class="card-body" th:each = "anime: ${animeDetails}">
-      <div class="row">
-        <div class="col-lg-4 col-md-5 col-sm-6">
-          <div class="white-box text-center"><img th:src="${anime.poster}" width="100%" class="img-responsive"></div>
-        </div>
+  <div class="container">
 
-        <div class="col-lg-8 col-md-7 col-sm-6">
-          <h1 class="card-title" th:text="${anime.title}"></h1>
-          <h5 class="mt-4">Runtime Start & End:</h5>
-          <h6 th:text="${ anime.runtimeStart } + ' - ' + ${  #temporals.year(anime.runtimeEnd) != 2900 ? anime.runtimeEnd : 'Present'}"></h6>
-          <h5 class="mt-4">Number of Episodes and Average Runtime:</h5>
-          <h6> <span th:text="${anime.numberEpisodes}"></span> episodes x <span th:text="${anime.averageRuntime}"></span> min</h6>
-          </h6>
-          <h5 class="mt-4">Anime Type:</h5>
-          <h6 th:text="${ anime.type }"></h6>
-          <h5 class="mt-4">Anime Source:</h5>
-          <h6 th:text="${ anime.source }"></h6>
-          <h5 class="mt-4">Genres:</h5>
-          <div th:each="genre,count : ${#strings.arraySplit(anime.genres, ',')}" class="form-outline mb-1 container">
-            <a class="div-genres" th:text="${genre.trim()}" th:href="@{'/anime?genre='+${genre.trim()}+'&year=0&language=*&sortBy=titleAsc&keyword='}"></a>
+    <div class="card mb-2">
+      <div class="card-body" th:each = "anime: ${animeDetails}">
+        <div class="row">
+          <div class="col-lg-4 col-md-5 col-sm-6">
+            <div class="white-box text-center"><img th:src="${anime.poster}" width="100%" class="img-responsive"></div>
           </div>
-          <br>
+
+          <div class="col-lg-8 col-md-7 col-sm-6">
+            <h1 class="card-title" th:text="${anime.title}"></h1>
+            <h5 class="mt-4">Runtime Start & End:</h5>
+            <h6 th:text="${ anime.runtimeStart } + ' - ' + ${  #temporals.year(anime.runtimeEnd) != 2900 ? anime.runtimeEnd : 'Present'}"></h6>
+            <h5 class="mt-4">Number of Episodes and Average Runtime:</h5>
+            <h6> <span th:text="${anime.numberEpisodes}"></span> episodes x <span th:text="${anime.averageRuntime}"></span> min</h6>
+            </h6>
+            <h5 class="mt-4">Anime Type:</h5>
+            <h6 th:text="${ anime.type }"></h6>
+            <h5 class="mt-4">Anime Source:</h5>
+            <h6 th:text="${ anime.source }"></h6>
+            <h5 class="mt-4">Genres:</h5>
+            <div th:each="genre,count : ${#strings.arraySplit(anime.genres, ',')}" class="form-outline mb-1 container">
+              <a class="div-genres" th:text="${genre.trim()}" th:href="@{'/anime?genre='+${genre.trim()}+'&year=0&language=*&sortBy=titleAsc&keyword='}"></a>
+            </div>
+            <br>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="card-body">
-      <div class="row">
-        <form method="post" id="review-form" th:action="@{/anime/saveReview(id=${animeID})}" th:object="${animeReviewDto}">
-          <div class="form-outline container mb-2">
-            <div class="dropdown dropdown-dark">
-              <select name="category" class="dropdown-select" id="genre-drop">
-                <option selected hidden="" disabled>Add to list</option>
-                <option value="plan_watch" th:selected="${ reviewInfo != null &&  #strings.equals('plan_watch', reviewInfo.getCategory()) }">Plan to Watch</option>
-                <option value="watching" th:selected="${ reviewInfo != null &&  #strings.equals('watching', reviewInfo.getCategory()) }">Watching</option>
-                <option value="completed" th:selected="${ reviewInfo != null &&  #strings.equals('completed', reviewInfo.getCategory()) }">Completed</option>
-                <option value="on_hold" th:selected="${ reviewInfo != null &&  #strings.equals('on_hold', reviewInfo.getCategory()) }">On Hold</option>
-                <option value="dropped" th:selected="${ reviewInfo != null &&  #strings.equals('dropped', reviewInfo.getCategory()) }">Dropped</option>
-              </select>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <form method="post" id="review-form" th:action="@{/anime/saveReview(id=${animeID})}" th:object="${animeReviewDto}">
+            <div class="form-outline container mb-2">
+              <div class="dropdown dropdown-dark">
+                <select name="category" class="dropdown-select" id="genre-drop">
+                  <option selected hidden="" disabled>Add to list</option>
+                  <option value="plan_watch" th:selected="${ reviewInfo != null &&  #strings.equals('plan_watch', reviewInfo.getCategory()) }">Plan to Watch</option>
+                  <option value="watching" th:selected="${ reviewInfo != null &&  #strings.equals('watching', reviewInfo.getCategory()) }">Watching</option>
+                  <option value="completed" th:selected="${ reviewInfo != null &&  #strings.equals('completed', reviewInfo.getCategory()) }">Completed</option>
+                  <option value="on_hold" th:selected="${ reviewInfo != null &&  #strings.equals('on_hold', reviewInfo.getCategory()) }">On Hold</option>
+                  <option value="dropped" th:selected="${ reviewInfo != null &&  #strings.equals('dropped', reviewInfo.getCategory()) }">Dropped</option>
+                </select>
+              </div>
+
+              <div class="dropdown dropdown-dark">
+                <select name="scoreReview" class="dropdown-select">
+                  <option selected hidden="" disabled>Select grade</option>
+                  <option value="10" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 10 }">(10) Masterpiece</option>
+                  <option value="9" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 9 }">(9) Great</option>
+                  <option value="8" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 8 }">(8) Very Good</option>
+                  <option value="7" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 7 }">(7) Good</option>
+                  <option value="6" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 6 }">(6) Fine</option>
+                  <option value="5" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 5 }">(5) Average</option>
+                  <option value="4" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 4 }">(4) Bad</option>
+                  <option value="3" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 3 }">(3) Very bad</option>
+                  <option value="2" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 2 }">(2) Horrible</option>
+                  <option value="1" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 1 }">(1) Appalling</option>
+                </select>
+              </div>
+
+              <button th:if="${reviewInfo != null}" type="submit" name="action" value="delete" class="btn btn-secondary submit-cancel">Delete</button>
+              <button th:if="${reviewInfo != null}" type="submit" name="action" value="update" class="btn btn-secondary submit-cancel">Update</button>
+              <button th:if="${reviewInfo == null}" type="submit" name="action" value="save" id="submit"        class="btn btn-primary">Save</button>
             </div>
 
-            <div class="dropdown dropdown-dark">
-              <select name="scoreReview" class="dropdown-select">
-                <option selected hidden="" disabled>Select grade</option>
-                <option value="10" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 10 }">(10) Masterpiece</option>
-                <option value="9" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 9 }">(9) Great</option>
-                <option value="8" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 8 }">(8) Very Good</option>
-                <option value="7" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 7 }">(7) Good</option>
-                <option value="6" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 6 }">(6) Fine</option>
-                <option value="5" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 5 }">(5) Average</option>
-                <option value="4" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 4 }">(4) Bad</option>
-                <option value="3" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 3 }">(3) Very bad</option>
-                <option value="2" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 2 }">(2) Horrible</option>
-                <option value="1" th:selected="${ reviewInfo != null && reviewInfo.getReviewScore() == 1 }">(1) Appalling</option>
-              </select>
+            <div class="col-xl-12 col-lg-5 col-md-6 col-sm-6 col-12">
+              <div class="well">
+                <textarea form="review-form" class="form-control" name="reviewMessage" placeholder="Say something about this movie to others" rows="5" th:text="${reviewInfo != null ? reviewInfo.getReviewMessage() : ''}"></textarea>
+              </div>
             </div>
-
-            <button th:if="${reviewInfo != null}" type="submit" name="action" value="delete" class="btn btn-secondary submit-cancel">Delete</button>
-            <button th:if="${reviewInfo != null}" type="submit" name="action" value="update" class="btn btn-secondary submit-cancel">Update</button>
-            <button th:if="${reviewInfo == null}" type="submit" name="action" value="save" id="submit"        class="btn btn-primary">Save</button>
-          </div>
-
-          <div class="col-xl-12 col-lg-5 col-md-6 col-sm-6 col-12">
-            <div class="well">
-              <textarea form="review-form" class="form-control" name="reviewMessage" placeholder="Say something about this movie to others" rows="5" th:text="${reviewInfo != null ? reviewInfo.getReviewMessage() : ''}"></textarea>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
 
-</div>
+  </div>
 
 </body>
 </html>
