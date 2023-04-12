@@ -1,0 +1,18 @@
+.center-text {
+    text-align: center;
+    padding: auto;
+    padding-top: 18%;
+}
+
+.action-buttons {
+    float:center;
+    width: 100px;
+    margin: 10px;
+    border-radius: 8px;
+    border: none;
+}
+
+.card {
+    background: black;
+    color: white;
+}

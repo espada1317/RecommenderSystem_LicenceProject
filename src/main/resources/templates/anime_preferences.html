@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime Preferences</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/movie_preferences.css}">
+</head>
+<body class="anime-body">
+
+<div class="container">
+    <div class="card mb-2">
+        <div class="card-body">
+            <div class="row">
+
+                <h1>Anime Profile Preferences</h1>
+                <h5>Choose how often do you watch anime on different genres</h5>
+                <br><br>
+                <form method="post" th:action="@{/preferences/anime}" th:object="${animePreferencesDto}">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Genre</th>
+                            <th>How often do you watch</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="genre : ${animeGenres}" class="upper-border">
+                            <td class="genre-list">
+                                <span class="genre-list" th:text="${genre}">Movie random genre</span>
+                            </td>
+                            <td>
+                                <div class="eyedio">
+                                    <label class="eyedio__label" th:for="${genre.trim().replaceAll(' ','_').replaceAll('-','_').toLowerCase()} + '_never'">
+                                        <input class="eyedio__radio" type="radio" th:name="${genre.trim().replaceAll(' ','_').replaceAll('-','_').toLowerCase()}" value="never" th:id="${genre.trim().replaceAll(' ','_').toLowerCase()} + '_never'">
+                                        <span class="eyedio__eye red-label"></span>
+                                        Never
+                                    </label>
+                                    <label class="eyedio__label" th:for="${genre.trim().replaceAll(' ','_').replaceAll('-','_').toLowerCase()} + '_sometimes'">
+                                        <input class="eyedio__radio" type="radio" th:name="${genre.trim().replaceAll(' ','_').replaceAll('-','_').toLowerCase()}" value="sometimes" th:id="${genre.trim().replaceAll(' ','_').toLowerCase()} + '_never'">
+                                        <span class="eyedio__eye yellow-label"></span>
+                                        Sometimes
+                                    </label>
+                                    <label class="eyedio__label" th:for="${genre.trim().replaceAll(' ','_').replaceAll('-','_').toLowerCase()} + '_often'">
+                                        <input class="eyedio__radio" type="radio" th:name="${genre.trim().replaceAll(' ','_').replaceAll('-','_').toLowerCase()}" value="often" th:id="${genre.trim().replaceAll(' ','_').toLowerCase()} + '_often'">
+                                        <span class="eyedio__eye green-label"></span>
+                                        Often
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <button class="action-buttons" type="submit" name="act" value="submit">Submit</button>
+                    <button class="action-buttons" type="submit" name="act" value="skip">Skip</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

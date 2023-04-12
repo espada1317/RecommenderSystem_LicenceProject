@@ -68,20 +68,34 @@
     height: 0
   }
 }
+
 .container {
-  margin-top: 2%;
+  margin: 1% auto;
   color: white;
 }
+
 body{
-  background-image: url('https://i.ibb.co/tKVtnPP/movie-pref-back.png');
-  background-color: black;
-  background-repeat: repeat;
-  background-size: 35%;
-  background-position: center;
+    background-image: url('https://i.ibb.co/tKVtnPP/movie-pref-back.png');
+    background-color: black;
+    background-repeat: repeat;
+    background-size: 35%;
+    background-position: center;
 }
+
+.tv-body {
+    background-image: url('https://i.ibb.co/dt0tSsF/tv-pref-back.png');
+    background-size: 25%;
+}
+
+.anime-body {
+    background-image: url('https://i.ibb.co/wYS4V1q/anime-pref-back.png');
+    background-size: 30%;
+}
+
 .card {
   background: black;
 }
+
 .action-buttons {
   float:right;
   width: 70px;
@@ -89,6 +103,27 @@ body{
   border-radius: 8px;
   border: none;
 }
+
 th, td {
-  padding: 5px 250px 5px 0;
+  padding: 5px 0px 5px 0;
+}
+
+.genre-list {
+    padding: 5px 250px 5px 0;
+}
+
+.red-label {
+    color: red;
+}
+
+.green-label {
+    color: green;
+}
+
+.yellow-label {
+    color: yellow;
+}
+
+.upper-border {
+    border-top: 1px solid white;
 }

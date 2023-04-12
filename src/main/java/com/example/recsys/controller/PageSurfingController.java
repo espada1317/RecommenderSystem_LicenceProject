@@ -28,11 +28,10 @@ public class PageSurfingController {
                             Model model) {
         if(principal != null) {
             model.addAttribute("principalName", principal.getName());
-            if(preferencesService.getPreferenceProfileOfUser(principal.getName()).isEmpty()) {
-                return "redirect:/preferences/movie";
+            if(preferencesService.getMoviePreferenceProfileOfUser(principal.getName()).isEmpty()) {
+                return "redirect:/preferences";
             }
         }
-
         return "index";
     }
 
