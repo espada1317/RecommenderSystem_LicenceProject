@@ -14,8 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -217,12 +216,10 @@ public class MovieServiceImpl implements MovieService {
         return result;
     }
 
-    @Override
     public List<MovieReviews> getPersonalMoviesByCategory(String nickname, String category) {
         return movieReviewRepository.getReviewsByCategories(nickname, category);
     }
 
-    @Override
     public List<MovieReviews> getPersonalMoviesByYear(String nickname, Integer year) {
         return movieReviewRepository.getReviewsByMovieYearRelease(nickname, year);
     }
@@ -240,6 +237,53 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<MovieReviews> getReviewsByNickname(String nickname) {
         return movieReviewRepository.getReviewsByNickname(nickname);
+    }
+
+    @Override
+    public List<Movie> getSimilarContent(Movie movieDetails) {
+        List<Movie> result = new ArrayList<>();
+        List<Movie> similarMoviesByTitle = findByTitleContaining( getParsedTitle(movieDetails.getTitle()), movieDetails.getMovieKey() );
+        if(similarMoviesByTitle != null) {
+            result.addAll(similarMoviesByTitle);
+        }
+        List<Movie> similarMoviesByGenres = findByGenresContaining( movieDetails.getGenres() );
+        if(similarMoviesByGenres != null) {
+            result.addAll(similarMoviesByGenres);
+        }
+        result.remove(movieDetails);
+
+        Set<Movie> set = new LinkedHashSet<>(result);
+        result.clear();
+        result.addAll(set);
+
+        return result;
+    }
+
+    @Override
+    public List<Movie> findByTitleContaining(String title, Integer movieKey) {
+        return movieRepository.findByTitleContaining(title, movieKey).stream()
+                .limit(5)
+                .toList();
+    }
+
+    public List<Movie> findByGenresContaining(String genre) {
+        String[] genresList = genre.split(",");
+
+        List<Movie> resultList = getAllMovies();
+        for(String movieGenre : genresList) {
+            List<Movie> tempList = movieRepository.findByGenreContaining(movieGenre);
+            resultList.retainAll(tempList);
+        }
+
+        return resultList.stream()
+                .limit(7)
+                .toList();
+    }
+
+    public String getParsedTitle(String title) {
+        String[] result = title.split("\\s*[0-9:]+");
+
+        return result[0].trim();
     }
 
 }

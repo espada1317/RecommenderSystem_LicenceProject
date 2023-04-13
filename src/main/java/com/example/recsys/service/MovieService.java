@@ -36,13 +36,14 @@ public interface MovieService {
 
     List<MovieReviews> searchPersonalMoviesByMultipleFilter(String nickname, String category, Integer year, String sortBy);
 
-    List<MovieReviews> getPersonalMoviesByCategory(String nickname, String category);
-
-    List<MovieReviews> getPersonalMoviesByYear(String nickname, Integer year);
-
     List<MovieReviews> getRecentWatchedMovies(String nickname);
 
     List<MovieReviews> getPlanToWatchMovies(String nickname);
 
     List<MovieReviews> getReviewsByNickname(String nickname);
+
+    List<Movie> getSimilarContent(Movie movieDetails);
+
+    List<Movie> findByTitleContaining(String title, Integer movieKey);
+
 }

@@ -14,7 +14,7 @@
 
     <div class="container">
 
-        <div class="card mb-2">
+        <div class="card mb-1">
             <div class="card-body" th:each = "movie: ${movies}">
                 <div class="row">
                     <div class="col-lg-4 col-md-5 col-sm-6">
@@ -43,6 +43,22 @@
                         <h5 class="box-title mt-3">Movie description:</h5>
                         <h6> <span th:text="${movie.overview}"></span> </h6>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-1">
+            <div class="card-body">
+                <div class="row">
+                    <h3>Similar movies</h3>
+                    <section class="exploreScroll">
+                        <div class="horizontal-scroll-wrapper squares">
+                            <div class="card-list" th:each="similarMovie : ${similarMovies}">
+                                <a th:href="@{/movies/getById/{id}(id=${similarMovie.movieKey})}"><div class="card card-img"><img th:src="${similarMovie.poster}" th:alt="${similarMovie.poster}"></div></a>
+                                <div class="info" th:text="${similarMovie.title}"></div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>

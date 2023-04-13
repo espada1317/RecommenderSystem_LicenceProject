@@ -14,7 +14,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Query("SELECT m FROM movie m WHERE CONCAT(m.overview, ' ', m.title) LIKE CONCAT('%', :keyword , '%')")
     List<Movie> findByTitleContainingOrOverviewContaining(@Param("keyword") String keyword);
 
-    @Query("SELECT m FROM movie m WHERE m.genres LIKE CONCAT('%', :genre , '%')")
+    @Query("SELECT m FROM movie m WHERE m.genres LIKE CONCAT('%', :genre , '%') ORDER BY m.voteaverage DESC")
     List<Movie> findByGenreContaining(@Param("genre") String genre);
 
     @Query("SELECT m FROM movie m WHERE YEAR(m.release) = :year")
@@ -31,5 +31,8 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
     @Query(value = "SELECT DISTINCT language AS lang FROM movie ORDER BY lang", nativeQuery = true)
     List<String> findAllDistinctLanguageList();
+
+    @Query("SELECT m FROM movie m WHERE m.title LIKE CONCAT(:title , '%') AND m.movieKey <> :movieKey ORDER BY m.voteaverage DESC")
+    List<Movie> findByTitleContaining(@Param("title") String title, @Param("movieKey") Integer movieKey);
 
 }

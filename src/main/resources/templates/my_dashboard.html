@@ -49,7 +49,7 @@
                             <section class="exploreScroll">
                                 <div class="horizontal-scroll-wrapper squares">
                                     <div class="card-list" th:each="recentMovies : ${recentWatchedMovies}">
-                                        <div class="card"><img th:src="${recentMovies.getMovie().poster}" th:alt="${recentMovies.getMovie().poster}"></div>
+                                        <div class="card card-img"><img th:src="${recentMovies.getMovie().poster}" th:alt="${recentMovies.getMovie().poster}"></div>
                                         <div class="info" th:text="${recentMovies.getMovie().title}"></div>
                                     </div>
                                 </div>

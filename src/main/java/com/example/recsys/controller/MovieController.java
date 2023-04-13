@@ -1,5 +1,6 @@
 package com.example.recsys.controller;
 
+import com.example.recsys.entity.Movie;
 import com.example.recsys.entity.MovieReviews;
 import com.example.recsys.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,10 @@ public class MovieController {
                             @PathVariable("id") int movieID,
                             Principal principal) {
         model.addAttribute("isMoviePage", true);
-        model.addAttribute("movies", movieService.getMovieById(movieID));
+        Movie movieDetails = movieService.getMovieById(movieID);
+        model.addAttribute("similarMovies", movieService.getSimilarContent(movieDetails));
+
+        model.addAttribute("movies", movieDetails);
         model.addAttribute("movieID", movieID);
         Optional<MovieReviews> movieReview = movieService.getReviewByNicknameAndMovieId(principal.getName(), movieID);
         movieReview.ifPresent(movieReviews -> model.addAttribute("reviewInfo", movieReviews));
