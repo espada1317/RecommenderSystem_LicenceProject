@@ -60,7 +60,7 @@
                             <section class="exploreScroll">
                                 <div class="horizontal-scroll-wrapper squares">
                                     <div class="card-list" th:each="planWatch : ${planToWatchMovies}">
-                                        <div class="card"><img th:src="${planWatch.getMovie().poster}" th:alt="${planWatch.getMovie().poster}"></div>
+                                        <div class="card card-img"><img th:src="${planWatch.getMovie().poster}" th:alt="${planWatch.getMovie().poster}"></div>
                                         <div class="info">
                                             <span th:text="${planWatch.getMovie().title}"></span>
                                              &#9672; IMDB:
@@ -76,7 +76,7 @@
                             <section class="exploreScroll">
                                 <div class="horizontal-scroll-wrapper squares">
                                     <div class="card-list" th:each="recentTv : ${recentWatchedTvs}">
-                                        <div class="card"><img th:src="${recentTv.tvSeries.poster}" th:alt="${recentTv.getTvSeries().poster}"></div>
+                                        <div class="card  card-img"><img th:src="${recentTv.tvSeries.poster}" th:alt="${recentTv.getTvSeries().poster}"></div>
                                         <div class="info" th:text="${recentTv.tvSeries.title}"></div>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@
                             <section class="exploreScroll">
                                 <div class="horizontal-scroll-wrapper squares">
                                     <div class="card-list" th:each="recentAnime : ${recentWatchedAnime}">
-                                        <div class="card"><img th:src="${recentAnime.getAnime().poster}" th:alt="${recentAnime.getAnime().poster}"></div>
+                                        <div class="card card-img"><img th:src="${recentAnime.getAnime().poster}" th:alt="${recentAnime.getAnime().poster}"></div>
                                         <div class="info" th:text="${recentAnime.getAnime().title}"></div>
                                     </div>
                                 </div>
@@ -114,7 +114,7 @@
                             <section class="exploreScroll">
                                 <div class="horizontal-scroll-wrapper squares">
                                     <div class="card-list" th:each="planWatch : ${planToWatchAnime}">
-                                        <div class="card"><img th:src="${planWatch.getAnime().poster}" th:alt="${planWatch.getAnime().poster}"></div>
+                                        <div class="card card-img"><img th:src="${planWatch.getAnime().poster}" th:alt="${planWatch.getAnime().poster}"></div>
                                         <div class="info">
                                             <span th:text="${planWatch.getAnime().title}"></span>
                                         </div>

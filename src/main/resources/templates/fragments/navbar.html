@@ -42,9 +42,9 @@
       </a>
     </div>
     <div class="page">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" th:href="@{/books}">
         <img src="https://i.ibb.co/rZ30zGW/books.png" alt="books">
-        <span>BOOKS</span>
+        <span th:classappend=" ${isBookPage} ? selected-main-page : '' ">BOOKS</span>
       </a>
     </div>
     <div class="page">
