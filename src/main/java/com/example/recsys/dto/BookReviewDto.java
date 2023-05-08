@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnimeReviewDto {
+public class BookReviewDto {
 
     private String category;
 

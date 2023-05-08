@@ -1,9 +1,11 @@
 package com.example.recsys.controller;
 
 import com.example.recsys.dto.AnimeReviewDto;
+import com.example.recsys.dto.BookReviewDto;
 import com.example.recsys.dto.MovieReviewDto;
 import com.example.recsys.dto.TvReviewDto;
 import com.example.recsys.service.AnimeService;
+import com.example.recsys.service.BookService;
 import com.example.recsys.service.MovieService;
 import com.example.recsys.service.TvSeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +28,14 @@ public class ReviewController {
     @Autowired
     private final AnimeService animeService;
 
-    public ReviewController(MovieService movieService, TvSeriesService tvSeriesService, AnimeService animeService) {
+    @Autowired
+    private final BookService bookService;
+
+    public ReviewController(MovieService movieService, TvSeriesService tvSeriesService, AnimeService animeService, BookService bookService) {
         this.movieService = movieService;
         this.tvSeriesService = tvSeriesService;
         this.animeService = animeService;
+        this.bookService = bookService;
     }
 
     @PostMapping(value = "/movie/saveReview", params = "action=save")
@@ -99,6 +105,29 @@ public class ReviewController {
                                  Principal principal) {
         animeService.deleteReview(principal.getName(), animeId);
         return "redirect:/anime/getById/" + animeId;
+    }
+
+    @PostMapping(value = "/books/saveReview", params = "action=save")
+    public String saveBookReview(@ModelAttribute("bookReviewDto") BookReviewDto bookReviewDto,
+                                  @RequestParam("id") Integer bookId,
+                                  Principal principal) {
+        bookService.saveReview(bookId, principal.getName(), bookReviewDto);
+        return "redirect:/books/getById/" + bookId;
+    }
+
+    @PostMapping(value = "/books/saveReview", params = "action=update")
+    public String updateBookReview(@ModelAttribute("bookReviewDto") BookReviewDto bookReviewDto,
+                                    @RequestParam("id") Integer bookId,
+                                    Principal principal) {
+        bookService.updateReview(principal.getName(), bookId, bookReviewDto);
+        return "redirect:/books/getById/" + bookId;
+    }
+
+    @PostMapping(value = "/books/saveReview", params = "action=delete")
+    public String deleteBookReview(@RequestParam("id") Integer bookId,
+                                    Principal principal) {
+        bookService.deleteReview(principal.getName(), bookId);
+        return "redirect:/books/getById/" + bookId;
     }
 
 }

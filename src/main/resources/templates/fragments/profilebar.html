@@ -34,8 +34,8 @@
             <span>MY MUSIC</span>
         </div>
     </a>
-    <a href="#">
-        <div class="profilebarbuttons">
+    <a th:href="@{/profile/myBookList}">
+        <div class="profilebarbuttons" th:classappend=" ${isBookStats} ? selectedbtn : '' ">
             <span>MY BOOKS</span>
         </div>
     </a>

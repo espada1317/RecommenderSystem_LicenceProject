@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>My Books</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/my_anime_stats.css}">
+</head>
+<body>
+
+<header th:insert="fragments/navbar :: navbar">
+</header>
+
+<div class="profilehead">
+  <div class="profileheadcontent">
+    <div class="profileheadcontentoverview">
+      <div class="profileheadcontentoverviewphoto">
+        <img alt="image" class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+      </div>
+
+      <div class="profileheadcontentoverviewinfo">
+        <h3 class="user-fullname" th:text="${userDetails.fullName != null ? userDetails.fullName : 'Anonymous'}"></h3>
+        <h4>(<strong id="nickname-bl" th:text="${userDetails.nickname}"></strong>)</h4>
+      </div>
+    </div>
+
+    <div class="profileheadcontentfollows">
+        <span>
+            <a href="#">0 Following</a>
+            <a href="#">0 Followers</a>
+        </span>
+    </div>
+  </div>
+</div>
+
+<div th:replace="fragments/profilebar :: profilebar">
+</div>
+
+<div class="container bootdey">
+  <div class="content">
+    <div id="pad-wrapper">
+
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Filter Options</strong>
+          </div>
+          <div class="panel-body no-padding">
+            <div class="ibox-content profile-content">
+              <form th:action="@{/profile/myBookList}">
+                <div class="dropdown dropdown-dark">
+                  <select name="category" class="dropdown-select" id="genre-drop">
+                    <option selected value="*">All progress</option>
+                    <option value="plan_read" th:selected="${ #strings.equals('plan_read', selectedCategory) }">Plan to Read</option>
+                    <option value="reading" th:selected="${ #strings.equals('reading', selectedCategory) }">Reading</option>
+                    <option value="completed" th:selected="${ #strings.equals('completed', selectedCategory) }">Completed</option>
+                  </select>
+                </div>
+                <div class="dropdown dropdown-dark">
+                  <select name="sortBy" class="dropdown-select">
+                    <option selected value="titleAsc" th:selected="${ #strings.equals('titleAsc', selectedSort) }">Sort ASC by title</option>
+                    <option value="titleDesc" th:selected="${ #strings.equals('titleDesc', selectedSort) }">Sort DESC by title</option>
+                    <option value="ratingAsc" th:selected="${ #strings.equals('ratingAsc', selectedSort) }">Sort ASC by rating</option>
+                    <option value="ratingDesc" th:selected="${ #strings.equals('ratingDesc', selectedSort) }">Sort DESC by rating</option>
+                  </select>
+                </div>
+                <div class="col-md-10">
+                  <button type="submit" class="btn btn-default btn-sm btn-block filterbtn">
+                    <i class="fa fa-search"></i> Filter
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong th:text="'Personal movie stats (' + ${ personalBookList == null ? 0 : personalBookList.size() } + ' results found)'"></strong>
+          </div>
+          <div class="panel-body">
+
+            <div class="ibox-content">
+              <div class="feed-activity-list">
+
+                <table>
+                  <thead>
+                  <tr>
+                    <th class="poster">Poster</th>
+                    <th class="titleMovie">Title</th>
+                    <th class="imdb">Rating</th>
+                    <th class="type">Pages</th>
+                    <th class="score">Score</th>
+                    <th class="progr">Progress</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="activity : ${personalBookList}">
+                    <td class="poster">
+                      <a th:href="@{/books/getById/{id}(id=${activity.getBooks().bookKey})}" class="pull-left">
+                        <img alt="image" class="img-circle" th:src="${activity.getBooks().poster}">
+                      </a>
+                    </td>
+                    <td class="titleMovie">
+                      <span th:text="${activity.getBooks().title}">Title</span>
+                    </td>
+                    <td class="imdb">
+                      <span th:text="${activity.getBooks().rating}">Rating</span>
+                    </td>
+                    <td class="imdb">
+                      <span th:text="${activity.getBooks().numPages}">Pages</span>
+                    </td>
+                    <td class="score">
+                      <span th:text="${activity.reviewScore}">Score</span>
+                    </td>
+                    <td class="progr">
+                      <span th:text="${activity.category == 'completed' ? 'Completed' : (activity.category == 'plan_read' ? 'Plan to Read' : 'Reading')}">Progress</span>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

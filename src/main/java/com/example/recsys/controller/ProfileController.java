@@ -33,12 +33,16 @@ public class ProfileController {
     @Autowired
     private final AnimeService animeService;
 
-    public ProfileController(UserAuthService userAuthService, MovieService movieService, TvSeriesService tvSeriesService, ProfileService profileService, AnimeService animeService) {
+    @Autowired
+    private final BookService bookService;
+
+    public ProfileController(UserAuthService userAuthService, MovieService movieService, TvSeriesService tvSeriesService, ProfileService profileService, AnimeService animeService, BookService bookService) {
         this.userAuthService = userAuthService;
         this.movieService = movieService;
         this.tvSeriesService = tvSeriesService;
         this.profileService = profileService;
         this.animeService = animeService;
+        this.bookService = bookService;
     }
 
     @GetMapping(value = "/profile/overview")
@@ -99,6 +103,20 @@ public class ProfileController {
         model.addAttribute("selectedCategory", category);
         model.addAttribute("personalAnimeList", animeService.searchPersonalAnimeByMultipleFilter(principal.getName(), category, sortBy));
         return "my_anime_stats";
+    }
+
+    @GetMapping(value = "/profile/myBookList")
+    public String personalBookList(Model model,
+                                    @Param("category") String category,
+                                    @Param("sortBy") String sortBy,
+                                    Principal principal) {
+        model.addAttribute("isProfilePage", true);
+        model.addAttribute("isBookStats", true);
+        model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
+        model.addAttribute("selectedSort", sortBy);
+        model.addAttribute("selectedCategory", category);
+        model.addAttribute("personalBookList", bookService.searchPersonalBooksByMultipleFilter(principal.getName(), category, sortBy));
+        return "my_books_stats";
     }
 
     @GetMapping(value = "/profile/dashboard")
