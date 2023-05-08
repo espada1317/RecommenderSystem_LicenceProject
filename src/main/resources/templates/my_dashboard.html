@@ -122,6 +122,31 @@
                                 </div>
                             </section>
                         </div>
+                        <br>
+                        <div class="category-block left" th:if="${recentCompletedBooks != null && recentCompletedBooks.size() != 0}">
+                            <h3 class="recently-header">Recently Completed Books</h3>
+                            <section class="exploreScroll">
+                                <div class="horizontal-scroll-wrapper squares">
+                                    <div class="card-list" th:each="recentBook : ${recentCompletedBooks}">
+                                        <div class="card card-img"><img th:src="${recentBook.getBooks().poster}" th:alt="${recentBook.getBooks().poster}"></div>
+                                        <div class="info" th:text="${recentBook.getBooks().title}"></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="category-block right" th:if="${planToReadBooks != null && planToReadBooks.size() != 0}">
+                            <h3 class="recently-header">Plan to Read</h3>
+                            <section class="exploreScroll">
+                                <div class="horizontal-scroll-wrapper squares">
+                                    <div class="card-list" th:each="planRead : ${planToReadBooks}">
+                                        <div class="card card-img"><img th:src="${planRead.getBooks().poster}" th:alt="${planRead.getBooks().poster}"></div>
+                                        <div class="info">
+                                            <span th:text="${planRead.getBooks().title}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
 
                     </div>
                 </div>

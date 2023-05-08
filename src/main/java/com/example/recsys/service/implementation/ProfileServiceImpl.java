@@ -5,6 +5,7 @@ import com.example.recsys.comparators.profile.UserActivityDtoLocalDateComparator
 import com.example.recsys.dto.RecentReviewsDto;
 import com.example.recsys.dto.UserActivityDto;
 import com.example.recsys.entity.AnimeReview;
+import com.example.recsys.entity.BookReview;
 import com.example.recsys.entity.MovieReviews;
 import com.example.recsys.entity.TvSeriesReviews;
 import com.example.recsys.service.ProfileService;
@@ -16,7 +17,10 @@ import java.util.List;
 @Service
 public class ProfileServiceImpl implements ProfileService {
     @Override
-    public List<UserActivityDto> getAllUserRecentActivity(List<MovieReviews> movieReviews, List<TvSeriesReviews> tvSeriesReviews, List<AnimeReview> animeReviews) {
+    public List<UserActivityDto> getAllUserRecentActivity(List<MovieReviews> movieReviews,
+                                                          List<TvSeriesReviews> tvSeriesReviews,
+                                                          List<AnimeReview> animeReviews,
+                                                          List<BookReview> bookReviews) {
         List<UserActivityDto> userActivityDtoList = new ArrayList<>();
 
         for(MovieReviews movReview : movieReviews) {
@@ -58,13 +62,29 @@ public class ProfileServiceImpl implements ProfileService {
             userActivityDtoList.add(tempUserActivity);
         }
 
+        for(BookReview bookReview : bookReviews) {
+            UserActivityDto tempUserActivity = new UserActivityDto();
+            tempUserActivity.setTitle( bookReview.getBooks().getTitle() );
+            tempUserActivity.setType("book");
+            tempUserActivity.setPoster( bookReview.getBooks().getPoster() );
+            tempUserActivity.setContentPosterLink( "/books/getById/" + bookReview.getBooks().getBookKey() );
+            tempUserActivity.setReviewScore( bookReview.getReviewScore() );
+            tempUserActivity.setReviewMessage( bookReview.getReviewMessage() );
+            tempUserActivity.setLocalDateTime( bookReview.getLocalDateTime() );
+
+            userActivityDtoList.add(tempUserActivity);
+        }
+
         userActivityDtoList.sort(new UserActivityDtoLocalDateComparator().reversed());
 
         return userActivityDtoList;
     }
 
     @Override
-    public List<RecentReviewsDto> getAllRecentReviews(List<MovieReviews> movieReviews, List<TvSeriesReviews> tvSeriesReviews, List<AnimeReview> animeReviews) {
+    public List<RecentReviewsDto> getAllRecentReviews(List<MovieReviews> movieReviews,
+                                                      List<TvSeriesReviews> tvSeriesReviews,
+                                                      List<AnimeReview> animeReviews,
+                                                      List<BookReview> bookReviews) {
         List<RecentReviewsDto> recentReviewsDtoList = new ArrayList<>();
 
         for(MovieReviews movReview : movieReviews) {
@@ -100,10 +120,20 @@ public class ProfileServiceImpl implements ProfileService {
             recentReviewsDtoList.add(tempUserReview);
         }
 
+        for(BookReview bookReview : bookReviews) {
+            RecentReviewsDto tempUserReview = new RecentReviewsDto();
+            tempUserReview.setTitle( bookReview.getBooks().getTitle() );
+            tempUserReview.setLink( "/books/getById/" + bookReview.getBooks().getBookKey() );
+            tempUserReview.setReviewScore( bookReview.getReviewScore() );
+            tempUserReview.setReviewMessage( bookReview.getReviewMessage() );
+            tempUserReview.setLocalDateTime( bookReview.getLocalDateTime() );
+
+            recentReviewsDtoList.add(tempUserReview);
+        }
+
         recentReviewsDtoList.sort(new RecentReviewsDtoLocalDateComparator().reversed());
 
         return recentReviewsDtoList;
     }
-
 
 }

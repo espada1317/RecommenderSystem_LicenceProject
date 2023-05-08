@@ -54,7 +54,8 @@ public class ProfileController {
         List<UserActivityDto> userActivityDtoList = profileService.getAllUserRecentActivity(
                 movieService.getAllUserAndFriendsMovieActivity(principal.getName()),
                 tvSeriesService.getAllUserAndFriendsTvActivity(principal.getName()),
-                animeService.getAllUserAndFriendsAnimeActivity(principal.getName()));
+                animeService.getAllUserAndFriendsAnimeActivity(principal.getName()),
+                bookService.getAllUserAndFriendsBooksActivity(principal.getName()));
         model.addAttribute("userActivity", userActivityDtoList);
 
         return "profile_overview";
@@ -131,6 +132,8 @@ public class ProfileController {
         model.addAttribute("planToWatchMoviesTvs", tvSeriesService.getPlanToWatchTvs(principal.getName()));
         model.addAttribute("recentWatchedAnime", animeService.getRecentWatchedAnime(principal.getName()));
         model.addAttribute("planToWatchAnime", animeService.getPlanToWatchAnime(principal.getName()));
+        model.addAttribute("recentCompletedBooks", bookService.getRecentCompletedBook(principal.getName()));
+        model.addAttribute("planToReadBooks", bookService.getPlanToReadBook(principal.getName()));
         return "my_dashboard";
     }
 
@@ -143,7 +146,8 @@ public class ProfileController {
         List<RecentReviewsDto> userReviewsList = profileService.getAllRecentReviews(
                 movieService.getReviewsByNickname(principal.getName()),
                 tvSeriesService.getReviewsByNickname(principal.getName()),
-                animeService.getReviewsByNickname(principal.getName()));
+                animeService.getReviewsByNickname(principal.getName()),
+                bookService.getReviewsByNickname(principal.getName()));
         model.addAttribute("userReviews", userReviewsList);
         return "my_reviews";
     }

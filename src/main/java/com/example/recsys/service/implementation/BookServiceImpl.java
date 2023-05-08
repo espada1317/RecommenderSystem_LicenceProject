@@ -1,14 +1,11 @@
 package com.example.recsys.service.implementation;
 
-import com.example.recsys.comparators.anime.reviews.AnimeReviewLengthComparator;
-import com.example.recsys.comparators.anime.reviews.AnimeReviewTitileComparator;
 import com.example.recsys.comparators.books.BooksScoreComparator;
 import com.example.recsys.comparators.books.BooksScoreCountComparator;
 import com.example.recsys.comparators.books.BooksTitleComparator;
 import com.example.recsys.comparators.books.reviews.BookReviewRatingComparator;
 import com.example.recsys.comparators.books.reviews.BookReviewTitleComparator;
 import com.example.recsys.dto.BookReviewDto;
-import com.example.recsys.entity.AnimeReview;
 import com.example.recsys.entity.BookReview;
 import com.example.recsys.entity.Books;
 import com.example.recsys.repository.BookRepository;
@@ -165,6 +162,26 @@ public class BookServiceImpl implements BookService {
         return result.stream()
                 .limit(LIMIT)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookReview> getAllUserAndFriendsBooksActivity(String nickname) {
+        return bookReviewRepository.getAllUserAndFriendsBooksActivity(nickname);
+    }
+
+    @Override
+    public List<BookReview> getRecentCompletedBook(String nickname) {
+        return bookReviewRepository.getRecentCompletedBook(nickname);
+    }
+
+    @Override
+    public List<BookReview> getPlanToReadBook(String nickname) {
+        return bookReviewRepository.getPlanToReadBook(nickname);
+    }
+
+    @Override
+    public List<BookReview> getReviewsByNickname(String nickname) {
+        return bookReviewRepository.getReviewsByNickname(nickname);
     }
 
 }
