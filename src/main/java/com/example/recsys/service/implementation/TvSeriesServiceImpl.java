@@ -200,5 +200,8 @@ public class TvSeriesServiceImpl implements TvSeriesService {
         return tvSeriesReviewRepository.getReviewsByNickname(nickname);
     }
 
-
+    @Override
+    public List<TvSeriesReviews> getAllActivityByNickname(String nickname) {
+        return tvSeriesReviewRepository.getAllActivityByNickname(nickname);
+    }
 }

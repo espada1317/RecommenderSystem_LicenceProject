@@ -39,4 +39,6 @@ public interface BookService {
 
     List<BookReview> getReviewsByNickname(String nickname);
 
+    List<BookReview> getAllActivityByNickname(String nickname);
+
 }

@@ -40,4 +40,6 @@ public interface TvSeriesService {
     List<TvSeriesReviews> getPlanToWatchTvs(String nickname);
 
     List<TvSeriesReviews> getReviewsByNickname(String nickname);
+
+    List<TvSeriesReviews> getAllActivityByNickname(String nickname);
 }

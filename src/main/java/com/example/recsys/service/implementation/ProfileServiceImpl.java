@@ -2,13 +2,13 @@ package com.example.recsys.service.implementation;
 
 import com.example.recsys.comparators.profile.RecentReviewsDtoLocalDateComparator;
 import com.example.recsys.comparators.profile.UserActivityDtoLocalDateComparator;
-import com.example.recsys.dto.RecentReviewsDto;
-import com.example.recsys.dto.UserActivityDto;
+import com.example.recsys.dto.*;
 import com.example.recsys.entity.AnimeReview;
 import com.example.recsys.entity.BookReview;
 import com.example.recsys.entity.MovieReviews;
 import com.example.recsys.entity.TvSeriesReviews;
 import com.example.recsys.service.ProfileService;
+import com.example.recsys.service.TvSeriesService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -134,6 +134,280 @@ public class ProfileServiceImpl implements ProfileService {
         recentReviewsDtoList.sort(new RecentReviewsDtoLocalDateComparator().reversed());
 
         return recentReviewsDtoList;
+    }
+
+    @Override
+    public MovieStatsDto getPersonalMovieStats(List<MovieReviews> movieReviews) {
+        int totalCount = movieReviews.size();
+        int planCount = 0;
+        int completedCount = 0;
+        int droppedCount = 0;
+        int completedTotalLength = 0;
+        int planTotalLength = 0;
+        int droppedTotalLength = 0;
+
+        for(MovieReviews x : movieReviews) {
+            if(x.getCategory().equals("plan_watch")) {
+                planCount++;
+                planTotalLength += x.getMovie().getLength();
+            }
+            if(x.getCategory().equals("completed")) {
+                completedCount++;
+                completedTotalLength += x.getMovie().getLength();
+            }
+            if(x.getCategory().equals("dropped")) {
+                droppedCount++;
+                droppedTotalLength += x.getMovie().getLength();
+            }
+        }
+
+        int tempCount = completedTotalLength;
+        int daysCount = tempCount / (24 * 60);
+        tempCount -= daysCount * 24 * 60;
+        int hoursCount = tempCount / 60;
+        tempCount -= hoursCount * 60;
+        int minutesCount = tempCount % 60;
+
+        double planDays = planTotalLength / ( 24.0 * 60.0 );
+        double droppedDays = droppedTotalLength / ( 24.0 * 60.0 );
+        double completedDays = completedTotalLength / ( 24.0 * 60.0 );
+
+        MovieStatsDto result = new MovieStatsDto();
+        result.setCompleted(completedCount);
+        result.setDropped(droppedCount);
+        result.setPlanWatch(planCount);
+        result.setTotalCount(totalCount);
+        result.setDays(daysCount);
+        result.setHours(hoursCount);
+        result.setMinutes(minutesCount);
+        result.setDaysWatchPlan( (double) Math.round(planDays * 100) / 100 );
+        result.setDaysWatchDropped( (double) Math.round(droppedDays * 100) / 100 );
+        result.setDaysWatchCompleted( (double) Math.round(completedDays * 100) / 100 );
+
+        return result;
+    }
+
+    @Override
+    public TvStatsDto getPersonalTvStats(List<TvSeriesReviews> tvSeriesReviews) {
+        int totalCount = tvSeriesReviews.size();
+        int planCount = 0;
+        int completedCount = 0;
+        int droppedCount = 0;
+        int watchingCount = 0;
+        int onHoldCount = 0;
+
+        int completedTotalLength = 0;
+        int planTotalLength = 0;
+        int droppedTotalLength = 0;
+        int watchingTotalLength = 0;
+        int onHoldTotalLength = 0;
+
+        int noEpisodesPlan = 0;
+        int noEpisodesWatching = 0;
+        int noEpisodesCompleted = 0;
+        int noEpisodesOnHold = 0;
+        int noEpisodesDropped = 0;
+
+        for(TvSeriesReviews x : tvSeriesReviews) {
+            int temp = x.getTvSeries().getAverageRuntime() * x.getTvSeries().getNumberEpisodes();
+            if(x.getCategory().equals("plan_watch")) {
+                planCount++;
+                planTotalLength += temp;
+                noEpisodesPlan += x.getTvSeries().getNumberEpisodes();
+            }
+            if(x.getCategory().equals("completed")) {
+                completedCount++;
+                completedTotalLength += temp;
+                noEpisodesWatching += x.getTvSeries().getNumberEpisodes();
+            }
+            if(x.getCategory().equals("watching")) {
+                watchingCount++;
+                watchingTotalLength += temp;
+                noEpisodesWatching += x.getTvSeries().getNumberEpisodes();
+            }
+            if(x.getCategory().equals("dropped")) {
+                droppedCount++;
+                droppedTotalLength += temp;
+                noEpisodesDropped += x.getTvSeries().getNumberEpisodes();
+            }
+            if(x.getCategory().equals("on_hold")) {
+                onHoldCount++;
+                onHoldTotalLength += temp;
+                noEpisodesOnHold += x.getTvSeries().getNumberEpisodes();
+            }
+        }
+
+        int tempCount = completedTotalLength;
+        int daysCount = tempCount / (24 * 60);
+        tempCount -= daysCount * 24 * 60;
+        int hoursCount = tempCount / 60;
+        tempCount -= hoursCount * 60;
+        int minutesCount = tempCount % 60;
+
+        double planDays = planTotalLength / ( 24.0 * 60.0 );
+        double droppedDays = droppedTotalLength / ( 24.0 * 60.0 );
+        double completedDays = completedTotalLength / ( 24.0 * 60.0 );
+        double watchingDays = watchingTotalLength / ( 24.0 * 60.0 );
+        double onHoldDays = onHoldTotalLength / (24.0 * 60.0 );
+
+        TvStatsDto result = new TvStatsDto();
+        result.setCompleted(completedCount);
+        result.setDropped(droppedCount);
+        result.setPlanWatch(planCount);
+        result.setOnHold(onHoldCount);
+        result.setWatching(watchingCount);
+
+        result.setTotalCount(totalCount);
+
+        result.setDays(daysCount);
+        result.setHours(hoursCount);
+        result.setMinutes(minutesCount);
+
+        result.setDaysWatchPlan( (double) Math.round(planDays * 100) / 100 );
+        result.setDaysWatchDropped( (double) Math.round(droppedDays * 100) / 100 );
+        result.setDaysWatchCompleted( (double) Math.round(completedDays * 100) / 100 );
+        result.setDaysWatchWatching( (double) Math.round(watchingDays * 100) / 100 );
+        result.setDaysWatchOnHold( (double) Math.round(onHoldDays * 100) / 100 );
+
+        result.setNoEpisodesCompleted(noEpisodesCompleted);
+        result.setNoEpisodesDropped(noEpisodesDropped);
+        result.setNoEpisodesPlan(noEpisodesPlan);
+        result.setNoEpisodesWatching(noEpisodesWatching);
+        result.setNoEpisodesOnHold(noEpisodesOnHold);
+
+        return result;
+    }
+
+    @Override
+    public AnimeStatsDto getPersonalAnimeStats(List<AnimeReview> animeReviews) {
+        int totalCount = animeReviews.size();
+        int planCount = 0;
+        int completedCount = 0;
+        int droppedCount = 0;
+        int watchingCount = 0;
+        int onHoldCount = 0;
+
+        int completedTotalLength = 0;
+        int planTotalLength = 0;
+        int droppedTotalLength = 0;
+        int watchingTotalLength = 0;
+        int onHoldTotalLength = 0;
+
+        int noEpisodesPlan = 0;
+        int noEpisodesWatching = 0;
+        int noEpisodesCompleted = 0;
+        int noEpisodesOnHold = 0;
+        int noEpisodesDropped = 0;
+
+        for(AnimeReview x : animeReviews) {
+            int temp = x.getAnime().getAverageRuntime() * x.getAnime().getNumberEpisodes();
+            if(x.getCategory() == null) {
+                continue;
+            }
+            if(x.getCategory().equals("plan_watch")) {
+                planCount++;
+                planTotalLength += temp;
+                noEpisodesPlan += x.getAnime().getNumberEpisodes();
+            }
+            if(x.getCategory().equals("completed")) {
+                completedCount++;
+                completedTotalLength += temp;
+                noEpisodesCompleted += x.getAnime().getNumberEpisodes();
+            }
+            if(x.getCategory().equals("watching")) {
+                watchingCount++;
+                watchingTotalLength += temp;
+                noEpisodesWatching += x.getAnime().getNumberEpisodes();
+            }
+            if(x.getCategory().equals("dropped")) {
+                droppedCount++;
+                droppedTotalLength += temp;
+                noEpisodesDropped += x.getAnime().getNumberEpisodes();
+            }
+            if(x.getCategory().equals("on_hold")) {
+                onHoldCount++;
+                onHoldTotalLength += temp;
+                noEpisodesOnHold += x.getAnime().getNumberEpisodes();
+            }
+        }
+
+        int tempCount = completedTotalLength;
+        int daysCount = tempCount / (24 * 60);
+        tempCount -= daysCount * 24 * 60;
+        int hoursCount = tempCount / 60;
+        tempCount -= hoursCount * 60;
+        int minutesCount = tempCount % 60;
+
+        double planDays = planTotalLength / ( 24.0 * 60.0 );
+        double droppedDays = droppedTotalLength / ( 24.0 * 60.0 );
+        double completedDays = completedTotalLength / ( 24.0 * 60.0 );
+        double watchingDays = watchingTotalLength / ( 24.0 * 60.0 );
+        double onHoldDays = onHoldTotalLength / (24.0 * 60.0 );
+
+        AnimeStatsDto result = new AnimeStatsDto();
+        result.setCompleted(completedCount);
+        result.setDropped(droppedCount);
+        result.setPlanWatch(planCount);
+        result.setOnHold(onHoldCount);
+        result.setWatching(watchingCount);
+
+        result.setTotalCount(totalCount);
+
+        result.setDays(daysCount);
+        result.setHours(hoursCount);
+        result.setMinutes(minutesCount);
+
+        result.setDaysWatchPlan( (double) Math.round(planDays * 100) / 100 );
+        result.setDaysWatchDropped( (double) Math.round(droppedDays * 100) / 100 );
+        result.setDaysWatchCompleted( (double) Math.round(completedDays * 100) / 100 );
+        result.setDaysWatchWatching( (double) Math.round(watchingDays * 100) / 100 );
+        result.setDaysWatchOnHold( (double) Math.round(onHoldDays * 100) / 100 );
+
+        result.setNoEpisodesCompleted(noEpisodesCompleted);
+        result.setNoEpisodesDropped(noEpisodesDropped);
+        result.setNoEpisodesPlan(noEpisodesPlan);
+        result.setNoEpisodesWatching(noEpisodesWatching);
+        result.setNoEpisodesOnHold(noEpisodesOnHold);
+
+        return result;
+    }
+
+    @Override
+    public BookStatsDto getPersonalBookStats(List<BookReview> bookReviews) {
+        int totalCount = bookReviews.size();
+        int planCount = 0;
+        int completedCount = 0;
+        int readingCount = 0;
+
+        int completedTotalLength = 0;
+        int planTotalLength = 0;
+        int readingTotalLength = 0;
+
+        for(BookReview x : bookReviews) {
+            if(x.getCategory().equals("plan_read")) {
+                planCount++;
+                planTotalLength += Integer.parseInt( x.getBooks().getNumPages().split(" pages")[0].trim() );
+            }
+            if(x.getCategory().equals("completed")) {
+                completedCount++;
+                completedTotalLength += Integer.parseInt( x.getBooks().getNumPages().split(" pages")[0].trim() );
+            }
+            if(x.getCategory().equals("reading")) {
+                readingCount++;
+                readingTotalLength += Integer.parseInt( x.getBooks().getNumPages().split(" pages")[0].trim() );
+            }
+        }
+
+        BookStatsDto result = new BookStatsDto();
+        result.setCompleted(completedCount);
+        result.setReading(readingCount);
+        result.setPlanRead(planCount);
+        result.setTotalCount(totalCount);
+        result.setNoPagesPlan(planTotalLength);
+        result.setNoPagesReading(readingTotalLength);
+        result.setNoPagesCompleted(completedTotalLength);
+
+        return result;
     }
 
 }

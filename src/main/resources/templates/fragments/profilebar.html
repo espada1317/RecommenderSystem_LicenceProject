@@ -24,16 +24,16 @@
             <span>MY ANIME</span>
         </div>
     </a>
-    <a href="#">
-        <div class="profilebarbuttons">
-            <span>MY GAMES</span>
-        </div>
-    </a>
-    <a href="#">
-        <div class="profilebarbuttons">
-            <span>MY MUSIC</span>
-        </div>
-    </a>
+<!--    <a href="#">-->
+<!--        <div class="profilebarbuttons">-->
+<!--            <span>MY GAMES</span>-->
+<!--        </div>-->
+<!--    </a>-->
+<!--    <a href="#">-->
+<!--        <div class="profilebarbuttons">-->
+<!--            <span>MY MUSIC</span>-->
+<!--        </div>-->
+<!--    </a>-->
     <a th:href="@{/profile/myBookList}">
         <div class="profilebarbuttons" th:classappend=" ${isBookStats} ? selectedbtn : '' ">
             <span>MY BOOKS</span>
@@ -44,8 +44,8 @@
             <span>MY REVIEWS</span>
         </div>
     </a>
-    <a href="#">
-        <div class="profilebarbuttons">
+    <a th:href="@{/profile/stats}">
+        <div class="profilebarbuttons" th:classappend=" ${isPersonalStats} ? selectedbtn : '' ">
             <span>MY STATS</span>
         </div>
     </a>

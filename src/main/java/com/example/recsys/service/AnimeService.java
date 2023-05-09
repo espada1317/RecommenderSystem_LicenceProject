@@ -45,4 +45,6 @@ public interface AnimeService {
 
     List<AnimeReview> getReviewsByNickname(String nickname);
 
+    List<AnimeReview> getAllActivityByNickname(String nickname);
+
 }

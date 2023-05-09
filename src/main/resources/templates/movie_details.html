@@ -65,7 +65,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <form method="post" id="review-form" th:action="@{/movie/saveReview(id=${movieID})}" th:object="${movieReviewDto}">
+                    <form method="post" id="review-form" th:action="@{/movies/saveReview(id=${movieID})}" th:object="${movieReviewDto}">
                         <div class="form-outline container mb-2">
                             <div class="dropdown dropdown-dark">
                                 <select name="category" class="dropdown-select" id="genre-drop">

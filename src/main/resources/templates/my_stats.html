@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Stats</title>
+</head>
+
+<style>
+  table {
+    border: 1px solid black;
+    border-collapse: separate;
+    min-width: 20%;
+  }
+
+  td, th {
+    border: 1px solid black;
+  }
+
+  .headers {
+    height: 100px;
+  }
+
+  .num {
+    width: 10%;
+    text-align: center;
+  }
+
+  .txt {
+    text-align: center;
+  }
+
+  .rows{
+    height: 50px;
+  }
+
+  h1{
+    margin: 2%;
+  }
+
+  .table-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3%;
+  }
+
+</style>
+
+<body>
+
+<div class="table-stats">
+
+  <table cellspacing="0">
+    <thead>
+    <tr class="headers">
+      <th colspan="9">WATCHED MOVIES</th>
+    </tr>
+    <tr class="headers">
+      <th colspan="9">
+        <span>spent watching</span>
+        <h1 th:text="${movieStats.getDays()} + ' : ' + ${movieStats.getHours()} + ' : ' + ${movieStats.getMinutes()}">0 : 0 : 0</h1>
+        <span>DAY : HOUR : MINUTE</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${movieStats.planWatch}"></td>
+      <td class="txt" colspan="4">plan to watch</td>
+      <td class="txt" colspan="4" th:text="${movieStats.daysWatchPlan} + ' days left to watch'">x days left to watch</td>
+    </tr>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${movieStats.completed}"></td>
+      <td class="txt" colspan="4">completed</td>
+      <td class="txt" colspan="4" th:text="${movieStats.daysWatchCompleted} + ' days'">x days</td>
+    </tr>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${movieStats.dropped}"></td>
+      <td class="txt" colspan="4">dropped</td>
+      <td class="txt" colspan="4" th:text="${movieStats.daysWatchDropped} + ' days'">x days</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table cellspacing="0">
+    <thead>
+    <tr class="headers">
+      <th colspan="9">WATCHED TV SERIES</th>
+    </tr>
+    <tr class="headers">
+      <th colspan="9">
+        <span>spent watching</span>
+        <h1 th:text="${tvStats.getDays()} + ' : ' + ${tvStats.getHours()} + ' : ' + ${tvStats.getMinutes()}">0 : 0 : 0</h1>
+        <span>DAY : HOUR : MINUTE</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${tvStats.planWatch}"></td>
+      <td class="txt" colspan="4">plan to watch</td>
+      <td class="txt" colspan="4" th:text="${tvStats.noEpisodesPlan} + ' episodes (' + ${tvStats.daysWatchPlan} + ' days left to watch)'">x days left to watch</td>
+    </tr>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${tvStats.watching}"></td>
+      <td class="txt" colspan="4">watching</td>
+      <td class="txt" colspan="4" th:text="${tvStats.noEpisodesWatching} + ' episodes (' + ${tvStats.daysWatchWatching} + ' days)'">x days need to watch the rest</td>
+    </tr>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${tvStats.completed}"></td>
+      <td class="txt" colspan="4">completed</td>
+      <td class="txt" colspan="4" th:text="${tvStats.noEpisodesCompleted} + ' episodes (' + ${tvStats.daysWatchCompleted} + ' days)'">x days</td>
+    </tr>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${tvStats.onHold}"></td>
+      <td class="txt" colspan="4">on hold</td>
+      <td class="txt" colspan="4" th:text="${tvStats.noEpisodesOnHold} + ' episodes (' + ${tvStats.daysWatchOnHold} + ' days)'">x days</td>
+    </tr>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${tvStats.dropped}"></td>
+      <td class="txt" colspan="4">dropped</td>
+      <td class="txt" colspan="4" th:text="${tvStats.noEpisodesDropped} + ' episodes (' + ${tvStats.daysWatchDropped} + ' days)'">x days</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table cellspacing="0">
+    <thead>
+    <tr class="headers">
+      <th colspan="9">WATCHED TV SERIES</th>
+    </tr>
+    <tr class="headers">
+      <th colspan="9">
+        <span>spent watching</span>
+        <h1 th:text="${animeStats.getDays()} + ' : ' + ${animeStats.getHours()} + ' : ' + ${animeStats.getMinutes()}">0 : 0 : 0</h1>
+        <span>DAY : HOUR : MINUTE</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${animeStats.planWatch}"></td>
+      <td class="txt" colspan="4">plan to watch</td>
+      <td class="txt" colspan="4" th:text="${animeStats.noEpisodesPlan} + ' episodes (' + ${animeStats.daysWatchPlan} + ' days left to watch)'">x days left to watch</td>
+    </tr>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${animeStats.watching}"></td>
+      <td class="txt" colspan="4">watching</td>
+      <td class="txt" colspan="4" th:text="${animeStats.noEpisodesWatching} + ' episodes (' + ${animeStats.daysWatchWatching} + ' days)'">x days need to watch the rest</td>
+    </tr>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${animeStats.completed}"></td>
+      <td class="txt" colspan="4">completed</td>
+      <td class="txt" colspan="4" th:text="${animeStats.noEpisodesCompleted} + ' episodes (' + ${animeStats.daysWatchCompleted} + ' days)'">x days</td>
+    </tr>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${animeStats.onHold}"></td>
+      <td class="txt" colspan="4">on hold</td>
+      <td class="txt" colspan="4" th:text="${animeStats.noEpisodesOnHold} + ' episodes (' + ${animeStats.daysWatchOnHold} + ' days)'">x days</td>
+    </tr>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${animeStats.dropped}"></td>
+      <td class="txt" colspan="4">dropped</td>
+      <td class="txt" colspan="4" th:text="${animeStats.noEpisodesDropped} + ' episodes (' + ${animeStats.daysWatchDropped} + ' days)'">x days</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table cellspacing="0">
+    <thead>
+    <tr class="headers">
+      <th colspan="9">READ BOOKS</th>
+    </tr>
+    <tr class="headers">
+      <th colspan="9">
+        <span>spent reading</span>
+        <h1 th:text="${bookStats.noPagesCompleted}">0</h1>
+        <span>PAGES</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${bookStats.planRead}"></td>
+      <td class="txt" colspan="4">plan to read</td>
+      <td class="txt" colspan="4" th:text="${bookStats.noPagesPlan} + ' pages left to read'">x days left to watch</td>
+    </tr>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${bookStats.completed}"></td>
+      <td class="txt" colspan="4">completed</td>
+      <td class="txt" colspan="4" th:text="${bookStats.noPagesCompleted} + ' pages'">x days</td>
+    </tr>
+    <tr class="rows">
+      <td class="num" colspan="1" th:text="${bookStats.reading}"></td>
+      <td class="txt" colspan="4">reading</td>
+      <td class="txt" colspan="4" th:text="${bookStats.noPagesReading} + ' pages'">x days</td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+</body>
+</html>

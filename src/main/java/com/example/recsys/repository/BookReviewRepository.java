@@ -43,4 +43,7 @@ public interface BookReviewRepository extends JpaRepository<BookReview, Integer>
 
     @Query(value = "SELECT * FROM book_reviews WHERE review_message <> '' AND nickname = :nickname", nativeQuery = true)
     List<BookReview> getReviewsByNickname(String nickname);
+
+    @Query(value = "SELECT * FROM book_reviews WHERE nickname = :nickname", nativeQuery = true)
+    List<BookReview> getAllActivityByNickname(String nickname);
 }

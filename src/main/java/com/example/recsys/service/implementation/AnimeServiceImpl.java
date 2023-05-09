@@ -218,4 +218,9 @@ public class AnimeServiceImpl implements AnimeService {
         return animeReviewRepository.getReviewsByNickname(nickname);
     }
 
+    @Override
+    public List<AnimeReview> getAllActivityByNickname(String nickname) {
+        return animeReviewRepository.getAllActivityByNickname(nickname);
+    }
+
 }

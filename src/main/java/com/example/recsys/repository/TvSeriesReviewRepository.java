@@ -41,4 +41,7 @@ public interface TvSeriesReviewRepository extends JpaRepository<TvSeriesReviews,
 
     @Query(value = "SELECT * FROM tv_reviews WHERE review_message <> '' AND nickname = :nickname", nativeQuery = true)
     List<TvSeriesReviews> getReviewsByNickname(String nickname);
+
+    @Query(value = "SELECT * FROM tv_reviews WHERE nickname = :nickname", nativeQuery = true)
+    List<TvSeriesReviews> getAllActivityByNickname(String nickname);
 }

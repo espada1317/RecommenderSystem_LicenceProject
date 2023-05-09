@@ -38,7 +38,7 @@ public class ReviewController {
         this.bookService = bookService;
     }
 
-    @PostMapping(value = "/movie/saveReview", params = "action=save")
+    @PostMapping(value = "/movies/saveReview", params = "action=save")
     public String saveMovieReview(@ModelAttribute("movieReviewDto") MovieReviewDto movieReviewDto,
                                   @RequestParam("id") Integer movieId,
                                   Principal principal) {
@@ -46,7 +46,7 @@ public class ReviewController {
         return "redirect:/movies/getById/" + movieId;
     }
 
-    @PostMapping(value = "/movie/saveReview", params = "action=update")
+    @PostMapping(value = "/movies/saveReview", params = "action=update")
     public String updateMovieReview(@ModelAttribute("movieReviewDto") MovieReviewDto movieReviewDto,
                                     @RequestParam("id") Integer movieId,
                                     Principal principal) {
@@ -54,7 +54,7 @@ public class ReviewController {
         return "redirect:/movies/getById/" + movieId;
     }
 
-    @PostMapping(value = "/movie/saveReview", params = "action=delete")
+    @PostMapping(value = "/movies/saveReview", params = "action=delete")
     public String deleteMovieReview(@RequestParam("id") Integer movieId,
                                     Principal principal) {
         movieService.deleteReview(principal.getName(), movieId);

@@ -46,4 +46,6 @@ public interface MovieService {
 
     List<Movie> findByTitleContaining(String title, Integer movieKey);
 
+    List<MovieReviews> getAllActivityByNickname(String nickname);
+
 }

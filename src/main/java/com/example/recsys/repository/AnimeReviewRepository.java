@@ -41,4 +41,6 @@ public interface AnimeReviewRepository extends JpaRepository<AnimeReview, Intege
     @Query(value = "SELECT * FROM anime_reviews WHERE review_message <> '' AND nickname = :nickname", nativeQuery = true)
     List<AnimeReview> getReviewsByNickname(String nickname);
 
+    @Query(value = "SELECT * FROM anime_reviews WHERE nickname = :nickname", nativeQuery = true)
+    List<AnimeReview> getAllActivityByNickname(String nickname);
 }

@@ -184,4 +184,9 @@ public class BookServiceImpl implements BookService {
         return bookReviewRepository.getReviewsByNickname(nickname);
     }
 
+    @Override
+    public List<BookReview> getAllActivityByNickname(String nickname) {
+        return bookReviewRepository.getAllActivityByNickname(nickname);
+    }
+
 }

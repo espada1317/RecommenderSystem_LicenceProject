@@ -266,6 +266,11 @@ public class MovieServiceImpl implements MovieService {
                 .toList();
     }
 
+    @Override
+    public List<MovieReviews> getAllActivityByNickname(String nickname) {
+        return movieReviewRepository.getAllActivityByNickname(nickname);
+    }
+
     public List<Movie> findByGenresContaining(String genre) {
         String[] genresList = genre.split(",");
 

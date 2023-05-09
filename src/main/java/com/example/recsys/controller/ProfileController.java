@@ -152,6 +152,19 @@ public class ProfileController {
         return "my_reviews";
     }
 
+    @GetMapping(value="/profile/stats")
+    public String personalStats(Model model,
+                                Principal principal) {
+        model.addAttribute("isProfilePage", true);
+        model.addAttribute("isPersonalStats", true);
+        model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
+        model.addAttribute("movieStats", profileService.getPersonalMovieStats(movieService.getAllActivityByNickname(principal.getName())));
+        model.addAttribute("tvStats", profileService.getPersonalTvStats(tvSeriesService.getAllActivityByNickname(principal.getName())));
+        model.addAttribute("animeStats", profileService.getPersonalAnimeStats(animeService.getAllActivityByNickname(principal.getName())));
+        model.addAttribute("bookStats", profileService.getPersonalBookStats(bookService.getAllActivityByNickname(principal.getName())));
+        return "my_stats";
+    }
+
     @GetMapping(value = "/profile/settings")
     public String profileSettings(Principal principal,
                                   Model model) {
