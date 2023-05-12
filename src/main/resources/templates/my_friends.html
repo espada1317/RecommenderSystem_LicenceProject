@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>My Friends</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/my_dashboard.css}">
+  <style>
+    .follower-block {
+      width: 95%;
+      margin-left: auto;
+      margin-right: auto;
+      min-height: 40%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .follower-box {
+      background: black;
+      width: 225px;
+      height: 250px;
+      border: 2px solid white;
+      margin: 1%;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .avatar {
+      height: 150px;
+      width: 150px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    .follower-fullname {
+      font-size: 22px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .follower-nickname {
+      font-size: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .follow-button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header th:insert="fragments/navbar :: navbar">
+</header>
+
+<div class="profilehead">
+  <div class="profileheadcontent">
+    <div class="profileheadcontentoverview">
+      <div class="profileheadcontentoverviewphoto">
+        <img alt="image" class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+      </div>
+      <div class="profileheadcontentoverviewinfo">
+        <h3 class="user-fullname" th:text="${userDetails.fullName != null ? userDetails.fullName : 'Anonymous'}"></h3>
+        <h4>(<strong id="nickname-bl" th:text="${userDetails.nickname}"></strong>)</h4>
+      </div>
+    </div>
+    <div class="profileheadcontentfollows">
+      <span>
+          <a href="#">0 Following</a>
+          <a href="#">0 Followers</a>
+      </span>
+    </div>
+    <div th:if="${followerPage}" class="profileheadcontentfollows">
+      <span>
+          <form method="post" th:action="@{/profile/follow/{id}(id=${nickname})}" id="follow">
+            <button th:if="${!isFollow}" class="follow-button" type="submit" form="follow" name="action" value="follow">Follow</button>
+            <button th:if="${isFollow}" class="follow-button" type="submit" form="follow" name="action" value="unfollow">Unfollow</button>
+          </form>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div th:replace=" ${!followerPage} ? ~{fragments/profilebar :: profilebar} : ~{fragments/followerbar :: followerbar}">
+</div>
+
+<div class="container bootdey">
+  <div class="content">
+
+    <div class="col-md-20">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>Followers</strong>
+        </div>
+
+        <div class="panel-body">
+
+          <div class="follower-block">
+            <div class="follower-box" th:each = "friend: ${friends}">
+              <img alt="image" class="avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+              <br>
+              <span class="follower-fullname" th:text="${friend.fullName}"></span>
+              <span class="follower-nickname" th:text="' (' + ${friend.nickname} + ')'"></span>
+              <br>
+              <form method="post" th:action="@{/profile/unfollow/{id}(id=${friend.nickname})}">
+                <button class="follow-button" type="submit" name="action" value="unfollow">Unfollow</button>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

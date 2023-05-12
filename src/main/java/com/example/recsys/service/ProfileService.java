@@ -19,4 +19,16 @@ public interface ProfileService {
 
     BookStatsDto getPersonalBookStats(List<BookReview> bookReviews);
 
+    TotalTimeStatsDto getTotalTime(List<MovieReviews> movieReviews, List<TvSeriesReviews> tvSeriesReviews, List<AnimeReview> animeReviews);
+
+    boolean getExistingFollowRelation(String nickname, String follower);
+
+    void saveFollower(String username, String follower);
+
+    void deleteFollower(String username, String follower);
+
+    List<Followers> getAllActiveFollowers(String nickname);
+
+    List<FollowersInfoDto> getAllFollowersInfo(List<Followers> followers);
+
 }

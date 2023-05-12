@@ -575,3 +575,11 @@ html {
 .selected-main-page {
     color: orange;
 }
+
+.follow-button {
+  background: none;
+  border: 2px solid;
+  font: inherit;
+  line-height: 0.5;
+  padding: 0.5em 1em;
+}

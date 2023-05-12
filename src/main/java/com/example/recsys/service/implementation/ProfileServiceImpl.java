@@ -3,19 +3,31 @@ package com.example.recsys.service.implementation;
 import com.example.recsys.comparators.profile.RecentReviewsDtoLocalDateComparator;
 import com.example.recsys.comparators.profile.UserActivityDtoLocalDateComparator;
 import com.example.recsys.dto.*;
-import com.example.recsys.entity.AnimeReview;
-import com.example.recsys.entity.BookReview;
-import com.example.recsys.entity.MovieReviews;
-import com.example.recsys.entity.TvSeriesReviews;
+import com.example.recsys.entity.*;
+import com.example.recsys.repository.FollowersRepository;
+import com.example.recsys.repository.UserInfoRepository;
 import com.example.recsys.service.ProfileService;
-import com.example.recsys.service.TvSeriesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
+
+    @Autowired
+    private final FollowersRepository followersRepository;
+
+    @Autowired
+    private final UserInfoRepository userInfoRepository;
+
+    public ProfileServiceImpl(FollowersRepository followersRepository, UserInfoRepository userInfoRepository) {
+        this.followersRepository = followersRepository;
+        this.userInfoRepository = userInfoRepository;
+    }
+
     @Override
     public List<UserActivityDto> getAllUserRecentActivity(List<MovieReviews> movieReviews,
                                                           List<TvSeriesReviews> tvSeriesReviews,
@@ -218,7 +230,7 @@ public class ProfileServiceImpl implements ProfileService {
             if(x.getCategory().equals("completed")) {
                 completedCount++;
                 completedTotalLength += temp;
-                noEpisodesWatching += x.getTvSeries().getNumberEpisodes();
+                noEpisodesCompleted += x.getTvSeries().getNumberEpisodes();
             }
             if(x.getCategory().equals("watching")) {
                 watchingCount++;
@@ -407,6 +419,86 @@ public class ProfileServiceImpl implements ProfileService {
         result.setNoPagesReading(readingTotalLength);
         result.setNoPagesCompleted(completedTotalLength);
 
+        return result;
+    }
+
+    @Override
+    public TotalTimeStatsDto getTotalTime(List<MovieReviews> movieReviews, List<TvSeriesReviews> tvSeriesReviews, List<AnimeReview> animeReviews) {
+        TotalTimeStatsDto totalTimeStatsDto = new TotalTimeStatsDto();
+
+        int totalMinutes = 0;
+
+        for(MovieReviews x : movieReviews) {
+            if(x.getCategory().equals("completed")) {
+                totalMinutes += x.getMovie().getLength();
+            }
+        }
+
+        for(AnimeReview x : animeReviews) {
+            int temp = x.getAnime().getAverageRuntime() * x.getAnime().getNumberEpisodes();
+            if(x.getCategory() == null) {
+                continue;
+            }
+            if(x.getCategory().equals("completed")) {
+                totalMinutes += temp;
+            }
+        }
+
+        for(TvSeriesReviews x : tvSeriesReviews) {
+            int temp = x.getTvSeries().getAverageRuntime() * x.getTvSeries().getNumberEpisodes();
+            if(x.getCategory().equals("completed")) {
+                totalMinutes += temp;
+            }
+        }
+
+        int daysCount = totalMinutes / (24 * 60);
+        totalMinutes -= daysCount * 24 * 60;
+        int hoursCount = totalMinutes / 60;
+        totalMinutes -= hoursCount * 60;
+        int minutesCount = totalMinutes % 60;
+
+        totalTimeStatsDto.setDays(daysCount);
+        totalTimeStatsDto.setHours(hoursCount);
+        totalTimeStatsDto.setMinutes(minutesCount);
+
+        return totalTimeStatsDto;
+    }
+
+    @Override
+    public boolean getExistingFollowRelation(String nickname, String follower) {
+        return followersRepository.checkForExistingFollower(nickname, follower) != null;
+    }
+
+    @Override
+    public void saveFollower(String username, String follower) {
+        Followers followers = new Followers();
+        followers.setId(new FollowerId( username, follower ));
+        followersRepository.save(followers);
+    }
+
+    @Override
+    public void deleteFollower(String username, String follower) {
+        followersRepository.deleteFollower(username, follower);
+    }
+
+    @Override
+    public List<Followers> getAllActiveFollowers(String nickname) {
+        return followersRepository.getAllFollowersForUser(nickname);
+    }
+
+    @Override
+    public List<FollowersInfoDto> getAllFollowersInfo(List<Followers> followers) {
+        List<FollowersInfoDto> result = new ArrayList<>();
+
+        for(Followers follower : followers) {
+            Optional<UserInfo> userInfo = userInfoRepository.findByNickname(follower.getId().getFollower());
+            FollowersInfoDto temp = new FollowersInfoDto();
+            if(userInfo.isPresent()) {
+                temp.setNickname(userInfo.get().getNickname());
+                temp.setFullName(userInfo.get().getFullName());
+                result.add(temp);
+            }
+        }
         return result;
     }
 

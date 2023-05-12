@@ -28,10 +28,18 @@
                     <a href="#">0 Followers</a>
                 </span>
             </div>
+            <div th:if="${followerPage}" class="profileheadcontentfollows">
+              <span>
+                  <form method="post" th:action="@{/profile/follow/{id}(id=${nickname})}" id="follow">
+                    <button th:if="${!isFollow}" class="follow-button" type="submit" form="follow" name="action" value="follow">Follow</button>
+                    <button th:if="${isFollow}" class="follow-button" type="submit" form="follow" name="action" value="unfollow">Unfollow</button>
+                  </form>
+              </span>
+            </div>
         </div>
     </div>
 
-    <div th:replace="fragments/profilebar :: profilebar">
+    <div th:replace=" ${!followerPage} ? ~{fragments/profilebar :: profilebar} : ~{fragments/followerbar :: followerbar}">
     </div>
 
     <div class="container bootdey">

@@ -1,0 +1,47 @@
+<div class="profilenavbar" th:fragment="followerbar">
+  <a th:href="@{/profile/dashboard/{id}(id=${nickname})}">
+    <div class="profilebarbuttons" th:classappend=" ${isDashboard} ? selectedbtn : '' ">
+      <span>MY DASHBOARD</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/overview/{id}(id=${nickname})}">
+    <div class="profilebarbuttons" th:classappend=" ${isOverview} ? selectedbtn : '' ">
+      <span>OVERVIEW</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/myMovieList/{id}(id=${nickname})}">
+    <div class="profilebarbuttons" th:classappend=" ${isMovieStats} ? selectedbtn : '' ">
+      <span>MY MOVIE</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/myTvList/{id}(id=${nickname})}">
+    <div class="profilebarbuttons" th:classappend=" ${isTvStats} ? selectedbtn : '' ">
+      <span>MY TV SHOWS</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/myAnimeList/{id}(id=${nickname})}">
+    <div class="profilebarbuttons" th:classappend=" ${isAnimeStats} ? selectedbtn : '' ">
+      <span>MY ANIME</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/myBookList/{id}(id=${nickname})}">
+    <div class="profilebarbuttons" th:classappend=" ${isBookStats} ? selectedbtn : '' ">
+      <span>MY BOOKS</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/reviews/{id}(id=${nickname})}">
+    <div class="profilebarbuttons" th:classappend=" ${isReviewStats} ? selectedbtn : '' ">
+      <span>MY REVIEWS</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/stats/{id}(id=${nickname})}">
+    <div class="profilebarbuttons" th:classappend=" ${isPersonalStats} ? selectedbtn : '' ">
+      <span>MY STATS</span>
+    </div>
+  </a>
+  <a th:href="@{/profile/friends/{id}(id=${nickname})}">
+    <div class="profilebarbuttons" th:classappend=" ${isFriendStats} ? selectedbtn : '' ">
+      <span>MY FRIENDS</span>
+    </div>
+  </a>
+</div>
