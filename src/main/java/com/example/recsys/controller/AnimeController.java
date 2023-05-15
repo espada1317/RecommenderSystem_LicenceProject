@@ -59,6 +59,8 @@ public class AnimeController {
         model.addAttribute("isAnimePage", true);
         model.addAttribute("animeDetails", animeService.getAnimeById(animeID));
         model.addAttribute("animeID", animeID);
+        model.addAttribute("similarAnime", animeService.getSimilarContent(animeService.getAnimeById(animeID)));
+
         Optional<AnimeReview> animeReview = animeService.getReviewByNicknameAndAnimeId(principal.getName(), animeID);
         animeReview.ifPresent(anime -> model.addAttribute("reviewInfo", anime));
 

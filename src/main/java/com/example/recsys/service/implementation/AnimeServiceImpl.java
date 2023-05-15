@@ -8,6 +8,7 @@ import com.example.recsys.comparators.anime.reviews.AnimeReviewTitileComparator;
 import com.example.recsys.dto.AnimeReviewDto;
 import com.example.recsys.entity.Anime;
 import com.example.recsys.entity.AnimeReview;
+import com.example.recsys.entity.TvSeries;
 import com.example.recsys.repository.AnimeRepository;
 import com.example.recsys.repository.AnimeReviewRepository;
 import com.example.recsys.service.AnimeService;
@@ -15,8 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,7 +43,7 @@ public class AnimeServiceImpl implements AnimeService {
     @Override
     public List<Anime> searchAnimeByMultipleFilter(String keyword, String genre, String type, String source, Integer startYear, Integer endYear, String sortBy) {
         List<Anime> result = getAllAnime();
-
+ 
         if(keyword != null) {
             List<Anime> keywordList = animeRepository.findByTitleContaining(keyword);
             result.retainAll(keywordList);
@@ -221,6 +221,53 @@ public class AnimeServiceImpl implements AnimeService {
     @Override
     public List<AnimeReview> getAllActivityByNickname(String nickname) {
         return animeReviewRepository.getAllActivityByNickname(nickname);
+    }
+
+    @Override
+    public List<Anime> getSimilarContent(Anime anime) {
+        List<Anime> result = new ArrayList<>();
+        List<Anime> similarMoviesByTitle = findByTitleContaining( getParsedTitle(anime.getTitle()), anime.getAnimeKey() );
+        if(similarMoviesByTitle != null) {
+            result.addAll(similarMoviesByTitle);
+        }
+        List<Anime> similarTvByGenres = findByGenresContaining( anime.getGenres() );
+        if(similarTvByGenres != null) {
+            result.addAll(similarTvByGenres);
+        }
+        result.remove(anime);
+
+        Set<Anime> set = new LinkedHashSet<>(result);
+        result.clear();
+        result.addAll(set);
+
+        return result;
+    }
+
+    public String getParsedTitle(String title) {
+        String[] result = title.split("\\s*[0-9:]+");
+
+        return result[0].trim();
+    }
+
+    public List<Anime> findByGenresContaining(String genre) {
+        String[] genresList = genre.split(",");
+
+        List<Anime> resultList = getAllAnime();
+        for(String movieGenre : genresList) {
+            List<Anime> tempList = animeRepository.findByGenreContaining(movieGenre);
+            resultList.retainAll(tempList);
+        }
+
+        return resultList.stream()
+                .limit(10)
+                .toList();
+    }
+
+    @Override
+    public List<Anime> findByTitleContaining(String title, Integer animeKey) {
+        return animeRepository.findByTitleContaining(title, animeKey).stream()
+                .limit(5)
+                .toList();
     }
 
 }

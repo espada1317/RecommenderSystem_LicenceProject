@@ -1,5 +1,7 @@
 package com.example.recsys.controller;
 
+import com.example.recsys.entity.Movie;
+import com.example.recsys.entity.TvSeries;
 import com.example.recsys.entity.TvSeriesReviews;
 import com.example.recsys.service.TvSeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +53,11 @@ public class TvSeriesController {
                             @PathVariable("id") int tvID,
                             Principal principal) {
         model.addAttribute("isTvPage",true);
-        model.addAttribute("tvSeries", tvSeriesService.getTvById(tvID));
+        TvSeries tvDetails = tvSeriesService.getTvById(tvID);
+        model.addAttribute("tvSeries", tvDetails);
         model.addAttribute("tvID", tvID);
+        model.addAttribute("similarTvs", tvSeriesService.getSimilarContent(tvDetails));
+
         Optional<TvSeriesReviews> tvReview = tvSeriesService.getReviewByNicknameAndTvId(principal.getName(), tvID);
         tvReview.ifPresent(tvReviews -> model.addAttribute("reviewInfo", tvReviews));
 

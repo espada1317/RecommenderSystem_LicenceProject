@@ -6,6 +6,7 @@ import com.example.recsys.comparators.tvseries.TvTitleComparator;
 import com.example.recsys.comparators.tvseries.reviews.TvReviewImdbComparator;
 import com.example.recsys.comparators.tvseries.reviews.TvReviewTitleComparator;
 import com.example.recsys.dto.TvReviewDto;
+import com.example.recsys.entity.Movie;
 import com.example.recsys.entity.TvSeries;
 import com.example.recsys.entity.TvSeriesReviews;
 import com.example.recsys.repository.TvSeriesRepository;
@@ -15,8 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -203,5 +203,52 @@ public class TvSeriesServiceImpl implements TvSeriesService {
     @Override
     public List<TvSeriesReviews> getAllActivityByNickname(String nickname) {
         return tvSeriesReviewRepository.getAllActivityByNickname(nickname);
+    }
+
+    @Override
+    public List<TvSeries> getSimilarContent(TvSeries tvSeriesDetails) {
+        List<TvSeries> result = new ArrayList<>();
+        List<TvSeries> similarMoviesByTitle = findByTitleContaining( getParsedTitle(tvSeriesDetails.getTitle()), tvSeriesDetails.getTvKey() );
+        if(similarMoviesByTitle != null) {
+            result.addAll(similarMoviesByTitle);
+        }
+        List<TvSeries> similarTvByGenres = findByGenresContaining( tvSeriesDetails.getGenres() );
+        if(similarTvByGenres != null) {
+            result.addAll(similarTvByGenres);
+        }
+        result.remove(tvSeriesDetails);
+
+        Set<TvSeries> set = new LinkedHashSet<>(result);
+        result.clear();
+        result.addAll(set);
+
+        return result;
+    }
+
+    @Override
+    public List<TvSeries> findByTitleContaining(String title, Integer movieKey) {
+        return tvSeriesRepository.findByTitleContaining(title, movieKey).stream()
+                .limit(5)
+                .toList();
+    }
+
+    public String getParsedTitle(String title) {
+        String[] result = title.split("\\s*[0-9:]+");
+
+        return result[0].trim();
+    }
+
+    public List<TvSeries> findByGenresContaining(String genre) {
+        String[] genresList = genre.split(",");
+
+        List<TvSeries> resultList = getAllTv();
+        for(String movieGenre : genresList) {
+            List<TvSeries> tempList = tvSeriesRepository.findByGenreContaining(movieGenre);
+            resultList.retainAll(tempList);
+        }
+
+        return resultList.stream()
+                .limit(10)
+                .toList();
     }
 }

@@ -3,6 +3,7 @@ package com.example.recsys.service;
 import com.example.recsys.dto.AnimeReviewDto;
 import com.example.recsys.entity.Anime;
 import com.example.recsys.entity.AnimeReview;
+import com.example.recsys.entity.TvSeries;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,5 +47,10 @@ public interface AnimeService {
     List<AnimeReview> getReviewsByNickname(String nickname);
 
     List<AnimeReview> getAllActivityByNickname(String nickname);
+
+
+    List<Anime> getSimilarContent(Anime anime);
+
+    List<Anime> findByTitleContaining(String title, Integer animeKey);
 
 }

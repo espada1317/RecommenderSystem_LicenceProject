@@ -29,6 +29,6 @@ public interface ProfileService {
 
     List<Followers> getAllActiveFollowers(String nickname);
 
-    List<FollowersInfoDto> getAllFollowersInfo(List<Followers> followers);
+    List<FollowersInfoDto> getAllFollowersInfo(List<Followers> followers, String currentUser);
 
 }

@@ -1,5 +1,6 @@
 package com.example.recsys.controller;
 
+import com.example.recsys.dto.CurrentNicknameDto;
 import com.example.recsys.dto.RecentReviewsDto;
 import com.example.recsys.dto.UserActivityDto;
 import com.example.recsys.dto.UserSettingsDto;
@@ -8,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -341,21 +339,21 @@ public class ProfileController {
         model.addAttribute("isFriendStats", true);
         model.addAttribute("followerPage", false);
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
-        model.addAttribute("friends", profileService.getAllFollowersInfo(profileService.getAllActiveFollowers(principal.getName())));
+        model.addAttribute("friends", profileService.getAllFollowersInfo(profileService.getAllActiveFollowers(principal.getName()), principal.getName()));
         return "my_friends";
     }
 
-    @GetMapping(value = "/profile/friends/{nickname}")
+    @GetMapping(value = "/profile/friends/{username}")
     public String personalFriends(Model model,
-                                  @PathVariable("nickname") String nickname,
+                                  @PathVariable("username") String username,
                                   Principal principal) {
         model.addAttribute("isProfilePage", true);
         model.addAttribute("isFriendStats", true);
         model.addAttribute("followerPage", true);
-        model.addAttribute("nickname", nickname);
-        model.addAttribute("userDetails", userAuthService.findUserByNickname(nickname));
-        model.addAttribute("isFollow", profileService.getExistingFollowRelation(principal.getName(), nickname));
-        model.addAttribute("friends", profileService.getAllFollowersInfo(profileService.getAllActiveFollowers(nickname)));
+        model.addAttribute("username", username);
+        model.addAttribute("userDetails", userAuthService.findUserByNickname(username));
+        model.addAttribute("isFollow", profileService.getExistingFollowRelation(principal.getName(), username));
+        model.addAttribute("friends", profileService.getAllFollowersInfo(profileService.getAllActiveFollowers(username), principal.getName()));
         return "my_friends";
     }
 
@@ -375,11 +373,19 @@ public class ProfileController {
 
     @PostMapping(value = "/profile/unfollow/{nickname}", params = "action=unfollow")
     public String deleteFollowerFromProfile(@PathVariable("nickname") String nickname,
+                                            @ModelAttribute("currentNicknameDto") CurrentNicknameDto currentNicknameDto,
                                             Principal principal) {
         profileService.deleteFollower(principal.getName(), nickname);
-        return "redirect:/profile/friends";
+        return "redirect:/profile/friends/" + currentNicknameDto.getNickname();
     }
 
+    @PostMapping(value = "/profile/unfollow/{nickname}", params = "action=follow")
+    public String saveFollowerFromProfile(@PathVariable("nickname") String nickname,
+                                          @ModelAttribute("currentNicknameDto") CurrentNicknameDto currentNicknameDto,
+                                          Principal principal) {
+        profileService.saveFollower(principal.getName(), nickname);
+        return "redirect:/profile/friends/" + currentNicknameDto.getNickname();
+    }
 
     @GetMapping(value = "/profile/settings")
     public String profileSettings(Principal principal,

@@ -48,6 +48,22 @@
     </div>
   </div>
 
+  <div class="card mb-1">
+    <div class="card-body">
+      <div class="row">
+        <h3>Similar movies</h3>
+        <section class="exploreScroll">
+          <div class="horizontal-scroll-wrapper squares">
+            <div class="card-list" th:each="similarBook : ${similarBooks}">
+              <a th:href="@{/books/getById/{id}(id=${similarBook.bookKey})}"><div class="card card-img"><img th:src="${similarBook.poster}" th:alt="${similarBook.poster}"></div></a>
+              <div class="info" th:text="${similarBook.title}"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-body">
       <div class="row">

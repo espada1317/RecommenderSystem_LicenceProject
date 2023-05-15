@@ -1,13 +1,11 @@
 package com.example.recsys.repository;
 
-import com.example.recsys.entity.AnimeReview;
 import com.example.recsys.entity.BookReview;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.List;
 

@@ -6,17 +6,19 @@ import com.example.recsys.comparators.books.BooksTitleComparator;
 import com.example.recsys.comparators.books.reviews.BookReviewRatingComparator;
 import com.example.recsys.comparators.books.reviews.BookReviewTitleComparator;
 import com.example.recsys.dto.BookReviewDto;
+import com.example.recsys.entity.Anime;
 import com.example.recsys.entity.BookReview;
 import com.example.recsys.entity.Books;
+import com.example.recsys.entity.TvSeries;
 import com.example.recsys.repository.BookRepository;
 import com.example.recsys.repository.BookReviewRepository;
 import com.example.recsys.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -187,6 +189,53 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookReview> getAllActivityByNickname(String nickname) {
         return bookReviewRepository.getAllActivityByNickname(nickname);
+    }
+
+    @Override
+    public List<Books> getSimilarContent(Books books) {
+        List<Books> result = new ArrayList<>();
+        List<Books> similarMoviesByTitle = findByTitleContaining( getParsedTitle(books.getTitle()), books.getBookKey() );
+        if(similarMoviesByTitle != null) {
+            result.addAll(similarMoviesByTitle);
+        }
+        List<Books> similarTvByGenres = findByGenresContaining( books.getGenres() );
+        if(similarTvByGenres != null) {
+            result.addAll(similarTvByGenres);
+        }
+        result.remove(books);
+
+        Set<Books> set = new LinkedHashSet<>(result);
+        result.clear();
+        result.addAll(set);
+
+        return result;
+    }
+
+    @Override
+    public List<Books> findByTitleContaining(String title, Integer bookKey) {
+        return bookRepository.findByTitleContaining(title, bookKey).stream()
+                .limit(5)
+                .toList();
+    }
+
+    public String getParsedTitle(String title) {
+        String[] result = title.split("\\s*[0-9:]+");
+
+        return result[0].trim();
+    }
+
+    public List<Books> findByGenresContaining(String genre) {
+        String[] genresList = genre.split(",");
+
+        List<Books> resultList = getAllBooks();
+        for(String movieGenre : genresList) {
+            List<Books> tempList = bookRepository.findByGenreContaining(movieGenre);
+            resultList.retainAll(tempList);
+        }
+
+        return resultList.stream()
+                .limit(10)
+                .toList();
     }
 
 }

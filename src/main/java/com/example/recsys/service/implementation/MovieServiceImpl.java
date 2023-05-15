@@ -281,7 +281,7 @@ public class MovieServiceImpl implements MovieService {
         }
 
         return resultList.stream()
-                .limit(7)
+                .limit(10)
                 .toList();
     }
 

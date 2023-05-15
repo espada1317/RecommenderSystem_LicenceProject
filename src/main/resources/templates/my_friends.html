@@ -105,8 +105,11 @@
               <span class="follower-fullname" th:text="${friend.fullName}"></span>
               <span class="follower-nickname" th:text="' (' + ${friend.nickname} + ')'"></span>
               <br>
+
               <form method="post" th:action="@{/profile/unfollow/{id}(id=${friend.nickname})}">
-                <button class="follow-button" type="submit" name="action" value="unfollow">Unfollow</button>
+                <input hidden="hidden" name="username" type="text" th:value="${username}">
+                <button th:if="${friend.isFollowed}" class="follow-button" type="submit" name="action" value="unfollow">Unfollow</button>
+                <button th:if="${!friend.isFollowed}" class="follow-button" type="submit" name="action" value="follow">Follow</button>
               </form>
             </div>
 

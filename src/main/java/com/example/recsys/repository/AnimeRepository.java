@@ -1,6 +1,7 @@
 package com.example.recsys.repository;
 
 import com.example.recsys.entity.Anime;
+import com.example.recsys.entity.TvSeries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -41,5 +42,8 @@ public interface AnimeRepository extends JpaRepository<Anime, Integer> {
 
     @Query("SELECT a FROM anime a WHERE a.type LIKE CONCAT('%', :type , '%')")
     List<Anime> findByTypeContaining(@Param("type") String type);
+
+    @Query("SELECT a FROM anime a WHERE a.title LIKE CONCAT(:title , '%') AND a.animeKey <> :animeKey ORDER BY a.voteTotal DESC")
+    List<Anime> findByTitleContaining(@Param("title") String title, @Param("animeKey") Integer animeKey);
 
 }

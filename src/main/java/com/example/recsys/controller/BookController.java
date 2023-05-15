@@ -46,6 +46,7 @@ public class BookController {
                             Principal principal) {
         model.addAttribute("isBookPage", true);
         model.addAttribute("bookDetails", bookService.getBookById(bookID));
+        model.addAttribute("similarBooks", bookService.getSimilarContent(bookService.getBookById(bookID)));
         model.addAttribute("bookID", bookID);
         Optional<BookReview> bookReview = bookService.getReviewByNicknameAndBookId(principal.getName(), bookID);
         bookReview.ifPresent(book -> model.addAttribute("reviewInfo", book));

@@ -487,7 +487,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public List<FollowersInfoDto> getAllFollowersInfo(List<Followers> followers) {
+    public List<FollowersInfoDto> getAllFollowersInfo(List<Followers> followers, String currentUser) {
         List<FollowersInfoDto> result = new ArrayList<>();
 
         for(Followers follower : followers) {
@@ -496,6 +496,7 @@ public class ProfileServiceImpl implements ProfileService {
             if(userInfo.isPresent()) {
                 temp.setNickname(userInfo.get().getNickname());
                 temp.setFullName(userInfo.get().getFullName());
+                temp.setFollowed(getExistingFollowRelation(currentUser, userInfo.get().getNickname()));
                 result.add(temp);
             }
         }

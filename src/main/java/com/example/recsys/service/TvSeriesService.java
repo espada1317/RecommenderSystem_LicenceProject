@@ -42,4 +42,8 @@ public interface TvSeriesService {
     List<TvSeriesReviews> getReviewsByNickname(String nickname);
 
     List<TvSeriesReviews> getAllActivityByNickname(String nickname);
+
+    List<TvSeries> getSimilarContent(TvSeries tvSeries);
+
+    List<TvSeries> findByTitleContaining(String title, Integer movieKey);
 }

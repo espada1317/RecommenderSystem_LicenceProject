@@ -52,6 +52,22 @@
       </div>
     </div>
 
+    <div class="card mb-1">
+      <div class="card-body">
+        <div class="row">
+          <h3>Similar movies</h3>
+          <section class="exploreScroll">
+            <div class="horizontal-scroll-wrapper squares">
+              <div class="card-list" th:each="similarTv : ${similarTvs}">
+                <a th:href="@{/tv/getById/{id}(id=${similarTv.tvKey})}"><div class="card card-img"><img th:src="${similarTv.poster}" th:alt="${similarTv.poster}"></div></a>
+                <div class="info" th:text="${similarTv.title}"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
     <div class="card">
       <div class="card-body">
         <div class="row">

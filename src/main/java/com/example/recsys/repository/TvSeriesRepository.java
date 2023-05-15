@@ -1,5 +1,6 @@
 package com.example.recsys.repository;
 
+import com.example.recsys.entity.Movie;
 import com.example.recsys.entity.TvSeries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -29,5 +30,8 @@ public interface TvSeriesRepository extends JpaRepository<TvSeries, Integer> {
 
     @Query(value = "SELECT * FROM tv_series WHERE runtime_end <= :endYear", nativeQuery = true)
     List<TvSeries> findByMaximEndYearRelease(Integer endYear);
+
+    @Query("SELECT tv FROM tv_series tv WHERE tv.title LIKE CONCAT(:title , '%') AND tv.tvKey <> :tvKey ORDER BY tv.voteAverage DESC")
+    List<TvSeries> findByTitleContaining(@Param("title") String title, @Param("tvKey") Integer tvKey);
 
 }

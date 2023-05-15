@@ -7,11 +7,6 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FollowersInfoDto {
-
+public class CurrentNicknameDto {
     private String nickname;
-    private String fullName;
-    private String photo;
-    private boolean isFollowed;
-
 }
