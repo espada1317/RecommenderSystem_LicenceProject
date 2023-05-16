@@ -1,14 +1,13 @@
 package com.example.recsys.service.implementation;
 
+import com.example.recsys.comparators.movies.MovieImdbRatingComparator;
 import com.example.recsys.comparators.tvseries.TvImdbComparator;
 import com.example.recsys.comparators.tvseries.TvLengthComparator;
 import com.example.recsys.comparators.tvseries.TvTitleComparator;
 import com.example.recsys.comparators.tvseries.reviews.TvReviewImdbComparator;
 import com.example.recsys.comparators.tvseries.reviews.TvReviewTitleComparator;
 import com.example.recsys.dto.TvReviewDto;
-import com.example.recsys.entity.Movie;
-import com.example.recsys.entity.TvSeries;
-import com.example.recsys.entity.TvSeriesReviews;
+import com.example.recsys.entity.*;
 import com.example.recsys.repository.TvSeriesRepository;
 import com.example.recsys.repository.TvSeriesReviewRepository;
 import com.example.recsys.service.TvSeriesService;
@@ -33,7 +32,7 @@ public class TvSeriesServiceImpl implements TvSeriesService {
         this.tvSeriesReviewRepository = tvSeriesReviewRepository;
     }
 
-    public static final int LIMIT = 48;
+    public static final int LIMIT = 16;
 
     @Override
     public List<TvSeries> getAllTv() {
@@ -230,6 +229,33 @@ public class TvSeriesServiceImpl implements TvSeriesService {
         return tvSeriesRepository.findByTitleContaining(title, movieKey).stream()
                 .limit(5)
                 .toList();
+    }
+
+    @Override
+    public List<TvSeries> recommendedByFriends(List<Followers> followers, String nickname) {
+        List<TvSeriesReviews> completedBookReviews = getRecentWatchedTvs(nickname);
+        List<TvSeries> personalBooks = new ArrayList<>();
+        List<TvSeries> friendsBooks = new ArrayList<>();
+
+        for(TvSeriesReviews completedBookReview : completedBookReviews) {
+            personalBooks.add(completedBookReview.getTvSeries());
+        }
+
+        for(Followers follower : followers) {
+            String followerNick = follower.getId().getFollower();
+            List<TvSeriesReviews> fiendsCompletedBookReviews = getRecentWatchedTvs(followerNick);
+
+            for(TvSeriesReviews friendCompletedReview : fiendsCompletedBookReviews) {
+                friendsBooks.add(friendCompletedReview.getTvSeries());
+            }
+        }
+
+        friendsBooks.removeAll(personalBooks);
+        friendsBooks.sort(new TvImdbComparator().reversed());
+
+        return friendsBooks.stream()
+                .limit(LIMIT)
+                .collect(Collectors.toList());
     }
 
     public String getParsedTitle(String title) {

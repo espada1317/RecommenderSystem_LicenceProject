@@ -1,6 +1,7 @@
 package com.example.recsys.service;
 
 import com.example.recsys.dto.TvReviewDto;
+import com.example.recsys.entity.Followers;
 import com.example.recsys.entity.TvSeries;
 import com.example.recsys.entity.TvSeriesReviews;
 
@@ -46,4 +47,6 @@ public interface TvSeriesService {
     List<TvSeries> getSimilarContent(TvSeries tvSeries);
 
     List<TvSeries> findByTitleContaining(String title, Integer movieKey);
+
+    List<TvSeries> recommendedByFriends(List<Followers> followers, String nickname);
 }

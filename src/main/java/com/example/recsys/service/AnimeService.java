@@ -1,12 +1,14 @@
 package com.example.recsys.service;
 
+import com.example.recsys.comparators.books.BooksScoreCountComparator;
 import com.example.recsys.dto.AnimeReviewDto;
-import com.example.recsys.entity.Anime;
-import com.example.recsys.entity.AnimeReview;
-import com.example.recsys.entity.TvSeries;
+import com.example.recsys.entity.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public interface AnimeService {
 
@@ -48,9 +50,10 @@ public interface AnimeService {
 
     List<AnimeReview> getAllActivityByNickname(String nickname);
 
-
     List<Anime> getSimilarContent(Anime anime);
 
     List<Anime> findByTitleContaining(String title, Integer animeKey);
+
+    List<Anime> recommendedByFriends(List<Followers> followers, String nickname);
 
 }

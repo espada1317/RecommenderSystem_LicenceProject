@@ -1,8 +1,8 @@
 package com.example.recsys.controller;
 
-import com.example.recsys.entity.Movie;
 import com.example.recsys.entity.TvSeries;
 import com.example.recsys.entity.TvSeriesReviews;
+import com.example.recsys.service.ProfileService;
 import com.example.recsys.service.TvSeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -22,8 +22,12 @@ public class TvSeriesController {
     @Autowired
     private final TvSeriesService tvSeriesService;
 
-    public TvSeriesController(TvSeriesService tvSeriesService) {
+    @Autowired
+    private final ProfileService profileService;
+
+    public TvSeriesController(TvSeriesService tvSeriesService, ProfileService profileService) {
         this.tvSeriesService = tvSeriesService;
+        this.profileService = profileService;
     }
 
     @GetMapping
@@ -45,6 +49,7 @@ public class TvSeriesController {
         model.addAttribute("selectedEndYear", endYear);
         model.addAttribute("selectedSort", sortBy);
         model.addAttribute("tvSeries", tvSeriesService.searchTvByMultipleFilter(keyword, genre, startYear, endYear, sortBy));
+        model.addAttribute("friendsRecommend", tvSeriesService.recommendedByFriends( profileService.getAllActiveFollowers(principal.getName()), principal.getName() ));
         return "tv_series";
     }
 

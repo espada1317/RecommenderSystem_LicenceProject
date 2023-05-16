@@ -6,17 +6,15 @@ import com.example.recsys.comparators.books.BooksTitleComparator;
 import com.example.recsys.comparators.books.reviews.BookReviewRatingComparator;
 import com.example.recsys.comparators.books.reviews.BookReviewTitleComparator;
 import com.example.recsys.dto.BookReviewDto;
-import com.example.recsys.entity.Anime;
 import com.example.recsys.entity.BookReview;
 import com.example.recsys.entity.Books;
-import com.example.recsys.entity.TvSeries;
+import com.example.recsys.entity.Followers;
 import com.example.recsys.repository.BookRepository;
 import com.example.recsys.repository.BookReviewRepository;
 import com.example.recsys.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,7 +28,7 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private final BookReviewRepository bookReviewRepository;
 
-    public static final int LIMIT = 48;
+    public static final int LIMIT = 16;
 
     public BookServiceImpl(BookRepository bookRepository, BookReviewRepository bookReviewRepository) {
         this.bookRepository = bookRepository;
@@ -236,6 +234,33 @@ public class BookServiceImpl implements BookService {
         return resultList.stream()
                 .limit(10)
                 .toList();
+    }
+
+    @Override
+    public List<Books> recommendedByFriends(List<Followers> followers,String nickname) {
+        List<BookReview> completedBookReviews = getRecentCompletedBook(nickname);
+        List<Books> personalBooks = new ArrayList<>();
+        List<Books> friendsBooks = new ArrayList<>();
+
+        for (BookReview completedBookReview : completedBookReviews) {
+            personalBooks.add(completedBookReview.getBooks());
+        }
+
+        for(Followers follower : followers) {
+            String followerNick = follower.getId().getFollower();
+            List<BookReview> fiendsCompletedBookReviews = getRecentCompletedBook(followerNick);
+
+            for (BookReview friendCompletedReview : fiendsCompletedBookReviews) {
+                friendsBooks.add(friendCompletedReview.getBooks());
+            }
+        }
+
+        friendsBooks.removeAll(personalBooks);
+        friendsBooks.sort(new BooksScoreCountComparator().reversed());
+
+        return friendsBooks.stream()
+                .limit(LIMIT)
+                .collect(Collectors.toList());
     }
 
 }

@@ -5,10 +5,9 @@ import com.example.recsys.comparators.anime.AnimeScoreComparator;
 import com.example.recsys.comparators.anime.AnimeTitleComparator;
 import com.example.recsys.comparators.anime.reviews.AnimeReviewLengthComparator;
 import com.example.recsys.comparators.anime.reviews.AnimeReviewTitileComparator;
+import com.example.recsys.comparators.books.BooksScoreCountComparator;
 import com.example.recsys.dto.AnimeReviewDto;
-import com.example.recsys.entity.Anime;
-import com.example.recsys.entity.AnimeReview;
-import com.example.recsys.entity.TvSeries;
+import com.example.recsys.entity.*;
 import com.example.recsys.repository.AnimeRepository;
 import com.example.recsys.repository.AnimeReviewRepository;
 import com.example.recsys.service.AnimeService;
@@ -28,7 +27,7 @@ public class AnimeServiceImpl implements AnimeService {
     @Autowired
     private final AnimeReviewRepository animeReviewRepository;
 
-    public static final int LIMIT = 48;
+    public static final int LIMIT = 16;
 
     public AnimeServiceImpl(AnimeRepository animeRepository, AnimeReviewRepository animeReviewRepository) {
         this.animeRepository = animeRepository;
@@ -268,6 +267,33 @@ public class AnimeServiceImpl implements AnimeService {
         return animeRepository.findByTitleContaining(title, animeKey).stream()
                 .limit(5)
                 .toList();
+    }
+
+    @Override
+    public List<Anime> recommendedByFriends(List<Followers> followers, String nickname) {
+        List<AnimeReview> completedBookReviews = getRecentWatchedAnime(nickname);
+        List<Anime> personalBooks = new ArrayList<>();
+        List<Anime> friendsBooks = new ArrayList<>();
+
+        for (AnimeReview completedBookReview : completedBookReviews) {
+            personalBooks.add(completedBookReview.getAnime());
+        }
+
+        for(Followers follower : followers) {
+            String followerNick = follower.getId().getFollower();
+            List<AnimeReview> fiendsCompletedBookReviews = getRecentWatchedAnime(followerNick);
+
+            for (AnimeReview friendCompletedReview : fiendsCompletedBookReviews) {
+                friendsBooks.add(friendCompletedReview.getAnime());
+            }
+        }
+
+        friendsBooks.removeAll(personalBooks);
+        friendsBooks.sort(new AnimeScoreComparator().reversed());
+
+        return friendsBooks.stream()
+                .limit(LIMIT)
+                .collect(Collectors.toList());
     }
 
 }

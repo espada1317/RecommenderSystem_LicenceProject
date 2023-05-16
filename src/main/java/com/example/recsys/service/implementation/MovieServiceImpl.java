@@ -1,12 +1,12 @@
 package com.example.recsys.service.implementation;
 
+import com.example.recsys.comparators.books.BooksScoreCountComparator;
 import com.example.recsys.comparators.movies.*;
 import com.example.recsys.comparators.movies.reviews.MovieReviewImdbRatingComparator;
 import com.example.recsys.comparators.movies.reviews.MovieReviewTitleComparator;
 import com.example.recsys.comparators.movies.reviews.MovieReviewYearComparator;
 import com.example.recsys.dto.MovieReviewDto;
-import com.example.recsys.entity.Movie;
-import com.example.recsys.entity.MovieReviews;
+import com.example.recsys.entity.*;
 import com.example.recsys.repository.MovieRepository;
 import com.example.recsys.repository.MovieReviewRepository;
 import com.example.recsys.service.MovieService;
@@ -26,7 +26,7 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private final MovieReviewRepository movieReviewRepository;
 
-    public static final int LIMIT = 48;
+    public static final int LIMIT = 16;
 
     public MovieServiceImpl(MovieRepository movieRepository, MovieReviewRepository movieReviewRepository) {
         this.movieRepository = movieRepository;
@@ -269,6 +269,33 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<MovieReviews> getAllActivityByNickname(String nickname) {
         return movieReviewRepository.getAllActivityByNickname(nickname);
+    }
+
+    @Override
+    public List<Movie> recommendedByFriends(List<Followers> followers, String nickname) {
+        List<MovieReviews> completedBookReviews = getRecentWatchedMovies(nickname);
+        List<Movie> personalBooks = new ArrayList<>();
+        List<Movie> friendsBooks = new ArrayList<>();
+
+        for(MovieReviews completedBookReview : completedBookReviews) {
+            personalBooks.add(completedBookReview.getMovie());
+        }
+
+        for(Followers follower : followers) {
+            String followerNick = follower.getId().getFollower();
+            List<MovieReviews> fiendsCompletedBookReviews = getRecentWatchedMovies(followerNick);
+
+            for(MovieReviews friendCompletedReview : fiendsCompletedBookReviews) {
+                friendsBooks.add(friendCompletedReview.getMovie());
+            }
+        }
+
+        friendsBooks.removeAll(personalBooks);
+        friendsBooks.sort(new MovieImdbRatingComparator().reversed());
+
+        return friendsBooks.stream()
+                .limit(LIMIT)
+                .collect(Collectors.toList());
     }
 
     public List<Movie> findByGenresContaining(String genre) {

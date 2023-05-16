@@ -2,6 +2,7 @@ package com.example.recsys.controller;
 
 import com.example.recsys.entity.BookReview;
 import com.example.recsys.service.BookService;
+import com.example.recsys.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,12 @@ public class BookController {
     @Autowired
     private final BookService bookService;
 
-    public BookController(BookService bookService) {
+    @Autowired
+    private final ProfileService profileService;
+
+    public BookController(BookService bookService, ProfileService profileService) {
         this.bookService = bookService;
+        this.profileService = profileService;
     }
 
     @GetMapping
@@ -37,6 +42,7 @@ public class BookController {
         model.addAttribute("selectedGenre", genre);
         model.addAttribute("selectedSort", sortBy);
         model.addAttribute("bookList", bookService.searchBooksByMultipleFilter(keyword, genre, sortBy));
+        model.addAttribute("friendsRecommend", bookService.recommendedByFriends( profileService.getAllActiveFollowers(principal.getName()), principal.getName() ));
         return "books";
     }
 

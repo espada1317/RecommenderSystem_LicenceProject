@@ -1,10 +1,7 @@
 package com.example.recsys.service;
 
 import com.example.recsys.dto.BookReviewDto;
-import com.example.recsys.entity.Anime;
-import com.example.recsys.entity.AnimeReview;
-import com.example.recsys.entity.BookReview;
-import com.example.recsys.entity.Books;
+import com.example.recsys.entity.*;
 
 import java.awt.print.Book;
 import java.util.List;
@@ -45,5 +42,7 @@ public interface BookService {
     List<Books> getSimilarContent(Books books);
 
     List<Books> findByTitleContaining(String title, Integer bookKey);
+
+    List<Books> recommendedByFriends(List<Followers> followers, String nickname);
 
 }

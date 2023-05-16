@@ -1,6 +1,7 @@
 package com.example.recsys.service;
 
 import com.example.recsys.dto.MovieReviewDto;
+import com.example.recsys.entity.Followers;
 import com.example.recsys.entity.Movie;
 import com.example.recsys.entity.MovieReviews;
 
@@ -47,5 +48,7 @@ public interface MovieService {
     List<Movie> findByTitleContaining(String title, Integer movieKey);
 
     List<MovieReviews> getAllActivityByNickname(String nickname);
+
+    List<Movie> recommendedByFriends(List<Followers> followers, String nickname);
 
 }

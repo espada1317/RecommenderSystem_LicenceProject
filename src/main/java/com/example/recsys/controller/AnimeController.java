@@ -2,6 +2,7 @@ package com.example.recsys.controller;
 
 import com.example.recsys.entity.AnimeReview;
 import com.example.recsys.service.AnimeService;
+import com.example.recsys.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -20,12 +21,16 @@ public class AnimeController {
     @Autowired
     private final AnimeService animeService;
 
-    public AnimeController(AnimeService animeService) {
+    @Autowired
+    private final ProfileService profileService;
+
+    public AnimeController(AnimeService animeService, ProfileService profileService) {
         this.animeService = animeService;
+        this.profileService = profileService;
     }
 
     @GetMapping
-    public String listOfTvSeries( Model model,
+    public String listOfAnime( Model model,
                                   @Param("keyword") String keyword,
                                   @Param("genre") String genre,
                                   @Param("type") String type,
@@ -49,6 +54,7 @@ public class AnimeController {
         model.addAttribute("selectedEndYear", endYear);
         model.addAttribute("selectedSort", sortBy);
         model.addAttribute("animeList", animeService.searchAnimeByMultipleFilter(keyword, genre, type, source, startYear, endYear, sortBy));
+        model.addAttribute("friendsRecommend", animeService.recommendedByFriends( profileService.getAllActiveFollowers(principal.getName()), principal.getName() ));
         return "anime";
     }
 

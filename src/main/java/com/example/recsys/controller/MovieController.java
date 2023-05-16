@@ -3,6 +3,7 @@ package com.example.recsys.controller;
 import com.example.recsys.entity.Movie;
 import com.example.recsys.entity.MovieReviews;
 import com.example.recsys.service.MovieService;
+import com.example.recsys.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -21,8 +22,12 @@ public class MovieController {
     @Autowired
     private final MovieService movieService;
 
-    public MovieController(MovieService movieService) {
+    @Autowired
+    private final ProfileService profileService;
+
+    public MovieController(MovieService movieService, ProfileService profileService) {
         this.movieService = movieService;
+        this.profileService = profileService;
     }
 
     @GetMapping("/getById/{id}")
@@ -60,6 +65,7 @@ public class MovieController {
         model.addAttribute("selectedLang", language);
         model.addAttribute("selectedSort", sortBy);
         model.addAttribute("movies", movieService.searchMoviesByMultipleFilter(keyword, genre, year, language, sortBy));
+        model.addAttribute("friendsRecommend", movieService.recommendedByFriends( profileService.getAllActiveFollowers(principal.getName()), principal.getName() ));
         return "movies";
     }
 
