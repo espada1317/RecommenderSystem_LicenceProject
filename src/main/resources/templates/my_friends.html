@@ -100,14 +100,16 @@
 
           <div class="follower-block">
             <div class="follower-box" th:each = "friend: ${friends}">
-              <img alt="image" class="avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+              <a th:href="@{/profile/dashboard/{id}(id=${friend.nickname})}">
+                <img alt="image" class="avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+              </a>
               <br>
               <span class="follower-fullname" th:text="${friend.fullName}"></span>
               <span class="follower-nickname" th:text="' (' + ${friend.nickname} + ')'"></span>
               <br>
 
-              <form method="post" th:action="@{/profile/unfollow/{id}(id=${friend.nickname})}">
-                <input hidden="hidden" name="username" type="text" th:value="${username}">
+              <form method="post" th:action="@{/profile/unfollow/{id}(id=${friend.nickname})}" >
+                <input hidden="hidden" name="currUsername" type="text" th:value="${nickname}">
                 <button th:if="${friend.isFollowed}" class="follow-button" type="submit" name="action" value="unfollow">Unfollow</button>
                 <button th:if="${!friend.isFollowed}" class="follow-button" type="submit" name="action" value="follow">Follow</button>
               </form>

@@ -338,22 +338,23 @@ public class ProfileController {
         model.addAttribute("isProfilePage", true);
         model.addAttribute("isFriendStats", true);
         model.addAttribute("followerPage", false);
+        model.addAttribute("nickname", principal.getName());
         model.addAttribute("userDetails", userAuthService.findUserByNickname(principal.getName()));
         model.addAttribute("friends", profileService.getAllFollowersInfo(profileService.getAllActiveFollowers(principal.getName()), principal.getName()));
         return "my_friends";
     }
 
-    @GetMapping(value = "/profile/friends/{username}")
+    @GetMapping(value = "/profile/friends/{nickname}")
     public String personalFriends(Model model,
-                                  @PathVariable("username") String username,
+                                  @PathVariable("nickname") String nickname,
                                   Principal principal) {
         model.addAttribute("isProfilePage", true);
         model.addAttribute("isFriendStats", true);
         model.addAttribute("followerPage", true);
-        model.addAttribute("username", username);
-        model.addAttribute("userDetails", userAuthService.findUserByNickname(username));
-        model.addAttribute("isFollow", profileService.getExistingFollowRelation(principal.getName(), username));
-        model.addAttribute("friends", profileService.getAllFollowersInfo(profileService.getAllActiveFollowers(username), principal.getName()));
+        model.addAttribute("nickname", nickname);
+        model.addAttribute("userDetails", userAuthService.findUserByNickname(nickname));
+        model.addAttribute("isFollow", profileService.getExistingFollowRelation(principal.getName(), nickname));
+        model.addAttribute("friends", profileService.getAllFollowersInfo(profileService.getAllActiveFollowers(nickname), principal.getName()));
         return "my_friends";
     }
 
@@ -373,18 +374,18 @@ public class ProfileController {
 
     @PostMapping(value = "/profile/unfollow/{nickname}", params = "action=unfollow")
     public String deleteFollowerFromProfile(@PathVariable("nickname") String nickname,
-                                            @ModelAttribute("currentNicknameDto") CurrentNicknameDto currentNicknameDto,
+                                            @RequestParam("currUsername") String currUsername,
                                             Principal principal) {
         profileService.deleteFollower(principal.getName(), nickname);
-        return "redirect:/profile/friends/" + currentNicknameDto.getNickname();
+        return currUsername.equals(principal.getName()) ? "redirect:/profile/friends" : "redirect:/profile/friends/" + currUsername;
     }
 
     @PostMapping(value = "/profile/unfollow/{nickname}", params = "action=follow")
     public String saveFollowerFromProfile(@PathVariable("nickname") String nickname,
-                                          @ModelAttribute("currentNicknameDto") CurrentNicknameDto currentNicknameDto,
+                                          @RequestParam("currUsername") String currUsername,
                                           Principal principal) {
         profileService.saveFollower(principal.getName(), nickname);
-        return "redirect:/profile/friends/" + currentNicknameDto.getNickname();
+        return currUsername.equals(principal.getName()) ? "redirect:/profile/friends" : "redirect:/profile/friends/" + currUsername;
     }
 
     @GetMapping(value = "/profile/settings")
