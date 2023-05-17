@@ -298,6 +298,25 @@ public class MovieServiceImpl implements MovieService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Movie> personalRecommended(String nickname, List<Followers> followers) {
+        List<String> mostGenres = movieRepository.getMostPopularUserGenres(nickname);
+        List<Movie> result = getAllMovies();
+        for(String x : mostGenres) {
+            List<Movie> temp = movieRepository.findByGenreContaining(x);
+            result.retainAll(temp);
+        }
+        List<Movie> personalMovies = movieRepository.getAllMarkedMovies(nickname);
+
+        result.removeAll(personalMovies);
+        result.removeAll(recommendedByFriends(followers, nickname));
+        result.sort(new MovieImdbRatingComparator().reversed());
+
+        return result.stream()
+                .limit(LIMIT)
+                .toList();
+    }
+
     public List<Movie> findByGenresContaining(String genre) {
         String[] genresList = genre.split(",");
 
@@ -308,7 +327,7 @@ public class MovieServiceImpl implements MovieService {
         }
 
         return resultList.stream()
-                .limit(10)
+                .limit(12)
                 .toList();
     }
 

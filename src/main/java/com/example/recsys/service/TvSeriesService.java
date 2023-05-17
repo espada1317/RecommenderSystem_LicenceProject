@@ -49,4 +49,7 @@ public interface TvSeriesService {
     List<TvSeries> findByTitleContaining(String title, Integer movieKey);
 
     List<TvSeries> recommendedByFriends(List<Followers> followers, String nickname);
+
+    List<TvSeries> personalRecommended(String nickname, List<Followers> followers);
+
 }

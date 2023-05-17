@@ -53,6 +53,7 @@ public class AnimeController {
         model.addAttribute("selectedStartYear", startYear);
         model.addAttribute("selectedEndYear", endYear);
         model.addAttribute("selectedSort", sortBy);
+        model.addAttribute("personalRecommend", animeService.personalRecommended(principal.getName(), profileService.getAllActiveFollowers(principal.getName())));
         model.addAttribute("animeList", animeService.searchAnimeByMultipleFilter(keyword, genre, type, source, startYear, endYear, sortBy));
         model.addAttribute("friendsRecommend", animeService.recommendedByFriends( profileService.getAllActiveFollowers(principal.getName()), principal.getName() ));
         return "anime";

@@ -90,6 +90,25 @@
                     </div>
                 </div>
 
+                <h3 class="white">Recommended For You:</h3>
+
+                <div class="row">
+                    <div class="col-sm-3" th:each = "movie: ${personalRecommend}">
+                        <div class="card mb-4 box-shadow">
+                            <img class="card-img-top" th:src="${movie.poster}" th:alt="${movie.poster}">
+                            <div class="card-body">
+                                <p class="card-text" th:text="${movie.title}"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary btn-sm btn-outline-secondary" th:href="@{/movies/getById/{id}(id=${movie.movieKey})}">View</a>
+                                    </div>
+                                    <strong class="text-muted" th:text="${movie.release}"></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <h3 class="white">Recommended By Friends:</h3>
 
                 <div class="row">

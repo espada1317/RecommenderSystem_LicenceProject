@@ -6,6 +6,7 @@ import com.example.recsys.comparators.anime.AnimeTitleComparator;
 import com.example.recsys.comparators.anime.reviews.AnimeReviewLengthComparator;
 import com.example.recsys.comparators.anime.reviews.AnimeReviewTitileComparator;
 import com.example.recsys.comparators.books.BooksScoreCountComparator;
+import com.example.recsys.comparators.tvseries.TvImdbComparator;
 import com.example.recsys.dto.AnimeReviewDto;
 import com.example.recsys.entity.*;
 import com.example.recsys.repository.AnimeRepository;
@@ -294,6 +295,30 @@ public class AnimeServiceImpl implements AnimeService {
         return friendsBooks.stream()
                 .limit(LIMIT)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Anime> personalRecommended(String nickname, List<Followers> followers) {
+        List<String> mostGenres = animeRepository.getMostPopularUserGenres(nickname);
+        List<Anime> result = getAllAnime();
+        for(String x : mostGenres) {
+            List<Anime> temp = animeRepository.findByGenreContaining(x);
+
+            List<Anime> copy = new ArrayList<>(result);
+            copy.retainAll(temp);
+            if(copy.size() > 0) {
+                result.retainAll(temp);
+            }
+        }
+        List<Anime> personalMovies = animeRepository.getAllMarkedAnimes(nickname);
+
+        result.removeAll(personalMovies);
+        result.removeAll(recommendedByFriends(followers, nickname));
+        result.sort(new AnimeScoreComparator().reversed());
+
+        return result.stream()
+                .limit(LIMIT)
+                .toList();
     }
 
 }

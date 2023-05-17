@@ -56,4 +56,6 @@ public interface AnimeService {
 
     List<Anime> recommendedByFriends(List<Followers> followers, String nickname);
 
+    List<Anime> personalRecommended(String nickname, List<Followers> followers);
+
 }

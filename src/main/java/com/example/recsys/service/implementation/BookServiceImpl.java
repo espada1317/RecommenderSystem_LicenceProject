@@ -1,11 +1,13 @@
 package com.example.recsys.service.implementation;
 
+import com.example.recsys.comparators.anime.AnimeScoreComparator;
 import com.example.recsys.comparators.books.BooksScoreComparator;
 import com.example.recsys.comparators.books.BooksScoreCountComparator;
 import com.example.recsys.comparators.books.BooksTitleComparator;
 import com.example.recsys.comparators.books.reviews.BookReviewRatingComparator;
 import com.example.recsys.comparators.books.reviews.BookReviewTitleComparator;
 import com.example.recsys.dto.BookReviewDto;
+import com.example.recsys.entity.Anime;
 import com.example.recsys.entity.BookReview;
 import com.example.recsys.entity.Books;
 import com.example.recsys.entity.Followers;
@@ -15,6 +17,7 @@ import com.example.recsys.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -237,14 +240,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Books> recommendedByFriends(List<Followers> followers,String nickname) {
-        List<BookReview> completedBookReviews = getRecentCompletedBook(nickname);
-        List<Books> personalBooks = new ArrayList<>();
+    public List<Books> parseFriendsBooks(List<Followers> followers) {
         List<Books> friendsBooks = new ArrayList<>();
-
-        for (BookReview completedBookReview : completedBookReviews) {
-            personalBooks.add(completedBookReview.getBooks());
-        }
 
         for(Followers follower : followers) {
             String followerNick = follower.getId().getFollower();
@@ -255,12 +252,48 @@ public class BookServiceImpl implements BookService {
             }
         }
 
-        friendsBooks.removeAll(personalBooks);
-        friendsBooks.sort(new BooksScoreCountComparator().reversed());
+        return friendsBooks;
+    }
 
-        return friendsBooks.stream()
+    @Override
+    public List<Books> recommendedByFriends(List<Books> followers,String nickname) {
+        List<BookReview> completedBookReviews = getRecentCompletedBook(nickname);
+        List<Books> personalBooks = new ArrayList<>();
+
+        for (BookReview completedBookReview : completedBookReviews) {
+            personalBooks.add(completedBookReview.getBooks());
+        }
+
+        followers.removeAll(personalBooks);
+        followers.sort(new BooksScoreCountComparator().reversed());
+
+        return followers.stream()
                 .limit(LIMIT)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Books> personalRecommended(String nickname, List<Books> followerBooks) {
+        List<String> mostGenres = bookRepository.getMostPopularUserGenres(nickname);
+        List<Books> result = getAllBooks();
+        for(String x : mostGenres) {
+            List<Books> temp = bookRepository.findByGenreContaining(x);
+
+            List<Books> copy = new ArrayList<>(result);
+            copy.retainAll(temp);
+            if(copy.size() > 0) {
+                result.retainAll(temp);
+            }
+        }
+        List<Books> personalMovies = bookRepository.getAllMarkedBooks(nickname);
+
+        result.removeAll(personalMovies);
+        result.removeAll(followerBooks);
+        result.sort(new BooksScoreComparator().reversed());
+
+        return result.stream()
+                .limit(LIMIT)
+                .toList();
     }
 
 }

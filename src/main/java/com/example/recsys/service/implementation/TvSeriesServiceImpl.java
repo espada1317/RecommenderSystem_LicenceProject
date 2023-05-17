@@ -258,6 +258,25 @@ public class TvSeriesServiceImpl implements TvSeriesService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<TvSeries> personalRecommended(String nickname, List<Followers> followers) {
+        List<String> mostGenres = tvSeriesRepository.getMostPopularUserGenres(nickname);
+        List<TvSeries> result = getAllTv();
+        for(String x : mostGenres) {
+            List<TvSeries> temp = tvSeriesRepository.findByGenreContaining(x);
+            result.retainAll(temp);
+        }
+        List<TvSeries> personalMovies = tvSeriesRepository.getAllMarkedTvs(nickname);
+
+        result.removeAll(personalMovies);
+        result.removeAll(recommendedByFriends(followers, nickname));
+        result.sort(new TvImdbComparator().reversed());
+
+        return result.stream()
+                .limit(LIMIT)
+                .toList();
+    }
+
     public String getParsedTitle(String title) {
         String[] result = title.split("\\s*[0-9:]+");
 

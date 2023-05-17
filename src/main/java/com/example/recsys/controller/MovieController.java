@@ -64,6 +64,7 @@ public class MovieController {
         model.addAttribute("selectedYear", year);
         model.addAttribute("selectedLang", language);
         model.addAttribute("selectedSort", sortBy);
+        model.addAttribute("personalRecommend", movieService.personalRecommended(principal.getName(), profileService.getAllActiveFollowers(principal.getName())));
         model.addAttribute("movies", movieService.searchMoviesByMultipleFilter(keyword, genre, year, language, sortBy));
         model.addAttribute("friendsRecommend", movieService.recommendedByFriends( profileService.getAllActiveFollowers(principal.getName()), principal.getName() ));
         return "movies";

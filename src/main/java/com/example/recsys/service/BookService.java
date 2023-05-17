@@ -43,6 +43,10 @@ public interface BookService {
 
     List<Books> findByTitleContaining(String title, Integer bookKey);
 
-    List<Books> recommendedByFriends(List<Followers> followers, String nickname);
+    List<Books> recommendedByFriends(List<Books> followers, String nickname);
+
+    List<Books> personalRecommended(String nickname, List<Books> followers);
+
+    List<Books> parseFriendsBooks(List<Followers> followers);
 
 }

@@ -4,6 +4,7 @@ import com.example.recsys.entity.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,5 +35,23 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
     @Query("SELECT m FROM movie m WHERE m.title LIKE CONCAT(:title , '%') AND m.movieKey <> :movieKey ORDER BY m.voteaverage DESC")
     List<Movie> findByTitleContaining(@Param("title") String title, @Param("movieKey") Integer movieKey);
+
+    @Query(value = "SELECT genre FROM\n" +
+            "(\n" +
+            "SELECT TOP 3 TRIM(value) as genre, COUNT(*) as number FROM\n" +
+            "(\n" +
+            "SELECT genres FROM\n" +
+            "movie_reviews m_r INNER JOIN movie m ON m_r.movie_id = m.movie_key\n" +
+            "WHERE nickname = :nickname AND ( category = 'completed' OR category = 'plan_watch' )\n" +
+            ") val CROSS APPLY string_split(genres,',')\n" +
+            "GROUP BY value\n" +
+            "ORDER BY number DESC\n" +
+            ") wtf", nativeQuery = true)
+    List<String> getMostPopularUserGenres(@Param("nickname") String nickname);
+
+    @Query(value = "  SELECT m.* FROM\n" +
+            "  movie_reviews m_r INNER JOIN movie m ON m_r.movie_id = m.movie_key\n" +
+            "  WHERE nickname = :nickname AND ( category = 'completed' OR category = 'plan_watch' OR category = 'dropped')", nativeQuery = true)
+    List<Movie> getAllMarkedMovies(@Param("nickname") String nickname);
 
 }

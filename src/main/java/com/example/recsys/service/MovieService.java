@@ -51,4 +51,6 @@ public interface MovieService {
 
     List<Movie> recommendedByFriends(List<Followers> followers, String nickname);
 
+    List<Movie> personalRecommended(String nickname, List<Followers> followers);
+
 }

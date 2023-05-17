@@ -46,4 +46,19 @@ public interface AnimeRepository extends JpaRepository<Anime, Integer> {
     @Query("SELECT a FROM anime a WHERE a.title LIKE CONCAT(:title , '%') AND a.animeKey <> :animeKey ORDER BY a.voteTotal DESC")
     List<Anime> findByTitleContaining(@Param("title") String title, @Param("animeKey") Integer animeKey);
 
+    @Query(value = "SELECT TOP 3 TRIM(value) as genre, COUNT(*) as number FROM\n" +
+            "(\n" +
+            "  SELECT m.* FROM\n" +
+            "  anime_reviews m_r INNER JOIN anime m ON m_r.anime_id = m.anime_key\n" +
+            "  WHERE nickname = :nickname\n" +
+            ") val CROSS APPLY string_split(genres,',')\n" +
+            "GROUP BY TRIM(value)\n" +
+            "ORDER BY number DESC", nativeQuery = true)
+    List<String> getMostPopularUserGenres(@Param("nickname") String nickname);
+
+    @Query(value = "  SELECT m.* FROM\n" +
+            "  anime_reviews m_r INNER JOIN anime m ON m_r.anime_id = m.anime_key\n" +
+            "  WHERE nickname = :nickname", nativeQuery = true)
+    List<Anime> getAllMarkedAnimes(@Param("nickname") String nickname);
+
 }

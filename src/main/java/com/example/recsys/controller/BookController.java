@@ -1,6 +1,8 @@
 package com.example.recsys.controller;
 
 import com.example.recsys.entity.BookReview;
+import com.example.recsys.entity.Books;
+import com.example.recsys.entity.Followers;
 import com.example.recsys.service.BookService;
 import com.example.recsys.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -41,8 +44,11 @@ public class BookController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("selectedGenre", genre);
         model.addAttribute("selectedSort", sortBy);
+        List<Followers> followersList = profileService.getAllActiveFollowers(principal.getName());
+        List<Books> friendsListBooks = bookService.parseFriendsBooks(followersList);
+        model.addAttribute("personalRecommend", bookService.personalRecommended(principal.getName(), friendsListBooks));
         model.addAttribute("bookList", bookService.searchBooksByMultipleFilter(keyword, genre, sortBy));
-        model.addAttribute("friendsRecommend", bookService.recommendedByFriends( profileService.getAllActiveFollowers(principal.getName()), principal.getName() ));
+        model.addAttribute("friendsRecommend", bookService.recommendedByFriends( friendsListBooks, principal.getName() ));
         return "books";
     }
 
@@ -56,7 +62,6 @@ public class BookController {
         model.addAttribute("bookID", bookID);
         Optional<BookReview> bookReview = bookService.getReviewByNicknameAndBookId(principal.getName(), bookID);
         bookReview.ifPresent(book -> model.addAttribute("reviewInfo", book));
-
         return "book_details";
     }
 

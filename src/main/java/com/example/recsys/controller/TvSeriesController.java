@@ -48,6 +48,7 @@ public class TvSeriesController {
         model.addAttribute("selectedStartYear", startYear);
         model.addAttribute("selectedEndYear", endYear);
         model.addAttribute("selectedSort", sortBy);
+        model.addAttribute("personalRecommend", tvSeriesService.personalRecommended(principal.getName(), profileService.getAllActiveFollowers(principal.getName())));
         model.addAttribute("tvSeries", tvSeriesService.searchTvByMultipleFilter(keyword, genre, startYear, endYear, sortBy));
         model.addAttribute("friendsRecommend", tvSeriesService.recommendedByFriends( profileService.getAllActiveFollowers(principal.getName()), principal.getName() ));
         return "tv_series";

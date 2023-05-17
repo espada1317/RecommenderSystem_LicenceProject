@@ -84,6 +84,25 @@
           </div>
         </div>
 
+        <h3 class="white">Recommended For You:</h3>
+
+        <div class="row">
+          <div class="col-sm-3" th:each = "tv: ${personalRecommend}">
+            <div class="card mb-4 box-shadow">
+              <img class="card-img-top" th:src="${tv.poster}" th:alt="${tv.poster}">
+              <div class="card-body">
+                <p class="card-text" th:text="${tv.title}"></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a class="btn btn-primary btn-sm btn-outline-secondary" th:href="@{/tv/getById/{id}(id=${tv.tvKey})}">View</a>
+                  </div>
+                  <strong class="text-muted" th:text="${tv.runtimeStart} + ' - ' + ${ tv.runtimeEnd == 9999 ? 'Present' : tv.runtimeEnd}"></strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <h3 class="white">Recommended By Friends:</h3>
 
         <div class="row">

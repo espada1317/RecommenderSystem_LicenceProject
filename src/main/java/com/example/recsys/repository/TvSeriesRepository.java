@@ -5,6 +5,7 @@ import com.example.recsys.entity.TvSeries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -33,5 +34,23 @@ public interface TvSeriesRepository extends JpaRepository<TvSeries, Integer> {
 
     @Query("SELECT tv FROM tv_series tv WHERE tv.title LIKE CONCAT(:title , '%') AND tv.tvKey <> :tvKey ORDER BY tv.voteAverage DESC")
     List<TvSeries> findByTitleContaining(@Param("title") String title, @Param("tvKey") Integer tvKey);
+
+    @Query(value = "SELECT genre FROM\n" +
+            "(\n" +
+            "SELECT TOP 3 TRIM(value) as genre, COUNT(*) as number FROM\n" +
+            "(\n" +
+            "SELECT genres FROM\n" +
+            "tv_reviews m_r INNER JOIN tv_series m ON m_r.tv_id = m.tv_key\n" +
+            "WHERE nickname = 'espada1317' AND ( category = 'completed' OR category = 'plan_watch' )\n" +
+            ") val CROSS APPLY string_split(genres,',')\n" +
+            "GROUP BY value\n" +
+            "ORDER BY number DESC\n" +
+            ") wtf", nativeQuery = true)
+    List<String> getMostPopularUserGenres(@Param("nickname") String nickname);
+
+    @Query(value = "SELECT m.* FROM\n" +
+            "tv_reviews m_r INNER JOIN tv_series m ON m_r.tv_id = m.tv_key\n" +
+            "WHERE nickname = :nickname", nativeQuery = true)
+    List<TvSeries> getAllMarkedTvs(@Param("nickname") String nickname);
 
 }
