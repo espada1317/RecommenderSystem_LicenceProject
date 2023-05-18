@@ -93,12 +93,8 @@
                             <section class="exploreScroll">
                                 <div class="horizontal-scroll-wrapper squares">
                                     <div class="card-list" th:each="planWatch : ${planToWatchTvs}">
-                                        <div class="card"><img th:src="${planWatch.getTvSeries().poster}" th:alt="${planWatch.getTvSeries().poster}"></div>
-                                        <div class="info">
-                                            <span th:text="${planWatch.getTvSeries().title}"></span>
-                                            &#9672; IMDB:
-                                            <span th:text="${planWatch.getTvSeries().voteaverage}"></span>
-                                        </div>
+                                        <div class="card card-img"><img th:src="${planWatch.getTvSeries().poster}" th:alt="${planWatch.getTvSeries().poster}"></div>
+                                        <div class="info" th:text="${planWatch.getTvSeries().title}"></div>
                                     </div>
                                 </div>
                             </section>

@@ -229,7 +229,7 @@ public class ProfileController {
         model.addAttribute("recentWatchedMovies", movieService.getRecentWatchedMovies(principal.getName()));
         model.addAttribute("planToWatchMovies", movieService.getPlanToWatchMovies(principal.getName()));
         model.addAttribute("recentWatchedTvs", tvSeriesService.getRecentWatchedTvs(principal.getName()));
-        model.addAttribute("planToWatchMoviesTvs", tvSeriesService.getPlanToWatchTvs(principal.getName()));
+        model.addAttribute("planToWatchTvs", tvSeriesService.getPlanToWatchTvs(principal.getName()));
         model.addAttribute("recentWatchedAnime", animeService.getRecentWatchedAnime(principal.getName()));
         model.addAttribute("planToWatchAnime", animeService.getPlanToWatchAnime(principal.getName()));
         model.addAttribute("recentCompletedBooks", bookService.getRecentCompletedBook(principal.getName()));
@@ -250,7 +250,7 @@ public class ProfileController {
         model.addAttribute("recentWatchedMovies", movieService.getRecentWatchedMovies(nickname));
         model.addAttribute("planToWatchMovies", movieService.getPlanToWatchMovies(nickname));
         model.addAttribute("recentWatchedTvs", tvSeriesService.getRecentWatchedTvs(nickname));
-        model.addAttribute("planToWatchMoviesTvs", tvSeriesService.getPlanToWatchTvs(nickname));
+        model.addAttribute("planToWatchTvs", tvSeriesService.getPlanToWatchTvs(nickname));
         model.addAttribute("recentWatchedAnime", animeService.getRecentWatchedAnime(nickname));
         model.addAttribute("planToWatchAnime", animeService.getPlanToWatchAnime(nickname));
         model.addAttribute("recentCompletedBooks", bookService.getRecentCompletedBook(nickname));
